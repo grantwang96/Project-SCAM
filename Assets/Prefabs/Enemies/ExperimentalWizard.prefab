@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33588379317212358}
   - component: {fileID: 135852572941892054}
   - component: {fileID: 23421843041596328}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: ArmBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23673556768070302}
   - component: {fileID: 114861056478261278}
   - component: {fileID: 54088791570192048}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Fist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4329298402832586}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4298010973408590}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4491981749027192}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 33543694543703896}
   - component: {fileID: 135920859624840898}
   - component: {fileID: 23681308344144840}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 136875896175830444}
   - component: {fileID: 23309439313191968}
   - component: {fileID: 95604338170922242}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 33745200420300444}
   - component: {fileID: 135263151725459624}
   - component: {fileID: 23715341021238074}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Eye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4368381794282566}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 33807532655847526}
   - component: {fileID: 135089130993540850}
   - component: {fileID: 23850479958099824}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 33590900994808748}
   - component: {fileID: 136149955663965772}
   - component: {fileID: 23185267553695332}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 195255064023556502}
   - component: {fileID: 114525517222117530}
   - component: {fileID: 114848195985472458}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: ExperimentalWizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}

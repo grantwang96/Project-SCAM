@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33681349974860668}
   - component: {fileID: 135576921664453818}
   - component: {fileID: 23560010549910508}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33439434468456356}
   - component: {fileID: 135146855706572308}
   - component: {fileID: 23943666319265868}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 33327960045221748}
   - component: {fileID: 135385077996657882}
   - component: {fileID: 23054554073389448}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: ArmBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4365588495035478}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4133500695572204}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 195837127592074648}
   - component: {fileID: 114464831148275428}
   - component: {fileID: 114488201888966684}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: ExperimentalMeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 136017138176733878}
   - component: {fileID: 23516881397256264}
   - component: {fileID: 95704293985634608}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 33725292440003440}
   - component: {fileID: 135215385095912474}
   - component: {fileID: 23094502924112536}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Eye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4103966479895978}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 23976534672196496}
   - component: {fileID: 114789068429280610}
   - component: {fileID: 54824966548063140}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Fist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4887055745659106}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 33497110875063620}
   - component: {fileID: 136352142987641560}
   - component: {fileID: 23046634374096748}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}

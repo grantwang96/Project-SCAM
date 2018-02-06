@@ -15,10 +15,9 @@ public class EventTrigger : MonoBehaviour {
     void OnTriggerEnter(Collider coll)
     {
         if(coll.tag == targetTag && !triggered) {
-            if (!repeatable) {
-                foreach(customEvent thing in events) {
-                    StartCoroutine(thing.myFunction.doThing(thing.myTarget, thing.delay));
-                }
+            if (!repeatable) { triggered = true; }
+            foreach (customEvent thing in events) {
+                StartCoroutine(thing.myFunction.doThing(thing.myTarget, thing.delay));
             }
         }
     }
