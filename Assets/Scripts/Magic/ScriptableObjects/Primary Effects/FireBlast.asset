@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53ecfa24c2a4fc046be44c891d98df20, type: 3}
+  m_Name: FireBlast
+  m_EditorClassIdentifier: 
+  force: 60
+  power: 10
+  duration: 0
+  powerLevelModifier: 1
+  powerLevel: 1
+  baseColor: {r: 1, g: 1, b: 0, a: 0.7058824}
+  ammo: 3
+  coolDown: 1
+  title: Flame
+  description: Powerful Fire Pillar
+  projectilePrefab: {fileID: 114765780417504250, guid: 88670340bf7213645838c2e6f7ce896e,
+    type: 2}
+  castEffect: {fileID: 198545228210204070, guid: 828a4427cc7df2942a99b970db3979fe,
+    type: 2}
+  tinyFlamePrefab: {fileID: 198455290786034794, guid: c0aef50a90ecdfb4b8deaef5ae66f06d,
+    type: 2}
+  firePillarPrefab: {fileID: 4173943671798356, guid: d6db12eea41740948bdf675357768ac2,
+    type: 2}
+  shrapnelCountLowerBound: 12
+  shrapnelCountUpperBound: 16
+  subShotMinimumForce: 10
+  subShotMaximumForce: 20
+  subBlastPowerMod: 1
+  mass: 1
+  radius: 4
+  subRadius: 2
+  knockBackForce: 10
+  upwardKnockup: 0.3

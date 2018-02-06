@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca3025abac1c9b4a8e9856edf8274c1, type: 3}
+  m_Name: Seduce
+  m_EditorClassIdentifier: 
+  force: 50
+  power: 10
+  duration: 10
+  powerLevelModifier: 1
+  powerLevel: 1
+  baseColor: {r: 1, g: 0, b: 0.47586155, a: 1}
+  ammo: 10
+  coolDown: 0.1
+  title: Seduction
+  description: Convert another to fight for you!
+  projectilePrefab: {fileID: 114765780417504250, guid: 88670340bf7213645838c2e6f7ce896e,
+    type: 2}
+  castEffect: {fileID: 198545228210204070, guid: 828a4427cc7df2942a99b970db3979fe,
+    type: 2}

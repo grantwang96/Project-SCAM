@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af4cdb27caa003a4e810595f10534662, type: 3}
+  m_Name: AntiGravity
+  m_EditorClassIdentifier: 
+  ammo: 5
+  coolDown: 0
+  title: Soaring
+  description: Will attempt to fly away
+  decoration: {fileID: 4013364312867060, guid: 0e890714461fb23469dadcd449f6e968, type: 2}
+  upwardForce: 4

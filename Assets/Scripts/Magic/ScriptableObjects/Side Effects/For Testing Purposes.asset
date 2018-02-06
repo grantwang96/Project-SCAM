@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf5b6016c122c5429da05b31af9c4cf, type: 3}
+  m_Name: For Testing Purposes
+  m_EditorClassIdentifier: 
+  ammo: 1000
+  coolDown: 0
+  title: StraightShot
+  description: Not totally worthless
+  decoration: {fileID: 4501848763058522, guid: 3ac5769bfaf46e3419d8f906cf6148eb, type: 2}

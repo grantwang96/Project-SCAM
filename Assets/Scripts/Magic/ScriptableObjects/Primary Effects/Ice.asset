@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cc55aa419bee647a5ecbb95b1a704e, type: 3}
+  m_Name: Ice
+  m_EditorClassIdentifier: 
+  force: 50
+  power: 10
+  duration: 0
+  powerLevelModifier: 1
+  powerLevel: 1
+  baseColor: {r: 0, g: 0.13103437, b: 1, a: 0.7058824}
+  ammo: 10
+  coolDown: 0.4
+  title: Ice
+  description: Creates an icy surface
+  projectilePrefab: {fileID: 114765780417504250, guid: 88670340bf7213645838c2e6f7ce896e,
+    type: 2}
+  castEffect: {fileID: 198545228210204070, guid: 828a4427cc7df2942a99b970db3979fe,
+    type: 2}
+  frostable:
+    serializedVersion: 2
+    m_Bits: 4353
+  icySurfacePrefab: {fileID: 114211350051635422, guid: aca591f8b2679ec4eb5db8b6ce3c5867,
+    type: 2}
+  submissile: {fileID: 54470539081215552, guid: fa8b1d4a5564d1d468b0a10525bb2f09,
+    type: 2}
+  iceExplosion: {fileID: 1027559872584000, guid: 828a727ac729a114cae9a593476559cf,
+    type: 2}
+  frostEffect: {fileID: 1902888575177058, guid: c642c5f471c641944afabf6266119b5d,
+    type: 2}
+  minIcySurfaces: 3
+  maxIcySurfaces: 5
+  radius: 0.64
+  maxIcePrefabRadius: 5
+  knockBackForce: 10
+  upwardKnockup: 0.5
