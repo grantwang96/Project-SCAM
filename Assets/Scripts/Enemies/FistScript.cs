@@ -26,8 +26,8 @@ public class FistScript : MonoBehaviour {
     void OnTriggerEnter(Collider coll)
     {
         Damageable dam = coll.GetComponent<Damageable>();
-        if (dam != null && dam != myBody.GetComponent<Damageable>())
-        {
+        if(myBody == null) { return; }
+        if (dam != null && dam != myBody.GetComponent<Damageable>()) {
             Vector3 dir = (coll.transform.position - myBody.position).normalized;
             dam.TakeDamage(myBody, damage, dir, force);
             // Debug.Log("Hit");

@@ -18,9 +18,8 @@ public class PlayerDamageable : Damageable {
     public CameraMovement HeadMove;
     public GameObject DrunkHead;
 
-    public Sprite drunkIcon;
-    public Sprite slowIcon;
-    public Sprite floatIcon;
+    public Sprite transmutedIcon;
+
     public Image statusEffectPrefab;
     public Transform statusEffectBar;
 
@@ -46,6 +45,7 @@ public class PlayerDamageable : Damageable {
         // Visual hurt effects
         base.TakeDamage(attacker, hpLost, dir, force);
         if(health <= 0) { Die(); return; }
+        if(attacker == null) { return; }
         PlayerMagic.instance.invokeChangeFollowers(attacker.GetComponent<Damageable>());
         Debug.Log("Player HP: " + health);
         StartCoroutine(hurtFrames());
@@ -63,16 +63,17 @@ public class PlayerDamageable : Damageable {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    /*public override void Fly(float force, float duration)
+    /*
+    public override void Fly(float force, float duration)
     {
         if(flight != null) {
             StopCoroutine(flight);
             myMovement.hamper--;
         }
         flight = StartCoroutine(processFlying(force, duration));
-    }*/
+    }
 
-    /*IEnumerator processFlying(float force, float duration)
+    IEnumerator processFlying(float force, float duration)
     {
         Debug.Log("Duration is: " + duration);
         float startTime = Time.time;
@@ -118,15 +119,15 @@ public class PlayerDamageable : Damageable {
         Destroy(newStatusEffect.gameObject);
         flight = null;
         myOwnerMove.hamper--;
-    }*/
+    }
 
-    /*public override void Drunk(float duration)
+    public override void Drunk(float duration)
     {
         if(drunkness != null) { StopCoroutine(drunkness); }
         drunkness = StartCoroutine(processDrunk(duration));
-    }*/
+    }
 
-    /*IEnumerator processDrunk(float duration)
+    IEnumerator processDrunk(float duration)
     {
         PlayerMovementV2 myMove = GetComponent<PlayerMovementV2>();
         float startTime = Time.time;
@@ -159,7 +160,8 @@ public class PlayerDamageable : Damageable {
         HeadMove.drunk = false;
         Destroy(newStatusEffect.gameObject);
         drunkness = null;
-    }*/
+    }
+    */
 
     public override void InitiateTransmutation(float duration, GameObject replacement)
     {
@@ -211,22 +213,31 @@ public class PlayerDamageable : Damageable {
         Camera.main.transform.position -= transform.forward * 3f;
         Camera.main.transform.LookAt(myMovement.Head);
 
-        gun.parent = newrbody.transform;
-        myMovement.Head.parent = newrbody.transform;
+        gun.parent = myMovement.Head;
+        Vector3 localPos = myMovement.Head.localPosition;
+        myMovement.Head.parent = null;
 
         // myPlayMagic.enabled = false; // ALLOW FOR SPELL COMBAT
         myMovement.hamper += 1;
+
+        Transform oldTransmuteStatus = statusEffectBar.Find("transmutedStatus");
+        if(oldTransmuteStatus) { Destroy(oldTransmuteStatus); }
+        Image newTransmuteStatus = Instantiate(statusEffectPrefab, statusEffectBar);
+        newTransmuteStatus.name = "transmutedStatus";
 
         // StatusBarHandler.instance.applyStatus("transmute", duration);
         float time = 0f;
         while(time < duration) {
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
+            // transform.position = newrbody.position;
+            myMovement.Head.position = newrbody.transform.TransformPoint(localPos);
 
-            newrbody.AddForce((newrbody.transform.forward * vertical + newrbody.transform.right * horizontal)
+            newrbody.AddForce((myMovement.Head.forward * vertical + myMovement.Head.right * horizontal)
                 * myMovement.maxSpeed);
             if(newrbody.velocity.magnitude > myMovement.maxSpeed) { newrbody.velocity = new Vector3(horizontal, 0f, vertical) * myMovement.maxSpeed; }
 
+            newTransmuteStatus.fillAmount = 1f - (time / duration);
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }

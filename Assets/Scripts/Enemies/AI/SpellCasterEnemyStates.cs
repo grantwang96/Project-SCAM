@@ -13,7 +13,6 @@ public class WizardEnemyIdle : NPCState{
     public override void Execute()
     {
         if (myOwner.checkView()) { // look for the player
-            Debug.Log("I see you!");
             myOwner.changeState(new WizardEnemyAttack());
             return;
         }
@@ -40,8 +39,6 @@ public class WizardEnemyWander : NPCState
         if (myOwner.agent.enabled) { myOwner.agent.SetDestination(target); }
 
         if (target == null) { Debug.Log("No Target!"); }
-        Debug.Log("Entering wander...");
-        Debug.Log("Target " + myOwner.agent.destination);
     }
 
     public override void Execute()
@@ -57,7 +54,6 @@ public class WizardEnemyWander : NPCState
         float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
         if (distToDest < 0.2f + myOwner.agent.stoppingDistance)
         {
-            Debug.Log("Reached destination!");
             myOwner.changeState(new WizardEnemyIdle(), Random.Range(4f, 6f));
         }
         if (myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
@@ -89,8 +85,7 @@ public class WizardEnemyAggro : NPCState
         anim = myOwner.anim;
         anim.SetInteger("Status", 2);
         duration = myOwner.blueprint.attentionSpan;
-
-        Debug.Log("Entering aggro...");
+        
         FindCover();
     }
 
@@ -102,13 +97,17 @@ public class WizardEnemyAggro : NPCState
             if (previousState != null) { myOwner.changeState(previousState); }
             else { myOwner.changeState(new WizardEnemyIdle(), Random.Range(4f, 6f)); }
         }
-
+        if(myOwner == null || myOwner.transform == null) { return; }
+        if(myOwner.attackTarget == null) {
+            if(previousState != null) { myOwner.changeState(previousState); }
+            else { myOwner.changeState(new WizardEnemyIdle()); }
+            return;
+        }
         Vector3 targetDir = myOwner.attackTarget.position - myOwner.transform.position;
         targetDir.y = 0;
         Quaternion forward = Quaternion.LookRotation(targetDir);
         myOwner.transform.rotation = Quaternion.Lerp(myOwner.transform.rotation, forward, 0.8f);
-
-
+        
         // Check to see if the target is still in view
         targetInView = myOwner.checkView();
 
@@ -217,12 +216,15 @@ public class WizardEnemyAttack : NPCState
         anim = myOwner.anim;
 
         myOwner.agent.updateRotation = false;
-        Debug.Log("Entering Attack...");
         myOwner.StartCoroutine(attackProcessing());
     }
 
     public override void Execute()
     {
+        if(myOwner.attackTarget == null) {
+            if(previousState != null) { myOwner.changeState(previousState); }
+            else { myOwner.changeState(new WizardEnemyIdle()); }
+        }
         Vector3 targetDir = myOwner.attackTarget.position - myOwner.transform.position;
         targetDir.y = 0;
         Quaternion forward = Quaternion.LookRotation(targetDir);
@@ -234,14 +236,13 @@ public class WizardEnemyAttack : NPCState
         int fireCount = Random.Range(2, 5);
         SpellBook spellbook = myOwner.GetComponent<SpellCaster>().returnSpell();
         float cooldown = spellbook.primaryEffect.coolDown + spellbook.secondaryEffect.coolDown;
-        for (int i = 0; i < fireCount; i++)
-        {
+        for (int i = 0; i < fireCount; i++) {
+            if(myOwner.attackTarget == null) { break; }
             myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
             yield return new WaitForEndOfFrame();
             while(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) {
                 yield return new WaitForEndOfFrame();
             }
-            Debug.Log("Fired spell");
             yield return new WaitForSeconds(cooldown);
         }
         myOwner.changeState(new WizardEnemyAggro());
@@ -296,7 +297,7 @@ public class WizardEnemySeduced : NPCState
             if (myOwner.agent.desiredVelocity.magnitude < 0.5f) { myOwner.changeState(new WizardEnemyAttack()); }
         }
         else {
-            Vector3 targetDir = myOwner.attackTarget.position - myOwner.transform.position;
+            Vector3 targetDir = myOwner.crushTarget.position - myOwner.transform.position;
             targetDir.y = 0;
             Quaternion forward = Quaternion.LookRotation(targetDir);
             myOwner.transform.rotation = Quaternion.Lerp(myOwner.transform.rotation, forward, 0.8f);

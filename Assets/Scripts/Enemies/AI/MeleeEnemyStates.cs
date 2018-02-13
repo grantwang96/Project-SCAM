@@ -18,7 +18,6 @@ public class MeleeEnemyIdle : NPCState
     public override void Execute() {
         
         if(myOwner.checkView()) { // look for the player
-            Debug.Log("I see you!");
             myOwner.changeState(new MeleeEnemyAggro());
             return;
         }
@@ -67,7 +66,6 @@ public class MeleeEnemyWander : NPCState
 
         float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
-            Debug.Log("Reached destination!");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }
         if(myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
@@ -148,7 +146,6 @@ public class MeleeEnemyAttack : NPCState
         base.Enter(owner);
         anim.Play("Attack");
         myOwner.attack(myOwner.attackTarget.position);
-        Debug.Log(myOwner.transform.name + " attacks!");
     }
 
     public override void Enter(Movement owner, NPCState prevState)
@@ -181,7 +178,19 @@ public class MeleeEnemySeduced : NPCState
     public override void Enter(Movement owner, NPCState prevState, float newDuration)
     {
         base.Enter(owner, prevState, newDuration);
+        Debug.Log("Seduced for: " + duration);
         
+        // set animator to seduced animations
+        anim = myOwner.anim;
+
+        myOwner.agent.stoppingDistance = 4f;
+        myOwner.attackTarget = null;
+        time = 0f;
+    }
+
+    public override void Enter(Movement owner, float newDuration)
+    {
+        base.Enter(owner, newDuration); Debug.Log("Seduced for: " + duration);
         // set animator to seduced animations
         anim = myOwner.anim;
 
@@ -192,10 +201,10 @@ public class MeleeEnemySeduced : NPCState
 
     public override void Execute()
     {
-        if(time > duration) { stateChange(); return; }
-
+        // if(time > duration) { stateChange(); return; }
+        
         // make sure the target and/or crush isn't dead/gone already
-        if(myOwner.crush == null || myOwner.crushTarget == null) { stateChange(); return; }
+        if(myOwner.crush == null || myOwner.crushTarget == null) { Debug.Log("No Crush"); stateChange(); return; }
 
         // if you don't have an attack target, go follow crush around
         if (myOwner.attackTarget == null) {
@@ -221,8 +230,8 @@ public class MeleeEnemySeduced : NPCState
         if(myOwner.crush != null) {
             myOwner.crush.removeFromSeductionList(myOwner.GetComponent<Damageable>());
         }
-        myOwner.crush = null;
-        myOwner.crushTarget = null;
+        // myOwner.crush = null;
+        // myOwner.crushTarget = null;
         myOwner.attackTarget = myOwner.blueprint.getOriginTarget();
         myOwner.agent.stoppingDistance = myOwner.blueprint.attackRange;
     }

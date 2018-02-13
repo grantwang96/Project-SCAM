@@ -23,7 +23,7 @@ public class NPCDamageable : Damageable {
 
     IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
-        myMovement.changeState(new NPCSeduced(), duration);
+        // myMovement.changeState(new NPCSeduced(), duration);
 
         // add hearts or whatever
 
@@ -34,7 +34,7 @@ public class NPCDamageable : Damageable {
             myMovement.crush.removeFromSeductionList(this);
         }
         myMovement.attackTarget = myMovement.blueprint.getOriginTarget();
-        myMovement.changeState(new NPCIdle());
+        // myMovement.changeState(new NPCIdle());
         seduction = null;
     }
 

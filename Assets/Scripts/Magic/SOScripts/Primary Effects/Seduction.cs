@@ -24,9 +24,6 @@ public class Seduction : SpellPrimary {
         // the part where you seduce that PIMPLE-POPPING, NOSE-PICKING, NIPPLE-TWISTING, DICK OF AN ASS.
 
         if (dam) {
-            Debug.Log("Duration: " + duration);
-            Debug.Log("Collided Object: " + coll.gameObject);
-            Debug.Log("SpellCaster: " + proj.originator.name);
             dam.Seduce(duration, coll.gameObject, proj.originator); // BECOME SEDUCED!
             proj.Die(); // don't need this anymore
             return;

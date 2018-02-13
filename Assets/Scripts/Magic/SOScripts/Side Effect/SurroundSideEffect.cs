@@ -51,7 +51,6 @@ public class SurroundSideEffect : SpellSecondary {
         {
             Vector3 userBefore = user.position;
             if(projectile == null) { break; }
-            Debug.Log("woo!");
             // fly around the user
             Vector3 before = projectile.transform.position;
             projectile.transform.RotateAround(user.position, user.up, speed * Time.deltaTime);

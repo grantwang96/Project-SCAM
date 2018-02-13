@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf05c30e18d28744ebfca712701f8657, type: 3}
   m_Name: SpellDipshit
   m_EditorClassIdentifier: 
-  health: 24
+  health: 15
   baseSpeed: 2
   maxSpeed: 4
   sightRange: 40
@@ -23,6 +23,10 @@ MonoBehaviour:
   myType: 3
   possibleSpellPrimaries:
   - {fileID: 11400000, guid: 0dbc7bd6bd1a3dc42bf917fbb7474704, type: 2}
+  - {fileID: 11400000, guid: 437f5c5bdc67d9d4ba582a07f5e280dc, type: 2}
+  - {fileID: 11400000, guid: d5a96c29055289f4587cd9027265f7d5, type: 2}
+  - {fileID: 11400000, guid: 88c394de94782c2468b102764ec1c997, type: 2}
+  - {fileID: 11400000, guid: c4d09230a38d96b4ea3faacc76c38ac4, type: 2}
   possibleSpellSecondaries:
   - {fileID: 11400000, guid: a90e707d7f6a8cc48a856dc052f35c34, type: 2}
   - {fileID: 11400000, guid: d8e6dff5e310ff241a7d678ab3d964d7, type: 2}

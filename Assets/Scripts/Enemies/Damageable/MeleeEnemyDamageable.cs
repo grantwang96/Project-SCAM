@@ -27,7 +27,6 @@ public class MeleeEnemyDamageable : Damageable {
 
         float groundTime = 0f;
         rbody.AddForce(dir * force, ForceMode.Impulse);
-        Debug.Log("Force is: " + force);
 
         while (groundTime < .3f) {
             if (rbody.velocity.y == 0) { groundTime += Time.deltaTime; }
@@ -85,6 +84,15 @@ public class MeleeEnemyDamageable : Damageable {
     public override void Seduce(float duration, GameObject target, Transform owner)
     {
         base.Seduce(duration, target, owner);
+        // if(myMovement.crushTarget != null) { return; }
+        // myMovement.changeState(new MeleeEnemySeduced(), myMovement.getCurrentState(), duration);
+    }
+
+    public override IEnumerator processSeduction(float duration, GameObject target, Transform owner)
+    {
         myMovement.changeState(new MeleeEnemySeduced(), duration);
+        yield return new WaitForSeconds(duration);
+        myMovement.changeState(new MeleeEnemyIdle());
+        seduction = null;
     }
 }

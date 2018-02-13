@@ -116,6 +116,7 @@ public class FireBlast : SpellPrimary {
                     knockBack.y = upwardKnockup;
                     knockBack = knockBack.normalized;
                     dam.TakeDamage(proj.originator, proj.power, knockBack, knockBackForce);
+                    if(proj.originator == null) { return; }
                     SpellCaster originator = proj.originator.GetComponent<SpellCaster>();
                     originator.invokeChangeFollowers(dam);
                 }

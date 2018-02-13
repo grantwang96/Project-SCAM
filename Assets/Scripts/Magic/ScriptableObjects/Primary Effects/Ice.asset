@@ -38,7 +38,9 @@ MonoBehaviour:
     type: 2}
   minIcySurfaces: 3
   maxIcySurfaces: 5
-  radius: 0.64
+  minDamage: 0
+  maxDamage: 0
+  radius: 1
   maxIcePrefabRadius: 5
   knockBackForce: 10
   upwardKnockup: 0.5

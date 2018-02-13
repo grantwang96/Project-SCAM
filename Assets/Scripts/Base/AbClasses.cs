@@ -30,6 +30,8 @@ public abstract class Damageable : MonoBehaviour
     public Damageable parentHit;
 
     public Damageable replacedBody; // for transmutations
+    
+    public Coroutine seduction;
 
     public virtual void Start()
     {
@@ -57,7 +59,7 @@ public abstract class Damageable : MonoBehaviour
         }
 
         // calculate damage dealt
-        Debug.Log(transform.name + " takes " + hpLost + " points of damage!");
+        // Debug.Log(transform.name + " takes " + hpLost + " points of damage!");
         health -= hpLost;
         if(health <= 0 && !dead) { dead = true; } // if this damage kills you
         
@@ -132,12 +134,23 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void Seduce(float duration, GameObject target, Transform owner)
     {
-        if(myMovement.crush != null) { // if already seduced
+        if(myMovement.crushTarget != null) { // if already seduced
             myMovement.crush.removeFromSeductionList(this); // remove from the seduction list
         }
+        if(seduction != null) { StopCoroutine(seduction); }
+        myMovement.attackTarget = null;
         myMovement.crushTarget = owner;
         myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
+        Debug.Log("Owner is: " + myMovement.crushTarget);
+        Debug.Log("Owner SpellCaster is: " + myMovement.crush);
         myMovement.crush.addToSeductionList(this);
+        seduction = StartCoroutine(processSeduction(duration, target, owner));
+    }
+
+    public virtual IEnumerator processSeduction(float duration, GameObject target, Transform owner)
+    {
+        yield return null;
+        seduction = null;
     }
 
     public virtual void setCurrentTarget(Damageable target, SpellCaster owner)
@@ -342,6 +355,13 @@ public abstract class Movement : MonoBehaviour
         currState.Enter(this, prevState);
     }
 
+    public virtual void changeState(NPCState newState, NPCState prevState, float newDuration)
+    {
+        if (currState != null) { currState.Exit(); }
+        currState = newState;
+        currState.Enter(this, prevState, newDuration);
+    }
+
     public virtual IEnumerator attack(Vector3 target)
     {
         hamper++;
@@ -415,8 +435,6 @@ public abstract class NPCState
 
         anim = myOwner.anim;
         anim.SetInteger("Status", 0);
-
-        Debug.Log("Entering Idle...");
     }
 
     public virtual void Enter(Movement owner, NPCState prevState) // if you want to return to a specific state

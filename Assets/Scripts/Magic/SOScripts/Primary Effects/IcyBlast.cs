@@ -19,6 +19,9 @@ public class IcyBlast : SpellPrimary {
     [Range(1, 20)]
     public int maxIcySurfaces;
 
+    public int minDamage;
+    public int maxDamage;
+
     public float radius;
     public float maxIcePrefabRadius;
 
@@ -49,9 +52,7 @@ public class IcyBlast : SpellPrimary {
         Destroy(newIceExplosion, 1f);
 
         // damage the damageables
-
         
-        /*
         Collider[] colls = Physics.OverlapSphere(missile.transform.position, radius, frostable, QueryTriggerInteraction.Ignore);
         if(colls.Length != 0) {
             foreach(Collider coll in colls) {
@@ -61,14 +62,10 @@ public class IcyBlast : SpellPrimary {
                     knockBack.y = upwardKnockup;
                     knockBack = knockBack.normalized;
                     dam.TakeDamage(missile.originator, missile.power, knockBack, knockBackForce);
-
-                    GameObject newFrost = Instantiate(frostEffect, missile.transform.position, Quaternion.identity);
-                    newFrost.transform.parent = dam.transform;
-                    Destroy(newFrost, 1f);
                 }
             }
         }
-        */
+        
         Rigidbody sub = Instantiate(submissile, missile.transform.position, Quaternion.identity);
         // sub.GetComponent<IceSubMissile>().radius = radius;
     }

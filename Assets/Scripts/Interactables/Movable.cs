@@ -83,10 +83,10 @@ public class Movable : Damageable
     public override void Seduce(float duration, GameObject target, Transform owner)
     {
         myOwner = owner.GetComponent<SpellCaster>();
-        if(seduction == null) { seduction = StartCoroutine(processSeduction(duration, target, myOwner)); }
+        if(seduction == null) { seduction = StartCoroutine(processSeduction(duration, target, owner)); }
     }
 
-    IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
+    public override IEnumerator processSeduction(float duration, GameObject target, Transform owner)
     {
         attackTarget = target.transform;
         float startTime = Time.time;
@@ -103,8 +103,7 @@ public class Movable : Damageable
         myOwner = null;
         attackTarget = null;
         Transform dokiFX = transform.Find("Doki");
-        if (dokiFX != null)
-        {
+        if (dokiFX != null) {
             ParticleSystem dFX = dokiFX.GetComponent<ParticleSystem>();
             dFX.Stop();
             dokiFX.parent = null;
@@ -118,15 +117,14 @@ public class Movable : Damageable
         float loverDist = Vector3.Distance(transform.position, target.transform.position);
         Vector3 moveDir = (target.transform.position - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(moveDir);
-        if (loverDist > 5f)
-        {
+        if (loverDist > 5f) {
             GetComponent<Rigidbody>().velocity = moveDir * 10f;
         }
     }
 
     void processSeducedAttack()
     {
-        if (attackTarget == null) { attackTarget = GameObject.Find("Player_Rbody").transform; }
+        if (attackTarget == null) { attackTarget = GameObject.Find("Player").transform; }
         float loverDist = Vector3.Distance(transform.position, attackTarget.transform.position);
         Vector3 moveDir = (attackTarget.transform.position - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(moveDir);
@@ -137,12 +135,10 @@ public class Movable : Damageable
     {
         myOwner = owner;
         List<Damageable> goodTargets = new List<Damageable>();
-        for (int i = 0; i < targets.Count; i++)
-        {
+        for (int i = 0; i < targets.Count; i++) {
             if (targets[i] != GetComponent<Damageable>()) { goodTargets.Add(targets[i]); }
         }
-        if (goodTargets.Count > 0)
-        {
+        if (goodTargets.Count > 0) {
             Damageable target = goodTargets[UnityEngine.Random.Range(0, goodTargets.Count)];
             attackTarget = target.transform;
         }

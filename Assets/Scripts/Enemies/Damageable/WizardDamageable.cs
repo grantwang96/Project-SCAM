@@ -75,4 +75,11 @@ public class WizardDamageable : Damageable {
         GetComponent<SpellCaster>().setCanShoot(true);
     }
 
+    public override IEnumerator processSeduction(float duration, GameObject target, Transform owner)
+    {
+        myMovement.changeState(new WizardEnemySeduced(), duration);
+        yield return new WaitForSeconds(duration);
+        myMovement.changeState(new WizardEnemyIdle());
+        seduction = null;
+    }
 }

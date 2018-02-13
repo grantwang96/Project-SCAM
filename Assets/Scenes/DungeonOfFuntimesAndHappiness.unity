@@ -6545,25 +6545,25 @@ Prefab:
         type: 2}
       propertyPath: primarySpellEffects.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: c4d09230a38d96b4ea3faacc76c38ac4,
+      objectReference: {fileID: 11400000, guid: 0dbc7bd6bd1a3dc42bf917fbb7474704,
         type: 2}
     - target: {fileID: 114916455034919990, guid: f6dee49b35134304dab60a5eede30e08,
         type: 2}
       propertyPath: primarySpellEffects.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: d5a96c29055289f4587cd9027265f7d5,
+      objectReference: {fileID: 11400000, guid: e7b3fb89bf84c2447bddd10be74834b5,
         type: 2}
     - target: {fileID: 114916455034919990, guid: f6dee49b35134304dab60a5eede30e08,
         type: 2}
       propertyPath: primarySpellEffects.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 0dbc7bd6bd1a3dc42bf917fbb7474704,
+      objectReference: {fileID: 11400000, guid: d5a96c29055289f4587cd9027265f7d5,
         type: 2}
     - target: {fileID: 114916455034919990, guid: f6dee49b35134304dab60a5eede30e08,
         type: 2}
       propertyPath: primarySpellEffects.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: e7b3fb89bf84c2447bddd10be74834b5,
+      objectReference: {fileID: 11400000, guid: c4d09230a38d96b4ea3faacc76c38ac4,
         type: 2}
     - target: {fileID: 114916455034919990, guid: f6dee49b35134304dab60a5eede30e08,
         type: 2}
@@ -8383,6 +8383,10 @@ Prefab:
     - target: {fileID: 1648676279256012, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648676279256012, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
@@ -11609,10 +11613,6 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: -345
-      objectReference: {fileID: 0}
-    - target: {fileID: 1319363378093952, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf, type: 2}
@@ -22564,6 +22564,10 @@ Prefab:
     - target: {fileID: 1648676279256012, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648676279256012, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
@@ -63559,6 +63563,10 @@ Prefab:
     - target: {fileID: 1648676279256012, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648676279256012, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b6301cfcc58f874f94f49e611eb14fb, type: 2}
