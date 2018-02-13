@@ -24,6 +24,11 @@ public class SpellSpawn : MonoBehaviour {
         newSpellBook.secondaryEffect = newSecondary;
     }
 
+    public void SpawnSpellRando()
+    {
+        SpellBook newSpellBook = SpellManager.Instance.GenerateSpell(spawnPoint.position);
+    }
+
     public void Poop() { Debug.Log("Poop"); }
 
     public void SpawnSpell(SpellPrimary primary)

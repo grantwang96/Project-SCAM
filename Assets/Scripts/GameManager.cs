@@ -9,19 +9,21 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
     public static GameManager Instance; // the singleton
     public List<GameObject> enemiesOnScreen = new List<GameObject> (); // list of enemies
 
-    public Transform[] spellSpawns;
+    public SpellSpawn[] spellSpawns;
     public LayerMask spellBooksLayer;
     public float spawnFrequency;
 
     public Text enemyCounter;
 
-    public GameObject messagePrefab;
-
     [SerializeField] private bool isSpellSpawning;
     [SerializeField] private bool combatTesting;
 
-	// Use this for initialization
-	void Start () {
+    #region Prefabs N Stuff
+    public GameHint messagePrefab;
+    #endregion
+
+    // Use this for initialization
+    void Start () {
         Instance = this;
         if (isSpellSpawning) { StartCoroutine(spellSpawning()); }
 	}
@@ -52,17 +54,27 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
             Debug.LogError("List of spell spawns is empty!");
             yield break;
         }
-        shuffle(spellSpawns);
+        foreach(SpellSpawn spawn in spellSpawns) { spawn.SpawnSpell(); }
+        // shuffle(spellSpawns);
+        /*
         int i = 0;
         while (true) {
-            Transform spawn = spellSpawns[i];
-            Collider[] colls = Physics.OverlapSphere(spawn.position, .5f, spellBooksLayer);
+            SpellSpawn nextSpawn = spellSpawns[i];
+            Collider[] colls = Physics.OverlapSphere(nextSpawn.spawnPoint.position, .5f, spellBooksLayer);
             if(colls.Length == 0) {
-                SpellBook newSpell = SpellManager.Instance.GenerateSpell(spawn.position);
+                nextSpawn.SpawnSpell();
             }
             i++;
             if(i >= spellSpawns.Length) { i = 0; }
             yield return new WaitForSeconds(spawnFrequency);
+        }
+        */
+        while(true) {
+            yield return new WaitForSeconds(spawnFrequency);
+            foreach (SpellSpawn spawn in spellSpawns) {
+                spawn.SpawnSpell();
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 
@@ -92,4 +104,21 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("Lose");
     }
+
+    public void SendHint(string message)
+    {
+        GameHint newMessage = Instantiate(messagePrefab, PlayerDamageable.Instance.playerCanvas);
+        newMessage.message = message;
+    }
+
+    public void UnlockDoor(Door door)
+    {
+        door.locked = false;
+    }
+
+    public void LockDoor(Door door)
+    {
+        door.locked = true;
+    }
+    
 }

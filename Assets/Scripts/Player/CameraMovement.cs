@@ -18,6 +18,7 @@ public class CameraMovement : MonoBehaviour {
 
     public Transform affectedYTurn;
     public int normalMove = 1;
+    public static CameraMovement Instance;
 
     public bool separateControl
     {
@@ -32,6 +33,7 @@ public class CameraMovement : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        Instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         separateControl = true;

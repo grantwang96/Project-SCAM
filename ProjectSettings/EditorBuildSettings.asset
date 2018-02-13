@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/DungeonOfFuntimesAndHappiness.unity
+    guid: 7aa91f76d2e04214a8971cb5cdf4f0f0

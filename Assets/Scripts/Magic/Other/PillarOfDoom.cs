@@ -11,7 +11,6 @@ public class PillarOfDoom : MonoBehaviour {
     float duration;
 
     ParticleSystem partSys;
-    public CameraMovement playerHead;
     public float shakeForce;
 
     public Transform myCaster;
@@ -19,7 +18,6 @@ public class PillarOfDoom : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        playerHead = GameObject.Find("PlayerHead").GetComponent<CameraMovement>();
         partSys = GetComponent<ParticleSystem>();
         duration = partSys.main.startLifetime.constant;
         radius = partSys.shape.radius;
@@ -36,12 +34,12 @@ public class PillarOfDoom : MonoBehaviour {
             }
             else {
                 Rigidbody rbody = hit.collider.attachedRigidbody;
-                if (rbody != null) { rbody.AddExplosionForce(force, transform.position, radius); }
+                if (rbody != null) { rbody.AddExplosionForce(force * 10, transform.position, radius); }
             }
         }
 
         StartCoroutine(burn());
-        StartCoroutine(playerHead.shakeCamera(shakeForce));
+        StartCoroutine(CameraMovement.Instance.shakeCamera(shakeForce));
 	}
 
     IEnumerator burn()

@@ -18,6 +18,7 @@ public abstract class Damageable : MonoBehaviour
     public bool hurt = false;
     public float hurtTime;
     public bool dead;
+    public bool damageable = true;
 
     // rbody or character controller
     // public Rigidbody rbody;
@@ -39,11 +40,11 @@ public abstract class Damageable : MonoBehaviour
         health = max_health;
     }
 
-    public virtual void Update()
-    {
-        if(dead) { // if we're dead
+    public virtual void Update() {
+        if(dead && damageable) { // if we're dead
             StopAllCoroutines();
             Die();
+            damageable = false;
         }
     }
 
@@ -58,7 +59,7 @@ public abstract class Damageable : MonoBehaviour
         // calculate damage dealt
         Debug.Log(transform.name + " takes " + hpLost + " points of damage!");
         health -= hpLost;
-        if(health <= 0) { dead = true; } // if this damage kills you
+        if(health <= 0 && !dead) { dead = true; } // if this damage kills you
         
         knockBack(dir, force);
 
@@ -83,9 +84,10 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void knockBack(Vector3 dir, float force)
     {
-        // rbody.AddForce(dir * force, ForceMode.Impulse)
-        if(myMovement == null) { return; }
-        myMovement.knockBack(dir, force);
+        if(myMovement == null) { 
+            GetComponent<Rigidbody>().AddForce(dir * force, ForceMode.Impulse); return;
+        }
+        else { myMovement.knockBack(dir, force); }
     }
 
     public virtual void Fly(float force, float duration)
@@ -178,6 +180,7 @@ public abstract class Movement : MonoBehaviour
     public NavMeshAgent agent;
     public EnemyData blueprint;
     public EnemyData.CombatType myType;
+    public bool sophisticated;
 
     NPCState currState;
     public NPCState getCurrentState() { return currState; }
@@ -203,7 +206,7 @@ public abstract class Movement : MonoBehaviour
 
     public virtual void Start()
     {
-        Debug.Log("I live");
+        
     }
 
     public virtual void Update()
@@ -228,15 +231,28 @@ public abstract class Movement : MonoBehaviour
         }
     }
 
-    public bool obstruction() {
+    public Transform obstruction() {
         RaycastHit[] rayHits = Physics.RaycastAll(
-            transform.position, agent.desiredVelocity, obstacleCheckRange, obstacleLayer, QueryTriggerInteraction.Ignore);
-        foreach(RaycastHit rayhit in rayHits) {
+            Head.position, agent.desiredVelocity, obstacleCheckRange, obstacleLayer, QueryTriggerInteraction.Ignore);
+        Debug.DrawRay(Head.position, agent.desiredVelocity, Color.green);
+        foreach (RaycastHit rayhit in rayHits) {
             if(rayhit.collider.tag == "Wall" || rayhit.collider.tag == "Ground") {
-                return true;
+                return rayhit.transform;
             }
         }
-        return false;
+        return null;
+    }
+
+    public bool attemptInteract(Interactable inter) {
+        StartCoroutine(pauseAgent(2f));
+        return inter.Interact();
+    }
+
+    IEnumerator pauseAgent(float time) {
+        if(agent == null || !agent.enabled) { yield break; }
+        agent.isStopped = true;
+        yield return new WaitForSeconds(time);
+        agent.isStopped = false;
     }
 
     public Vector3 getRandomLocation(Vector3 origin, float range)
@@ -388,6 +404,7 @@ public abstract class NPCState
         turnDurationTime = Random.Range(1f, 2f);
         anim = myOwner.anim;
         maxAngleChange = 60f;
+        myOwner.agent.ResetPath();
     }
 
     public virtual void Enter(Movement owner, float newDuration)

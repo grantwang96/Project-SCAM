@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Door : MonoBehaviour, Interactable {
+public class Door : Damageable, Interactable {
 
     [SerializeField] Vector3 openRotation;
     [SerializeField] Vector3 closedRotation;
@@ -17,24 +17,27 @@ public class Door : MonoBehaviour, Interactable {
     [SerializeField] private bool open;
 
     Coroutine movement;
+    [SerializeField] Rigidbody rbody;
 
     // private Key myKey; // the key that unlocks this door
 
-    public void Interact(SpellCaster spellCaster)
+    public bool Interact(SpellCaster spellCaster)
     {
         if (_locked) {
-            return;
+            return false; // do not open for anyone
         }
-        if (movement != null) { return; }
+        if (movement != null) { return false; } // do not allow interaction during motion.
         movement = StartCoroutine(doorRotation());
+        return true;
     }
 
-    public void Interact() {
+    public bool Interact() {
         if(_locked) {
-            return;
+            return false;
         }
-        if(movement != null) { return; }
+        if(movement != null) { return false; }
         movement = StartCoroutine(doorRotation());
+        return true;
     }
 
     public void Unlock(string keyCode)
@@ -68,9 +71,51 @@ public class Door : MonoBehaviour, Interactable {
         // check if thing touching is key
     }
 
-    void Start()
+    public override void Start()
     {
         if(open) { myHinge.localEulerAngles = openRotation; }
         else { myHinge.localEulerAngles = closedRotation; }
+    }
+
+    public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
+    {
+        if(_locked) { return; }
+        base.TakeDamage(attacker, hpLost, dir, force);
+        if(health <= 0) {
+            transform.parent = null;
+            rbody.useGravity = true;
+            rbody.isKinematic = false;
+            knockBack(dir, force);
+        }
+    }
+
+    public override void Die() {
+        dead = true;
+        StartCoroutine(fadeAway());
+    }
+
+    IEnumerator fadeAway() {
+        yield return new WaitForSeconds(4f);
+        Destroy(gameObject);
+    }
+
+    public override void InitiateTransmutation(float duration, GameObject replacement)
+    {
+        
+    }
+
+    public override void knockBack(Vector3 dir, float force)
+    {
+        if(!rbody.isKinematic) { rbody.AddForce(dir * force, ForceMode.Impulse); }
+    }
+
+    public override void Seduce(float duration, GameObject target, Transform owner)
+    {
+        
+    }
+
+    public override void vortexGrab(Transform center, float force)
+    {
+        
     }
 }

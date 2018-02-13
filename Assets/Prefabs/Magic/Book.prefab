@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114233178495423298}
   - component: {fileID: 135488008751031114}
   - component: {fileID: 54292998384304554}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Book
   m_TagString: Book
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4485554614516932}
   - component: {fileID: 33175181869095722}
   - component: {fileID: 23949821157813078}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pages
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 4780245164039708}
   - component: {fileID: 33481518263405488}
   - component: {fileID: 23598618782017394}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,6 +114,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -129,6 +130,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -146,6 +148,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -161,6 +164,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -228,8 +232,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   primaryEffect: {fileID: 11400000, guid: c4d09230a38d96b4ea3faacc76c38ac4, type: 2}
   secondaryEffect: {fileID: 11400000, guid: 2ba6a0d701e3e0742b9da7d870ab3aef, type: 2}
+  maxAmmo: 0
   ammo: 0
   _dead: 0
+  spellTitle: 
+  spellDescription: 
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  sparklyEffect: {fileID: 0}
   DieEffect: {fileID: 198791783538903984, guid: 241f629cffcd04c4b8ab2992f3df0dad,
     type: 2}
 --- !u!135 &135488008751031114

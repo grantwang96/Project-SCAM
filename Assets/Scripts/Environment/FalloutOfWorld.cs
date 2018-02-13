@@ -7,12 +7,10 @@ public class FalloutOfWorld : MonoBehaviour {
 	void OnTriggerEnter(Collider coll)
     {
         Damageable collDam = coll.GetComponent<Damageable>();
-        if(collDam != null)
-        {
+        if(collDam != null) {
             collDam.Die();
         }
-        else
-        {
+        else {
             Destroy(coll.gameObject);
         }
     }

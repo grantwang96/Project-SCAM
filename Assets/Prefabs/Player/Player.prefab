@@ -633,6 +633,8 @@ MonoBehaviour:
   ammoGaugeFill: {fileID: 114884878726994160}
   ammoGaugeBackground: {fileID: 114167382961887270}
   reticule: {fileID: 114390754303615090}
+  reticuleNormal: {r: 0, g: 0, b: 0, a: 0}
+  reticuleInteractable: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114064217563046156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1242,7 +1244,7 @@ MonoBehaviour:
   drunkMod: 1
   slownessSeverity: 1
   linearDrag: 3
-  jumpForce: 10
+  jumpForce: 8
   falling: 0
   yMove: -20
   charCon: {fileID: 143297429126818006}
@@ -1494,6 +1496,8 @@ MonoBehaviour:
   ammoGaugeFill: {fileID: 114884878726994160}
   ammoGaugeBackground: {fileID: 114167382961887270}
   reticule: {fileID: 114390754303615090}
+  reticuleNormal: {r: 1, g: 1, b: 1, a: 0.29411766}
+  reticuleInteractable: {r: 0.02434074, g: 0.7058823, b: 0, a: 0.29411766}
 --- !u!124 &124167096603899766
 Behaviour:
   m_ObjectHideFlags: 1

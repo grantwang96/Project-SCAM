@@ -84,14 +84,15 @@ public class SpellBook : MonoBehaviour, Interactable {
         }
     }
 
-    public void Interact(SpellCaster spellCaster)
+    public bool Interact(SpellCaster spellCaster)
     {
-        if (_dead || owner != null) { return; }
+        if (_dead || owner != null) { return false; }
         owner = spellCaster;
         spellCaster.pickUpSpell(this);
+        return true;
     }
 
-    public void Interact() { Debug.Log("Can't be used by you!"); }
+    public bool Interact() { Debug.Log("Can't be used by you!"); return false; } // MUST BE USED BY SPELLCASTER
 
     public IEnumerator Drop(Vector3 newLoc)
     {

@@ -20,6 +20,6 @@ public interface SpellCaster
 
 public interface Interactable
 {
-    void Interact(SpellCaster spellCaster);
-    void Interact();
+    bool Interact(SpellCaster spellCaster); // return if successful
+    bool Interact(); // if successful
 }

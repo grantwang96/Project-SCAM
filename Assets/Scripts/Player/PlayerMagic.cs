@@ -35,6 +35,9 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     [SerializeField] Image ammoGaugeFill;
     [SerializeField] Image ammoGaugeBackground;
     [SerializeField] Image reticule;
+
+    [SerializeField] Color reticuleNormal;
+    [SerializeField] Color reticuleInteractable;
     #endregion
 
     // Use this for initialization
@@ -50,8 +53,14 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 	void Update () {
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
-        if (Input.GetButtonDown("Fire1") && spellsInventory.Count != 0) { // make sure player hits shoot button and has something to shoot
-            fireSpell();
+
+        Interactable interactable = processLooking();
+        if(interactable != null) { reticule.color = reticuleInteractable; }
+        else { reticule.color = reticuleNormal; }
+
+        if (Input.GetButtonDown("Fire1")) { // make sure player hits shoot button and has something to shoot
+            if(interactable != null) { interactable.Interact(this); }
+            else if (spellsInventory.Count != 0) { fireSpell(); }
         }
         if (spellsInventory.Count > 0 && ammoGaugeBackground.gameObject.activeInHierarchy) { // update the ammo gauge
             ammoGaugeFill.fillAmount = (float)spellsInventory[currentHeld].getAmmo() / spellsInventory[currentHeld].getMaxAmmo();
@@ -59,17 +68,15 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         processLooking();
     }
 
-    void processLooking()
-    {
+    Interactable processLooking() {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
         // Debug.DrawLine(transform.position, transform.position + transform.forward * grabRange, Color.green, 1f);
         if (Physics.Raycast(ray, out hit, grabRange, interactLayers, QueryTriggerInteraction.Collide)) { // if you hit something that is interactable
-            if (Input.GetButtonDown("Fire2")) { // if the player tries to interact with something
-                Interactable interactable = hit.collider.GetComponent<Interactable>(); // be REALLY sure we can interact with it
-                if (interactable != null) { interactable.Interact(this); }
-            }
+            Interactable interactable = hit.collider.GetComponent<Interactable>();
+            if(interactable != null) { return interactable; }
         }
+        return null;
     }
 
     void processNumKeys()
@@ -129,14 +136,14 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
     }
 
-    void OnTriggerStay(Collider coll)
+    /*void OnTriggerStay(Collider coll)
     {
         if (coll.tag.Contains("Book"))
         {
             SpellBook touchedSpell = coll.GetComponent<SpellBook>();
             if (Input.GetButtonDown("Fire2")) { touchedSpell.Interact(this); }
         }
-    }
+    }*/
 
     #region SpellCaster Implementations
 

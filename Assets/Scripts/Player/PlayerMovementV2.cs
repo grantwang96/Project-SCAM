@@ -107,7 +107,6 @@ public class PlayerMovementV2 : Movement {
 
     IEnumerator knockingBack(Vector3 force)
     {
-        Debug.Log("Oof");
         Vector3 knock = force;
         Vector3 start = knock;
         float time = 0f;
@@ -131,15 +130,13 @@ public class PlayerMovementV2 : Movement {
     void OnControllerColliderHit(ControllerColliderHit coll)
     {
         string tag = coll.collider.tag;
-        if (tag.Contains("Book"))
-        {
+        if (tag.Contains("Book")) {
             SpellBook touchedBook = coll.collider.GetComponent<SpellBook>();
             if (touchedBook) {
                 Debug.Log("I touched book!");
             }
         }
-        if (tag.Contains("Ground"))
-        {
+        if (tag.Contains("Ground")) {
             if (Vector3.Distance(coll.point, Head.position) < 0.1f) // If collided with head
             {
                 yMove = 0f;
@@ -153,17 +150,15 @@ public class PlayerMovementV2 : Movement {
                 return;
             }
         }
-        if(tag.Contains("Wall") || tag.Contains("Furniture"))
-        {
+        if(tag.Contains("Wall") || tag.Contains("Furniture")) {
             if(movementTakeover != null) {
-                Debug.Log("Hit a wall!");
                 StopCoroutine(movementTakeover);
                 movementTakeover = null;
                 hamper--;
             }
             if(coll.collider.attachedRigidbody != null) {
                 Vector3 velocity = coll.collider.transform.position - transform.position;
-                coll.collider.attachedRigidbody.AddForce(velocity.normalized * currSpeed * 10);
+                coll.collider.attachedRigidbody.AddForce(velocity.normalized * currSpeed * 6f);
             }
         }
     }

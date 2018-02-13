@@ -26,9 +26,12 @@ public class GravityWellVortex : MonoBehaviour {
     public Transform explosionPrefab;
 
     public Transform myOwner;
+    Rigidbody rbody;
 
 	// Use this for initialization
 	void Start () {
+        rbody = GetComponent<Rigidbody>();
+        rbody.isKinematic = true;
         range = 0.33f;
         rangeFinder = GetComponent<SphereCollider>();
         effects = GetComponent<ParticleSystem>();
@@ -46,10 +49,6 @@ public class GravityWellVortex : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-        Vector3 before = transform.position + transform.forward * range;
-        transform.Rotate(0, speed * Time.deltaTime, 0);
-        Vector3 after = transform.position + transform.forward * range;
-        pointShift = transform.InverseTransformDirection(after - before);
         if (Time.time - startTime >= lifeTime) {
             Die();
         }
@@ -67,35 +66,27 @@ public class GravityWellVortex : MonoBehaviour {
             emModule.rateOverTime = currEmission;
             effects.startSpeed = -range;
         }
-
-        if(idiots.Count > 0)
-        {
-            foreach (trappedIdiot idiot in idiots)
-            {
-                if (idiot == null) { continue; }
-                if (idiot.loser == null) { continue; }
-                Damageable dam = idiot.loser.GetComponent<Damageable>();
-                if (dam) {
-                    dam.vortexGrab(transform, force);
-                    if(idiot.tracker != null) {
-                        Vector3 moveDir = (idiot.tracker.position - idiot.loser.position).normalized;
-                        dam.myMovement.Move(idiot.tracker.position - idiot.loser.position);
-                    }
-                }
-                else if (idiot.loser.GetComponent<Rigidbody>() != null) {
-                    idiot.loser.GetComponent<Rigidbody>().AddForce((transform.position - idiot.loser.position).normalized * force);
-                }
-            }
-        }
 	}
 
     void FixedUpdate()
     {
+        
         Vector3 before = transform.position + transform.forward * range;
-        transform.Rotate(0, speed * Time.deltaTime, 0);
+        rbody.MoveRotation(Quaternion.Euler(transform.eulerAngles + Vector3.up * speed * Time.deltaTime));
         Vector3 after = transform.position + transform.forward * range;
         pointShift = transform.InverseTransformDirection(after - before);
         
+        foreach(Transform child in transform) {
+            Damageable dam = child.GetComponent<Damageable>();
+            Vector3 move = pointShift + (transform.position - child.position);
+            if(dam) { dam.knockBack(move.normalized, force); }
+            else if(child.GetComponent<Rigidbody>()) { child.GetComponent<Rigidbody>().AddForce(move.normalized * force); }
+        }
+    }
+
+    void LateUpdate()
+    {
+
     }
 
     class trappedIdiot
@@ -106,23 +97,32 @@ public class GravityWellVortex : MonoBehaviour {
 
     void OnTriggerEnter(Collider coll)
     {
+        /*
         Vector3 centerForce = (transform.position - coll.transform.position).normalized;
-        Vector3 combinedForce = centerForce + coll.transform.TransformDirection(pointShift);
-        if (coll.GetComponent<Damageable>() != null || coll.GetComponent<Rigidbody>() != null)
-        {
-            trappedIdiot newIdiot = new trappedIdiot();
-            newIdiot.loser = coll.transform;
-            GameObject newTracker = Instantiate(new GameObject(), newIdiot.loser.position, newIdiot.loser.rotation);
-            newTracker.transform.parent = transform;
-            newIdiot.tracker = newTracker.transform;
-            idiots.Add(newIdiot);
+        Vector3 combinedForce = centerForce + coll.transform.TransformDirection(pointShift);*/
+        if (coll.transform.parent != transform) {
+            if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) { coll.transform.parent = transform; }
+            else if(coll.GetComponent<Damageable>() != null) {
+                if(coll.attachedRigidbody != null) {
+                    if(!coll.attachedRigidbody.isKinematic) { coll.transform.parent = transform; }
+                }
+                else { coll.transform.parent = transform; }
+            }
+            // trappedIdiot newIdiot = new trappedIdiot();
+            // newIdiot.loser = coll.transform;
+            // GameObject newTracker = Instantiate(new GameObject(), newIdiot.loser.position, newIdiot.loser.rotation);
+            // newTracker.transform.parent = transform;
+            // newIdiot.tracker = newTracker.transform;
+            // idiots.Add(newIdiot);
             // coll.transform.parent = transform;
             // trapped.Add(coll.transform);
         }
+
     }
 
     void OnTriggerExit(Collider coll)
     {
+        /*
         for(int i = 0; i < idiots.Count; i++)
         {
             if(idiots[i].loser == coll.transform)
@@ -132,17 +132,23 @@ public class GravityWellVortex : MonoBehaviour {
                 idiots.Remove(idiots[i]);
                 break;
             }
-        }
+        }*/
+        coll.transform.SetParent(null);
     }
-
+    /*
     void OnTriggerStay(Collider coll)
     {
         Damageable colldam = coll.GetComponent<Damageable>();
-        if(colldam != null) {
-            
+        Vector3 dir = (transform.position - coll.transform.position).normalized;
+        dir += pointShift.normalized * force;
+        if (colldam != null) {
+            colldam.knockBack(dir, force);
+        }
+        else if(coll.attachedRigidbody != null) {
+            coll.attachedRigidbody.AddForce(dir * force);
         }
     }
-
+    */
     void Die()
     {
         /*
@@ -151,7 +157,7 @@ public class GravityWellVortex : MonoBehaviour {
                 loser.parent = null;
             }
         }
-        */
+        
         // trapped.Clear();
         if(idiots.Count > 0) {
             foreach (trappedIdiot idiot in idiots) {
@@ -159,20 +165,29 @@ public class GravityWellVortex : MonoBehaviour {
                 Destroy(tracker.gameObject);
             }
             idiots.Clear();
-        }
+        }*/
+
+
         // Small explosion to send all objects up
         Collider[] colls = Physics.OverlapSphere(transform.position, 3f);
         Transform newExp = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        foreach(Collider coll in colls)
-        {
+        foreach(Collider coll in colls) {
             Damageable dam = coll.GetComponent<Damageable>();
-            if(dam != null)
-            {
+            if(dam != null) {
                 Vector3 dir = (coll.transform.position - transform.position).normalized;
                 dam.knockBack(dir, force);
             }
         }
         Destroy(newExp.gameObject, 3f);
+
+        List<Transform> children = new List<Transform>();
+        foreach (Transform child in transform) {
+            Debug.Log(child.name);
+            children.Add(child);
+        }
+        for (int i = 0; i < children.Count; i++) { children[i].SetParent(null); }
+
+        Debug.Log(transform.childCount);
         Destroy(gameObject);
     }
 

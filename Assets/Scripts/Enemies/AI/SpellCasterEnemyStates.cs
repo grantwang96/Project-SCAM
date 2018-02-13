@@ -37,7 +37,7 @@ public class WizardEnemyWander : NPCState
 
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
         Vector3 target = myOwner.getRandomLocation(myOwner.transform.position, myOwner.maxWanderDistance);
-        myOwner.agent.SetDestination(target);
+        if (myOwner.agent.enabled) { myOwner.agent.SetDestination(target); }
 
         if (target == null) { Debug.Log("No Target!"); }
         Debug.Log("Entering wander...");
@@ -47,7 +47,12 @@ public class WizardEnemyWander : NPCState
     public override void Execute()
     {
         if (myOwner.checkView()) { myOwner.changeState(new WizardEnemyAttack()); }
-        if (myOwner.obstruction()) { myOwner.changeState(new WizardEnemyIdle()); }
+
+        // check for obstructions
+        Transform obstruction = myOwner.obstruction();
+        if (obstruction != null) {
+            myOwner.changeState(new WizardEnemyIdle());
+        }
 
         float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
         if (distToDest < 0.2f + myOwner.agent.stoppingDistance)
@@ -91,16 +96,18 @@ public class WizardEnemyAggro : NPCState
 
     public override void Execute()
     {
+        // if you have nothing to chase, stop chasing
+        if (myOwner.attackTarget == null)
+        {
+            if (previousState != null) { myOwner.changeState(previousState); }
+            else { myOwner.changeState(new WizardEnemyIdle(), Random.Range(4f, 6f)); }
+        }
+
         Vector3 targetDir = myOwner.attackTarget.position - myOwner.transform.position;
         targetDir.y = 0;
         Quaternion forward = Quaternion.LookRotation(targetDir);
         myOwner.transform.rotation = Quaternion.Lerp(myOwner.transform.rotation, forward, 0.8f);
 
-        // if you have nothing to chase, stop chasing
-        if (myOwner.attackTarget == null) {
-            if(previousState != null) { myOwner.changeState(previousState); }
-            else { myOwner.changeState(new WizardEnemyIdle(), Random.Range(4f, 6f)); }
-        }
 
         // Check to see if the target is still in view
         targetInView = myOwner.checkView();
@@ -109,7 +116,7 @@ public class WizardEnemyAggro : NPCState
         if (!targetInView) {
             hasCoverPosition = false;
             lostTargetViewTime += Time.deltaTime;
-            myOwner.agent.SetDestination(myOwner.attackTarget.position);
+            if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
             if (lostTargetViewTime >= duration) {
                 Debug.Log("Where'd you go?");
                 myOwner.changeState(new WizardEnemyIdle(), Random.Range(4f, 6f));
@@ -119,26 +126,33 @@ public class WizardEnemyAggro : NPCState
             if(!hasCoverPosition) { FindCover(); }
         }
 
-        if (myOwner.obstruction()) { myOwner.changeState(new WizardEnemyIdle()); }
+        // check for obstructions
+        Transform obstruction = myOwner.obstruction();
+        if (obstruction != null) {
+            Damageable dam = obstruction.GetComponent<Damageable>();
+            if (dam) { myOwner.changeState(new WizardEnemyAttack(), this); }
+            else { myOwner.changeState(new WizardEnemyIdle()); }
+        }
+
         if (myOwner.agent.desiredVelocity.magnitude < 0.5f) { myOwner.changeState(new WizardEnemyAttack()); }
         targetWasInView = targetInView;
     }
 
-    public override void Exit()
-    {
+    public override void Exit() {
         myOwner.agent.updateRotation = true;
     }
-
+    
     void FindCover()
     {
         myOwner.agent.ResetPath();
         NavMeshHit hit;
         if(NavMesh.FindClosestEdge(myOwner.transform.position, out hit, myOwner.agent.areaMask)) {
             hasCoverPosition = true;
-            myOwner.agent.SetDestination(hit.position);
+            if (myOwner.agent.enabled) { myOwner.agent.SetDestination(hit.position); }
         }
     }
 
+    /*
     NavMeshHit[] SplitNMerge(NavMeshHit[] array)
     {
         if (array.Length < 2) { return array; } // if the resulting array is length 1
@@ -193,6 +207,7 @@ public class WizardEnemyAggro : NPCState
             idx++;
         }
     }
+    */
 }
 
 public class WizardEnemyAttack : NPCState
@@ -270,7 +285,7 @@ public class WizardEnemySeduced : NPCState
             // Enter idle if target has been out of view too long
             if (!targetInView) {
                 hasCoverPosition = false;
-                myOwner.agent.SetDestination(myOwner.attackTarget.position);
+                if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
             }
             else {
                 if (!hasCoverPosition) { FindCover(); }
@@ -287,9 +302,12 @@ public class WizardEnemySeduced : NPCState
             myOwner.transform.rotation = Quaternion.Lerp(myOwner.transform.rotation, forward, 0.8f);
             
             myOwner.agent.stoppingDistance = 5f;
-            myOwner.agent.SetDestination(myOwner.crushTarget.position);
+            if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.crushTarget.position); }
         }
-        if (myOwner.obstruction()) { myOwner.changeState(new WizardEnemyIdle()); }
+        
+        // check for obstructions
+        Transform obstruction = myOwner.obstruction();
+        if (obstruction != null) { teleportToLover(); }
     }
 
     public override void Exit()
@@ -304,7 +322,7 @@ public class WizardEnemySeduced : NPCState
         if (NavMesh.FindClosestEdge(myOwner.transform.position, out hit, myOwner.agent.areaMask))
         {
             hasCoverPosition = true;
-            myOwner.agent.SetDestination(hit.position);
+            if (myOwner.agent.enabled) { myOwner.agent.SetDestination(hit.position); }
         }
     }
 
