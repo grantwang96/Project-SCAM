@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class spellslot : MonoBehaviour {
 
     public Text spellTitle;
-    public Text spellDescription;
+    // public Text spellDescription;
     public Image ammoBar;
     public Image ammoBarInner;
 
@@ -38,7 +38,7 @@ public class spellslot : MonoBehaviour {
 
     public void Deselect()
     {
-        spellDescription.gameObject.SetActive(false);
+        // spellDescription.gameObject.SetActive(false);
         ammoBar.gameObject.SetActive(false);
         if (myRect.rect.width == minimizedWidth && myRect.rect.height == minimizedHeight) { return; }
         if (resizingProcess != null) {
@@ -54,7 +54,7 @@ public class spellslot : MonoBehaviour {
     public void modifyDetails(string title, string description, int currAmmo, int maxAmmo, Color ammoColor)
     {
         spellTitle.text = title;
-        spellDescription.text = description;
+        // spellDescription.text = description;
         ammoBarInner.color = ammoColor;
         ammoBarInner.fillAmount = (float)currAmmo / maxAmmo;
     }
@@ -72,7 +72,7 @@ public class spellslot : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
         myRect.sizeDelta = new Vector2(fullSizeWidth, fullSizeHeight);
-        spellDescription.gameObject.SetActive(true);
+        // spellDescription.gameObject.SetActive(true);
         ammoBar.gameObject.SetActive(true);
         resizingProcess = null;
     }

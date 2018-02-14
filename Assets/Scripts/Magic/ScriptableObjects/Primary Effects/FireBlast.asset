@@ -19,7 +19,7 @@ MonoBehaviour:
   baseColor: {r: 1, g: 1, b: 0, a: 0.7058824}
   ammo: 3
   coolDown: 1
-  title: Flame
+  title: Flame Pillar
   description: Powerful Fire Pillar
   projectilePrefab: {fileID: 114765780417504250, guid: 88670340bf7213645838c2e6f7ce896e,
     type: 2}

@@ -53,7 +53,7 @@ public class SpellBook : MonoBehaviour, Interactable {
         if (secondaryEffect)
         {
             ammo += secondaryEffect.ammo;
-            spellTitle = secondaryEffect.title + " " + spellTitle;
+            // spellTitle = secondaryEffect.title + " " + spellTitle;
             spellDescription += "\n-" + secondaryEffect.description;
             if (transform.Find("Sparkles")) {
                 sparklyEffect = null;

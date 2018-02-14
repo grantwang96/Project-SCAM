@@ -35,10 +35,9 @@ public class PlayerMovementV2 : Movement {
 
     void FixedUpdate()
     {
-        if (falling) { yMove += Time.deltaTime * Physics.gravity.y; }
-        // Debug.Log(charCon.isGrounded);
+        if (yMove > Physics.gravity.y) { yMove += Time.deltaTime * Physics.gravity.y; }
         Vector3 move = moveDir * slownessSeverity * drunkMod; // Get the total movement
-        Move(move * Time.deltaTime);
+        if(hamper <= 0) { Move(move * Time.deltaTime); }
         if(charCon != null && charCon.enabled) { charCon.Move(Vector3.up * yMove * Time.deltaTime); }
     }
 
@@ -90,9 +89,11 @@ public class PlayerMovementV2 : Movement {
 
     public override void processMovement()
     {
+        float horizontal = 0f;
+        float vertical = 0f;
         if (hamper > 0) { return; }
-        float horizontal = Input.GetAxis("Horizontal"); // Get player inputs
-        float vertical = Input.GetAxis("Vertical"); // Get player inputs
+        horizontal = Input.GetAxis("Horizontal"); // Get player inputs
+        vertical = Input.GetAxis("Vertical"); // Get player inputs
 
         if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
         moveDir = ((transform.forward * vertical * currSpeed) + (transform.right * horizontal * currSpeed));
@@ -100,24 +101,31 @@ public class PlayerMovementV2 : Movement {
 
     public override void knockBack(Vector3 dir, float force)
     {
-        if(movementTakeover != null) { StopCoroutine(movementTakeover); }
+        if(movementTakeover != null) {
+            StopCoroutine(movementTakeover);
+            hamper--;
+        }
         Vector3 knock = dir * force;
         movementTakeover = StartCoroutine(knockingBack(knock));
     }
 
-    IEnumerator knockingBack(Vector3 force)
-    {
+    IEnumerator knockingBack(Vector3 force) {
+        hamper++;
         Vector3 knock = force;
-        Vector3 start = knock;
         float time = 0f;
+        yMove = force.y;
+        knock.y = 0;
+        Vector3 start = knock;
 
-        while (knock != Vector3.zero) {
-            knock = Vector3.Lerp(start, Vector3.zero, 2f * time);
-            time += Time.deltaTime;
+        falling = true;
+
+        while (time < 1f) {
+            if(charCon.isGrounded) { time += Time.deltaTime; }
             Move(knock * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
         movementTakeover = null;
+        hamper--;
     }
 
     void Jump()
@@ -136,10 +144,12 @@ public class PlayerMovementV2 : Movement {
                 Debug.Log("I touched book!");
             }
         }
-        if (tag.Contains("Ground")) {
-            if (Vector3.Distance(coll.point, Head.position) < 0.1f) // If collided with head
+        if (tag.Contains("Ground") || tag.Contains("Roof")) {
+            if (/*Vector3.Distance(coll.point, Head.position) < 0.1f*/yMove > 0) // If collided with head
             {
-                yMove = 0f;
+                Debug.Log("I hit my head!");
+                yMove = -Time.deltaTime;
+                transform.position -= Vector3.up * Time.deltaTime;
                 return;
             }
             Vector3 feet = transform.position + Vector3.down * charCon.bounds.extents.y;

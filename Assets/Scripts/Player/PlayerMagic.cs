@@ -26,6 +26,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     bool canFire;
     public LayerMask interactLayers;
     public float grabRange;
+    [SerializeField] Interactable currentInteractable;
     #region UIStuff
 
     [SerializeField] Transform spellSlots;
@@ -54,13 +55,14 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
 
-        Interactable interactable = processLooking();
-        if(interactable != null) { reticule.color = reticuleInteractable; }
+        if(currentInteractable != null) { reticule.color = reticuleInteractable; }
         else { reticule.color = reticuleNormal; }
-
+        
         if (Input.GetButtonDown("Fire1")) { // make sure player hits shoot button and has something to shoot
-            if(interactable != null) { interactable.Interact(this); }
-            else if (spellsInventory.Count != 0) { fireSpell(); }
+            // if(interactable != null) { interactable.Interact(this); }
+            // else if (spellsInventory.Count != 0) { fireSpell(); }
+            if(currentInteractable != null && currentInteractable.Interact(this)) { currentInteractable = null; }
+            else if(spellsInventory.Count != 0) { fireSpell(); }
         }
         if (spellsInventory.Count > 0 && ammoGaugeBackground.gameObject.activeInHierarchy) { // update the ammo gauge
             ammoGaugeFill.fillAmount = (float)spellsInventory[currentHeld].getAmmo() / spellsInventory[currentHeld].getMaxAmmo();
@@ -69,13 +71,19 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     }
 
     Interactable processLooking() {
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
+        Ray ray = new Ray(Head.position, Head.forward);
+        // RaycastHit hit;
         // Debug.DrawLine(transform.position, transform.position + transform.forward * grabRange, Color.green, 1f);
+        RaycastHit[] rayHits = Physics.RaycastAll(ray, grabRange, interactLayers, QueryTriggerInteraction.Collide);
+        foreach(RaycastHit hit in rayHits) {
+            Interactable interactable = hit.collider.GetComponent<Interactable>();
+            if (interactable != null) { return interactable; }
+        }
+        /*
         if (Physics.Raycast(ray, out hit, grabRange, interactLayers, QueryTriggerInteraction.Collide)) { // if you hit something that is interactable
             Interactable interactable = hit.collider.GetComponent<Interactable>();
             if(interactable != null) { return interactable; }
-        }
+        }*/
         return null;
     }
 
@@ -121,8 +129,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
             else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
-            foreach(Transform child in spellSlots)
-            {
+            foreach(Transform child in spellSlots) {
                 spellslot data = child.GetComponent<spellslot>();
                 if (child.GetSiblingIndex() == currentHeld) {
                     SpellBook currSpell = spellsInventory[currentHeld];
@@ -136,14 +143,15 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
     }
 
-    /*void OnTriggerStay(Collider coll)
-    {
-        if (coll.tag.Contains("Book"))
-        {
-            SpellBook touchedSpell = coll.GetComponent<SpellBook>();
-            if (Input.GetButtonDown("Fire2")) { touchedSpell.Interact(this); }
-        }
-    }*/
+    void OnTriggerStay(Collider coll) {
+        Interactable inter = coll.GetComponent<Interactable>();
+        if(inter != null && currentInteractable == null) { currentInteractable = inter; }
+    }
+
+    void OnTriggerExit(Collider coll) {
+        Interactable inter = coll.GetComponent<Interactable>();
+        if(inter == currentInteractable) { currentInteractable = null; }
+    }
 
     #region SpellCaster Implementations
 

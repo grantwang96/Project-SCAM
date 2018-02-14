@@ -21,8 +21,6 @@ public class GravityWellVortex : MonoBehaviour {
     public Vector3 pointShift; // vector between edge before and after turn
 
     float startTime;
-    List<Transform> trapped = new List<Transform>();
-    List<trappedIdiot> idiots = new List<trappedIdiot>();
     public Transform explosionPrefab;
 
     public Transform myOwner;
@@ -70,18 +68,17 @@ public class GravityWellVortex : MonoBehaviour {
 
     void FixedUpdate()
     {
-        
         Vector3 before = transform.position + transform.forward * range;
         rbody.MoveRotation(Quaternion.Euler(transform.eulerAngles + Vector3.up * speed * Time.deltaTime));
         Vector3 after = transform.position + transform.forward * range;
         pointShift = transform.InverseTransformDirection(after - before);
-        
+        /*
         foreach(Transform child in transform) {
             Damageable dam = child.GetComponent<Damageable>();
             Vector3 move = pointShift + (transform.position - child.position);
             if(dam) { dam.knockBack(move.normalized, force); }
             else if(child.GetComponent<Rigidbody>()) { child.GetComponent<Rigidbody>().AddForce(move.normalized * force); }
-        }
+        }*/
     }
 
     void LateUpdate()
@@ -89,52 +86,28 @@ public class GravityWellVortex : MonoBehaviour {
 
     }
 
-    class trappedIdiot
-    {
-        public Transform loser;
-        public Transform tracker;
-    }
-
     void OnTriggerEnter(Collider coll)
     {
-        /*
-        Vector3 centerForce = (transform.position - coll.transform.position).normalized;
-        Vector3 combinedForce = centerForce + coll.transform.TransformDirection(pointShift);*/
-        if (coll.transform.parent != transform) {
-            if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) { coll.transform.parent = transform; }
-            else if(coll.GetComponent<Damageable>() != null) {
-                if(coll.attachedRigidbody != null) {
-                    if(!coll.attachedRigidbody.isKinematic) { coll.transform.parent = transform; }
-                }
-                else { coll.transform.parent = transform; }
-            }
-            // trappedIdiot newIdiot = new trappedIdiot();
-            // newIdiot.loser = coll.transform;
-            // GameObject newTracker = Instantiate(new GameObject(), newIdiot.loser.position, newIdiot.loser.rotation);
-            // newTracker.transform.parent = transform;
-            // newIdiot.tracker = newTracker.transform;
-            // idiots.Add(newIdiot);
-            // coll.transform.parent = transform;
-            // trapped.Add(coll.transform);
+        Damageable dam = coll.GetComponent<Damageable>();
+        if(dam) {
+            Vector3 dir = (transform.position - coll.transform.position).normalized;
+            dir += pointShift;
+            dir.y = 2f;
+            dam.knockBack(dir, force);
         }
-
+        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) {
+            Vector3 dir = (transform.position - coll.transform.position).normalized;
+            dir += pointShift;
+            dir.y = 2f;
+            coll.attachedRigidbody.AddForce(dir * force, ForceMode.Impulse);
+        }
     }
 
     void OnTriggerExit(Collider coll)
     {
-        /*
-        for(int i = 0; i < idiots.Count; i++)
-        {
-            if(idiots[i].loser == coll.transform)
-            {
-                Transform tracker = idiots[i].tracker;
-                Destroy(tracker.gameObject);
-                idiots.Remove(idiots[i]);
-                break;
-            }
-        }*/
-        coll.transform.SetParent(null);
+        
     }
+
     /*
     void OnTriggerStay(Collider coll)
     {
@@ -149,25 +122,9 @@ public class GravityWellVortex : MonoBehaviour {
         }
     }
     */
+
     void Die()
     {
-        /*
-        foreach(Transform loser in trapped) {
-            if(loser != null) {
-                loser.parent = null;
-            }
-        }
-        
-        // trapped.Clear();
-        if(idiots.Count > 0) {
-            foreach (trappedIdiot idiot in idiots) {
-                Transform tracker = idiot.tracker;
-                Destroy(tracker.gameObject);
-            }
-            idiots.Clear();
-        }*/
-
-
         // Small explosion to send all objects up
         Collider[] colls = Physics.OverlapSphere(transform.position, 3f);
         Transform newExp = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
@@ -179,7 +136,7 @@ public class GravityWellVortex : MonoBehaviour {
             }
         }
         Destroy(newExp.gameObject, 3f);
-
+        /*
         List<Transform> children = new List<Transform>();
         foreach (Transform child in transform) {
             Debug.Log(child.name);
@@ -187,7 +144,7 @@ public class GravityWellVortex : MonoBehaviour {
         }
         for (int i = 0; i < children.Count; i++) { children[i].SetParent(null); }
 
-        Debug.Log(transform.childCount);
+        Debug.Log(transform.childCount);*/
         Destroy(gameObject);
     }
 

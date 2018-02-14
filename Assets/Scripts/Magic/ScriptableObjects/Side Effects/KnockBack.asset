@@ -17,6 +17,6 @@ MonoBehaviour:
   description: Really, REALLY, strong
   decoration: {fileID: 4984204316487484, guid: 521344c0cdcdabf44b262c5d5505ff4e, type: 2}
   force: 40
-  upwardForce: 0.1
+  upwardForce: 0.3
   chargeTime: 0
   valueModifier: 3

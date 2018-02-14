@@ -14,8 +14,7 @@ public class KnockBackSideEffect : SpellSecondary {
     public override void MessUp(Transform user, Missile projectile)
     {
         Damageable dam = user.GetComponent<Damageable>();
-        Vector3 dir = user.position - projectile.transform.position;
-        dir = dir.normalized;
+        Vector3 dir = -projectile.transform.forward;
         dir.y = upwardForce;
         dir = dir.normalized;
         projectile.transform.localScale = new Vector3(projectile.transform.localScale.x * valueModifier, projectile.transform.localScale.y, projectile.transform.localScale.z);

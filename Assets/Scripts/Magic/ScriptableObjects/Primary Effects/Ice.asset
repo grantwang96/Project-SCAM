@@ -19,7 +19,7 @@ MonoBehaviour:
   baseColor: {r: 0, g: 0.13103437, b: 1, a: 0.7058824}
   ammo: 10
   coolDown: 0.4
-  title: Ice
+  title: Ice Blast
   description: Creates an icy surface
   projectilePrefab: {fileID: 114765780417504250, guid: 88670340bf7213645838c2e6f7ce896e,
     type: 2}

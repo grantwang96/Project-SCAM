@@ -10,8 +10,16 @@ public class SpellSpawn : MonoBehaviour {
     public SpellBook bookPrefab;
     public Transform spawnPoint;
 
+    public float checkRadius;
+    public LayerMask bookLayer;
+
     public void SpawnSpell()
     {
+        Collider[] colls = Physics.OverlapSphere(spawnPoint.position, checkRadius, bookLayer, QueryTriggerInteraction.Collide);
+        if(colls.Length > 0) { // if there is a book here
+            return;
+        }
+
         SpellBook newSpellBook = Instantiate(bookPrefab, spawnPoint.position, spawnPoint.rotation);
         SpellPrimary newPrimary;
         if (OverridePrimaryEffects.Count != 0) { newPrimary = OverridePrimaryEffects[Random.Range(0, OverridePrimaryEffects.Count)]; } // use this list if not empty
@@ -26,6 +34,11 @@ public class SpellSpawn : MonoBehaviour {
 
     public void SpawnSpellRando()
     {
+        Collider[] colls = Physics.OverlapSphere(spawnPoint.position, checkRadius, bookLayer, QueryTriggerInteraction.Collide);
+        if (colls.Length > 0)
+        { // if there is a book here
+            return;
+        }
         SpellBook newSpellBook = SpellManager.Instance.GenerateSpell(spawnPoint.position);
     }
 
@@ -33,6 +46,11 @@ public class SpellSpawn : MonoBehaviour {
 
     public void SpawnSpell(SpellPrimary primary)
     {
+        Collider[] colls = Physics.OverlapSphere(spawnPoint.position, checkRadius, bookLayer, QueryTriggerInteraction.Collide);
+        if (colls.Length > 0) { // if there is a book here
+            return;
+        }
+
         SpellBook newSpellBook = Instantiate(bookPrefab, spawnPoint.position, spawnPoint.rotation);
         newSpellBook.primaryEffect = primary;
         
@@ -44,6 +62,10 @@ public class SpellSpawn : MonoBehaviour {
 
     public void SpawnSpell(SpellPrimary primary, SpellSecondary secondary)
     {
+        Collider[] colls = Physics.OverlapSphere(spawnPoint.position, checkRadius, bookLayer, QueryTriggerInteraction.Collide);
+        if (colls.Length > 0) { // if there is a book here
+            return;
+        }
         SpellBook newSpellBook = Instantiate(bookPrefab, spawnPoint.position, spawnPoint.rotation);
         newSpellBook.primaryEffect = primary;
         newSpellBook.secondaryEffect = secondary;
@@ -51,6 +73,11 @@ public class SpellSpawn : MonoBehaviour {
 
     public void SpawnSpell(SpellSecondary secondary)
     {
+        Collider[] colls = Physics.OverlapSphere(spawnPoint.position, checkRadius, bookLayer, QueryTriggerInteraction.Collide);
+        if (colls.Length > 0) { // if there is a book here
+            return;
+        }
+
         SpellBook newSpellBook = Instantiate(bookPrefab, spawnPoint.position, spawnPoint.rotation);
         SpellPrimary newPrimary;
         if (OverridePrimaryEffects.Count != 0) { newPrimary = OverridePrimaryEffects[Random.Range(0, OverridePrimaryEffects.Count)]; } // use this list if not empty

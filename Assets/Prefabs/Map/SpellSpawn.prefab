@@ -48,8 +48,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1214201073216096}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4800258352442012}
@@ -80,10 +80,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ecb23eec22a3b94c971de05a2ad753e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OverridePrimaryEffects:
-  - {fileID: 11400000, guid: 437f5c5bdc67d9d4ba582a07f5e280dc, type: 2}
-  OverrideSecondaryEffects:
-  - {fileID: 11400000, guid: ed297814ac0744043a0a685501eae819, type: 2}
+  OverridePrimaryEffects: []
+  OverrideSecondaryEffects: []
   bookPrefab: {fileID: 114233178495423298, guid: 41e5e204f56f3fe489ea699084c0291d,
     type: 2}
   spawnPoint: {fileID: 4800258352442012}
+  checkRadius: 2
+  bookLayer:
+    serializedVersion: 2
+    m_Bits: 512
