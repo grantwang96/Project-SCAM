@@ -127,7 +127,15 @@ public class MeleeEnemyAggro : NPCState
 
         // Enter attack state if in range to attack
         float dist = Vector3.Distance(myOwner.transform.position, attackTarget.position);
-        if(dist <= myOwner.blueprint.attackRange) {
+        Vector3 forward = myOwner.transform.forward;
+        Vector3 dir = attackTarget.position - myOwner.transform.position;
+        forward.y = 0;
+        dir.y = 0;
+        float ang = Vector3.Angle(myOwner.transform.forward, attackTarget.position - myOwner.transform.position);
+
+        Debug.Log(ang);
+
+        if(dist <= myOwner.blueprint.attackRange && ang < 20f) {
             myOwner.changeState(new MeleeEnemyAttack());
         }
         myOwner.rbody.AddForce(myOwner.agent.desiredVelocity / myOwner.friction);
@@ -144,15 +152,15 @@ public class MeleeEnemyAttack : NPCState
     public override void Enter(Movement owner)
     {
         base.Enter(owner);
-        anim.Play("Attack");
-        myOwner.attack(myOwner.attackTarget.position);
+        // anim.Play("Attack");
+        myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
     }
 
     public override void Enter(Movement owner, NPCState prevState)
     {
         base.Enter(owner, prevState);
-        anim.Play("Attack");
-        myOwner.attack(myOwner.attackTarget.position);
+        // anim.Play("Attack");
+        myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
         Debug.Log(myOwner.transform.name + " attacks!");
     }
 

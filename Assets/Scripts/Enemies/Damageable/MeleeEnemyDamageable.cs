@@ -9,7 +9,6 @@ public class MeleeEnemyDamageable : Damageable {
 
     public override void knockBack(Vector3 dir, float force)
     {
-        // rbody.AddForce(dir * force, ForceMode.Impulse);
         if (knockBackRoutine != null) {
             StopCoroutine(knockBackRoutine);
         }

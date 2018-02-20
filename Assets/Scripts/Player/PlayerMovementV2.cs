@@ -37,7 +37,8 @@ public class PlayerMovementV2 : Movement {
     {
         if (yMove > Physics.gravity.y) { yMove += Time.deltaTime * Physics.gravity.y; }
         Vector3 move = moveDir * slownessSeverity * drunkMod; // Get the total movement
-        if(hamper <= 0) { Move(move * Time.deltaTime); }
+        // if(hamper <= 0) { Move(move * Time.deltaTime); }
+        Move(move * Time.deltaTime);
         if(charCon != null && charCon.enabled) { charCon.Move(Vector3.up * yMove * Time.deltaTime); }
     }
 
@@ -91,7 +92,7 @@ public class PlayerMovementV2 : Movement {
     {
         float horizontal = 0f;
         float vertical = 0f;
-        if (hamper > 0) { return; }
+        // if (hamper > 0) { return; }
         horizontal = Input.GetAxis("Horizontal"); // Get player inputs
         vertical = Input.GetAxis("Vertical"); // Get player inputs
 
@@ -119,9 +120,10 @@ public class PlayerMovementV2 : Movement {
 
         falling = true;
 
-        while (time < 1f) {
+        while (time < .3f) {
             if(charCon.isGrounded) { time += Time.deltaTime; }
             Move(knock * Time.deltaTime);
+            knock = Vector3.Lerp(knock, Vector3.zero, 0.5f);
             yield return new WaitForEndOfFrame();
         }
         movementTakeover = null;
@@ -145,11 +147,10 @@ public class PlayerMovementV2 : Movement {
             }
         }
         if (tag.Contains("Ground") || tag.Contains("Roof")) {
-            if (/*Vector3.Distance(coll.point, Head.position) < 0.1f*/yMove > 0) // If collided with head
+            if (coll.point.y > transform.position.y && yMove > 0) // If collided with head
             {
                 Debug.Log("I hit my head!");
-                yMove = -Time.deltaTime;
-                transform.position -= Vector3.up * Time.deltaTime;
+                yMove = 0f;
                 return;
             }
             Vector3 feet = transform.position + Vector3.down * charCon.bounds.extents.y;

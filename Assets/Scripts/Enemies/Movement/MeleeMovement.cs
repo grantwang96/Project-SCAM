@@ -9,9 +9,6 @@ public class MeleeMovement : Movement {
 
     public override void setup() {
         agent = GetComponent<NavMeshAgent>(); // set the agent
-        // agent.updatePosition = false;
-        // agent.updateRotation = false;
-        // agent.isStopped = true;
         base.setup();
     }
 
@@ -19,5 +16,11 @@ public class MeleeMovement : Movement {
     {
         destination = agent.destination;
         base.Update();
+    }
+
+    public override IEnumerator attack(Vector3 target)
+    {
+        anim.Play("Attack");
+        return base.attack(target);
     }
 }

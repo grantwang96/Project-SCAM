@@ -40,9 +40,9 @@ public class Door : Damageable, Interactable {
         return true;
     }
 
-    public void Unlock(string keyCode)
+    public void Unlock()
     {
-
+        locked = false;
     }
 
     IEnumerator doorRotation()

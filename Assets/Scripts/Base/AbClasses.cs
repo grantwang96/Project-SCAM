@@ -201,16 +201,21 @@ public abstract class Movement : MonoBehaviour
     public int damage;
     public int hamper;
 
+    #region For Seeing things
     [SerializeField] int numRaycasts;
     [SerializeField] float raySpread;
     [SerializeField] float obstacleCheckRange;
     public LayerMask scanLayer;
     public LayerMask obstacleLayer;
     public LayerMask pathFindingLayers;
+    #endregion
 
     public Transform attackTarget; // who to target
+
+    #region Seduction Stuff
     public Transform crushTarget; // if seduced
     public SpellCaster crush; // if seduced
+    #endregion
 
     public virtual void Awake()
     {

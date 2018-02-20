@@ -26,16 +26,18 @@ public class SurroundSideEffect : SpellSecondary {
     IEnumerator waitAndSurround(Transform user, Missile projectile)
     {
         projectile.bounceCount = 0;
-        yield return new WaitForSeconds(forwardTime);
         Rigidbody projRbody = projectile.GetComponent<Rigidbody>();
+        projRbody.MovePosition(user.position + user.forward * forwardTime);
         projRbody.velocity = Vector3.zero;
-        Rigidbody newAxis = Instantiate(axisPrefab);
-        newAxis.rotation = user.rotation;
-        projectile.transform.parent = newAxis.transform;
-        projectile.toBeDeleted.Add(newAxis.gameObject);
-        newAxis.angularVelocity = new Vector3(0, speed, 0);
-        while (!projectile.dead) {
-            newAxis.MovePosition(user.position);
+        
+        float time = 0f;
+        while(!projectile.dead) {
+            Vector3 newpos = new Vector3(Mathf.Sin(time), 0f, Mathf.Cos(time)) * forwardTime;
+            Vector3 newposWorld = user.TransformPoint(newpos);
+
+            projRbody.MovePosition(newposWorld);
+
+            time += Time.deltaTime * speed;
             yield return new WaitForEndOfFrame();
         }
     }

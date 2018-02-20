@@ -142,7 +142,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             }
         }
     }
-
+    
     void OnTriggerStay(Collider coll) {
         Interactable inter = coll.GetComponent<Interactable>();
         if(inter != null && currentInteractable == null) { currentInteractable = inter; }
