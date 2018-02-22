@@ -9,9 +9,17 @@ public class SpellSpawn : MonoBehaviour {
 
     public SpellBook bookPrefab;
     public Transform spawnPoint;
+    public SpellBook currBook;
 
     public float checkRadius;
     public LayerMask bookLayer;
+
+    void Update()
+    {
+        if(currBook == null) {
+            SpawnSpell();
+        }
+    }
 
     public void SpawnSpell()
     {
@@ -30,6 +38,8 @@ public class SpellSpawn : MonoBehaviour {
         if (OverrideSecondaryEffects.Count != 0) { newSecondary = OverrideSecondaryEffects[Random.Range(0, OverrideSecondaryEffects.Count)]; } // use this list if not empty
         else { newSecondary = SpellManager.Instance.secondarySpellEffects[Random.Range(0, SpellManager.Instance.secondarySpellEffects.Count)]; }
         newSpellBook.secondaryEffect = newSecondary;
+
+        currBook = newSpellBook;
     }
 
     public void SpawnSpellRando()
@@ -40,9 +50,8 @@ public class SpellSpawn : MonoBehaviour {
             return;
         }
         SpellBook newSpellBook = SpellManager.Instance.GenerateSpell(spawnPoint.position);
+        currBook = newSpellBook;
     }
-
-    public void Poop() { Debug.Log("Poop"); }
 
     public void SpawnSpell(SpellPrimary primary)
     {
@@ -58,6 +67,8 @@ public class SpellSpawn : MonoBehaviour {
         if (OverrideSecondaryEffects.Count != 0) { newSecondary = OverrideSecondaryEffects[Random.Range(0, OverrideSecondaryEffects.Count)]; } // use this list if not empty
         else { newSecondary = SpellManager.Instance.secondarySpellEffects[Random.Range(0, SpellManager.Instance.secondarySpellEffects.Count)]; }
         newSpellBook.secondaryEffect = newSecondary;
+
+        currBook = newSpellBook;
     }
 
     public void SpawnSpell(SpellPrimary primary, SpellSecondary secondary)
@@ -69,6 +80,8 @@ public class SpellSpawn : MonoBehaviour {
         SpellBook newSpellBook = Instantiate(bookPrefab, spawnPoint.position, spawnPoint.rotation);
         newSpellBook.primaryEffect = primary;
         newSpellBook.secondaryEffect = secondary;
+
+        currBook = newSpellBook;
     }
 
     public void SpawnSpell(SpellSecondary secondary)
@@ -85,5 +98,7 @@ public class SpellSpawn : MonoBehaviour {
         newSpellBook.primaryEffect = newPrimary;
 
         newSpellBook.secondaryEffect = secondary;
+
+        currBook = newSpellBook;
     }
 }

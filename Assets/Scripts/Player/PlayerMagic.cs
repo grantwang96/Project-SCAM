@@ -55,13 +55,13 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
 
-        if(currentInteractable != null) { reticule.color = reticuleInteractable; }
-        else { reticule.color = reticuleNormal; }
+        if(currentInteractable == null) { reticule.color = reticuleNormal;  }
+        else { reticule.color = reticuleInteractable; }
         
         if (Input.GetButtonDown("Fire1")) { // make sure player hits shoot button and has something to shoot
             // if(interactable != null) { interactable.Interact(this); }
             // else if (spellsInventory.Count != 0) { fireSpell(); }
-            if(currentInteractable != null && currentInteractable.Interact(this)) { currentInteractable = null; }
+            if(currentInteractable != null) { currentInteractable.Interact(this); currentInteractable = null; }
             else if(spellsInventory.Count != 0) { fireSpell(); }
         }
         if (spellsInventory.Count > 0 && ammoGaugeBackground.gameObject.activeInHierarchy) { // update the ammo gauge

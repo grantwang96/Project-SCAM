@@ -17,10 +17,11 @@ MonoBehaviour:
   powerLevelModifier: 1
   powerLevel: 1
   baseColor: {r: 1, g: 0.6413793, b: 0, a: 1}
-  ammo: 4
+  ammo: 3
   coolDown: 0.4
   title: Teleport
   description: 
   projectilePrefab: {fileID: 114765780417504250, guid: 88670340bf7213645838c2e6f7ce896e,
     type: 2}
-  castEffect: {fileID: 0}
+  castEffect: {fileID: 198545228210204070, guid: 828a4427cc7df2942a99b970db3979fe,
+    type: 2}

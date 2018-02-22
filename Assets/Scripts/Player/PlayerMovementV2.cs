@@ -76,7 +76,7 @@ public class PlayerMovementV2 : Movement {
 
     public override void Teleport(Vector3 newLocation)
     {
-        Vector3 dir = newLocation - transform.position;
+        Vector3 dir = (newLocation + Vector3.up * charCon.height) - transform.position;
         if (charCon.enabled) { charCon.Move(dir); }
     }
 

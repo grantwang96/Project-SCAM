@@ -23,7 +23,7 @@ public class Door : Damageable, Interactable {
 
     public bool Interact(SpellCaster spellCaster)
     {
-        if (_locked) {
+        if (_locked || gameObject == null) {
             return false; // do not open for anyone
         }
         if (movement != null) { return false; } // do not allow interaction during motion.
@@ -96,6 +96,9 @@ public class Door : Damageable, Interactable {
 
     IEnumerator fadeAway() {
         yield return new WaitForSeconds(4f);
+        GetComponent<Renderer>().enabled = false;
+        transform.position = Vector3.down * 1000;
+        yield return new WaitForFixedUpdate();
         Destroy(gameObject);
     }
 
