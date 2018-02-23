@@ -11,7 +11,6 @@ public class FistScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        myMovement = transform.root.GetComponent<Movement>();
         if(myMovement != null) {
             EnemyData blueprint = myMovement.blueprint;
             damage = blueprint.damage;
@@ -29,7 +28,8 @@ public class FistScript : MonoBehaviour {
         if(myBody == null) { return; }
         if (dam != null && dam != myBody.GetComponent<Damageable>()) {
             Vector3 dir = (coll.transform.position - myBody.position).normalized;
-            dam.TakeDamage(myBody, damage, dir, force);
+            Debug.Log(myBody + " " + myMovement);
+            dam.TakeDamage(myBody, myMovement.damage, dir, force);
             // Debug.Log("Hit");
         }
     }

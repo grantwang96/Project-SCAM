@@ -19,5 +19,5 @@ MonoBehaviour:
   delayTime: 1
   intervalTime: 0.3
   maxRadius: 2
-  heightOffset: 6
+  heightOffset: 2.5
   lifeTime: 5

@@ -23,7 +23,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpellSpawn
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -85,6 +85,7 @@ MonoBehaviour:
   bookPrefab: {fileID: 114233178495423298, guid: 41e5e204f56f3fe489ea699084c0291d,
     type: 2}
   spawnPoint: {fileID: 4800258352442012}
+  currBook: {fileID: 0}
   checkRadius: 2
   bookLayer:
     serializedVersion: 2

@@ -162,6 +162,8 @@ public class EnemySpellCasterMovement : Movement, SpellCaster
 
     public Transform returnHead() { return transform; }
 
+    public Transform returnTransform() { return transform; }
+
     public void getHitList(List<Damageable> hitList, SpellCaster owner)
     {
         

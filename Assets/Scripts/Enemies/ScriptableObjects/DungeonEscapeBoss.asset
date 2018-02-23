@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf05c30e18d28744ebfca712701f8657, type: 3}
+  m_Name: DungeonEscapeBoss
+  m_EditorClassIdentifier: 
+  health: 400
+  baseSpeed: 3
+  maxSpeed: 6
+  sightRange: 60
+  sightAngle: 90
+  attackRange: 80
+  attentionSpan: 30
+  firstName: []
+  lastNameP1: []
+  lastNameP2: []
+  verbings: []
+  nouns: []
+  preferredName: Dungeon Boi
+  attackTargetTag: Player
+  damage: 0
+  myType: 3
+  possibleSpellPrimaries:
+  - {fileID: 11400000, guid: 437f5c5bdc67d9d4ba582a07f5e280dc, type: 2}
+  - {fileID: 11400000, guid: d5a96c29055289f4587cd9027265f7d5, type: 2}
+  - {fileID: 11400000, guid: 88c394de94782c2468b102764ec1c997, type: 2}
+  possibleSpellSecondaries:
+  - {fileID: 11400000, guid: 61c16d23215b8a6499528ba66350c390, type: 2}
+  spellBookPrefab: {fileID: 0}
+  maxBooks: 3

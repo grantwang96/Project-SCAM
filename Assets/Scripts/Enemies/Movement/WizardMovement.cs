@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class WizardMovement : Movement, SpellCaster {
 
-    [SerializeField] SpellBook heldSpell; // the current spell held by this character
+    [SerializeField] List<SpellBook> heldSpells = new List<SpellBook>(); // the current spell held by this character
+    private SpellBook currSpell;
     [SerializeField] bool canShootSpells;
     [SerializeField] Transform gun; // the gun that will shoot spells
     
     public bool canShoot() { return canShootSpells; }
     public void setCanShoot(bool can) { canShootSpells = can; }
+
+    public override void setup()
+    {
+        base.setup();
+        currSpell = heldSpells[0];
+    }
 
     public override void Start()
     {
@@ -24,7 +31,8 @@ public class WizardMovement : Movement, SpellCaster {
         gun.forward = targetingDir;
         anim.Play("Attack");
         bool fired = false;
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForFixedUpdate();
+        currSpell = heldSpells[Random.Range(0, heldSpells.Count)];
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
             if (anim.GetCurrentAnimatorStateInfo(0).length >= 0.5f && !fired) {
                 fired = true;
@@ -36,10 +44,14 @@ public class WizardMovement : Movement, SpellCaster {
 
     public void pickUpSpell(SpellBook newSpell)
     {
-        if(heldSpell != null) { dropSpell(heldSpell, newSpell.transform.position); }
-        heldSpell = newSpell;
+        /*
+        if(heldSpells.Count != 0) {
+            SpellBook loseSpell = heldSpells[Random.Range(0, heldSpells.Count)];
+            if (loseSpell != null) { dropSpell(loseSpell, newSpell.transform.position); }
+        }*/
+        heldSpells.Add(newSpell);
         newSpell.Deactivate();
-        heldSpell.transform.parent = transform;
+        newSpell.transform.parent = transform;
         newSpell.transform.localPosition = Vector3.zero;
         newSpell.transform.localRotation = Quaternion.identity;
     }
@@ -54,7 +66,7 @@ public class WizardMovement : Movement, SpellCaster {
 
     public void fireSpell()
     {
-        if(heldSpell != null && canShootSpells) { heldSpell.primaryEffect.ActivateSpell(this, heldSpell.secondaryEffect, gun.forward); }
+        if(currSpell != null && canShootSpells) { currSpell.primaryEffect.ActivateSpell(this, currSpell.secondaryEffect, gun.forward); }
         else { Debug.Log("I don't has spell"); }
     }
 
@@ -78,6 +90,8 @@ public class WizardMovement : Movement, SpellCaster {
         return transform;
     }
 
+    public Transform returnTransform() { return transform; }
+
     public Transform returnGun()
     {
         return gun;
@@ -90,7 +104,7 @@ public class WizardMovement : Movement, SpellCaster {
 
     public SpellBook returnSpell()
     {
-        if(heldSpell == null) { return null; }
-        return heldSpell;
+        if(currSpell == null) { return null; }
+        return currSpell;
     }
 }

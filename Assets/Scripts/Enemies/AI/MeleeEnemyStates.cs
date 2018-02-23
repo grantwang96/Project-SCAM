@@ -131,11 +131,10 @@ public class MeleeEnemyAggro : NPCState
         Vector3 dir = attackTarget.position - myOwner.transform.position;
         forward.y = 0;
         dir.y = 0;
-        float ang = Vector3.Angle(myOwner.transform.forward, attackTarget.position - myOwner.transform.position);
-
-        Debug.Log(ang);
-
-        if(dist <= myOwner.blueprint.attackRange && ang < 20f) {
+        // float ang = Vector3.Angle(myOwner.transform.forward, attackTarget.position - myOwner.transform.position);
+        float dotprod = Vector3.Dot(myOwner.transform.forward, (attackTarget.position - myOwner.transform.position).normalized);
+        
+        if(dist <= myOwner.blueprint.attackRange && dotprod > 0.5f) {
             myOwner.changeState(new MeleeEnemyAttack());
         }
         myOwner.rbody.AddForce(myOwner.agent.desiredVelocity / myOwner.friction);

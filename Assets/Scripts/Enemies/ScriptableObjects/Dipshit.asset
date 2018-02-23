@@ -18,6 +18,54 @@ MonoBehaviour:
   sightAngle: 80
   attackRange: 2.9
   attentionSpan: 6.1
+  firstName:
+  - Bob
+  - Krong
+  - Dave
+  - Horatio
+  - Elroy
+  - Robson
+  - Grum
+  - Tatania
+  - Seel
+  - Remi
+  lastNameP1:
+  - Storm
+  - Smash
+  - Hammer
+  - Bone
+  - Blade
+  - Wrath
+  - Murder
+  - Crimson
+  lastNameP2:
+  - House
+  - Tooth
+  - Raiser
+  - Stomper
+  - Slayer
+  - Dan
+  - Smith
+  - Heart
+  verbings:
+  - Stormy
+  - Howling
+  - Flaming
+  - Frozen
+  - Lofty
+  - Chaos
+  - Cursed
+  - Breezy
+  nouns:
+  - Plains
+  - Woods
+  - Clouds
+  - City
+  - Desert
+  - Void
+  - Wasteland
+  - Mountain
+  preferredName: 
   attackTargetTag: Player
   damage: 5
   myType: 0

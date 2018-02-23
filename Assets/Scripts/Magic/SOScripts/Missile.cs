@@ -5,6 +5,7 @@ using UnityEngine;
 public class Missile : MonoBehaviour {
 
     public Transform originator;
+    public SpellCaster myCaster;
     public bool friendlyOff = true;
     public bool mainShot = true;
     [SerializeField] float delayFriendlyOn;

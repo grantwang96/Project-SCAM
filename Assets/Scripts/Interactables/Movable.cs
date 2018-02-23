@@ -80,13 +80,13 @@ public class Movable : Damageable
 
     }
 
-    public override void Seduce(float duration, GameObject target, Transform owner)
+    public override void Seduce(float duration, GameObject target, SpellCaster owner)
     {
-        myOwner = owner.GetComponent<SpellCaster>();
+        myOwner = owner;
         if(seduction == null) { seduction = StartCoroutine(processSeduction(duration, target, owner)); }
     }
 
-    public override IEnumerator processSeduction(float duration, GameObject target, Transform owner)
+    public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         attackTarget = target.transform;
         float startTime = Time.time;

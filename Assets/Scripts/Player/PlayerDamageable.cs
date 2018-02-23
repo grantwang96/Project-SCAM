@@ -172,7 +172,6 @@ public class PlayerDamageable : Damageable {
     public override IEnumerator processTransmutation(float duration, GameObject replacement)
     {
         transmutable = false; // set transmutable to false
-        PlayerMagic myPlayMagic = GetComponent<PlayerMagic>(); // get magical abilities
         GameObject newBody = Instantiate(replacement, transform); // create new body
 
         // prime new body to replace player
@@ -221,7 +220,7 @@ public class PlayerDamageable : Damageable {
         myMovement.hamper += 1;
 
         Transform oldTransmuteStatus = statusEffectBar.Find("transmutedStatus");
-        if(oldTransmuteStatus) { Destroy(oldTransmuteStatus); }
+        if(oldTransmuteStatus) { Destroy(oldTransmuteStatus.gameObject); }
         Image newTransmuteStatus = Instantiate(statusEffectPrefab, statusEffectBar);
         newTransmuteStatus.name = "transmutedStatus";
 
@@ -244,6 +243,7 @@ public class PlayerDamageable : Damageable {
         // yield return new WaitForSeconds(duration);
 
         transform.position = newrbody.position;
+        Destroy(newTransmuteStatus.gameObject);
         // reset head components
  
         charCon.enabled = true;
@@ -260,7 +260,6 @@ public class PlayerDamageable : Damageable {
         Camera.main.transform.rotation = myMovement.Head.rotation;
 
         // re-enable spell combat and transmutable
-        myPlayMagic.enabled = true;
         myMovement.hamper--;
         setTransmutable(true);
 
@@ -268,7 +267,7 @@ public class PlayerDamageable : Damageable {
         Destroy(newBody);
     }
 
-    public override void Seduce(float duration, GameObject target, Transform owner)
+    public override void Seduce(float duration, GameObject target, SpellCaster owner)
     {
         
     }

@@ -27,7 +27,11 @@ public class MagicBlast : SpellPrimary { // Standard damaging magic attack
             knockBack = knockBack.normalized;
             collDam.TakeDamage(proj.originator, proj.power, knockBack, knockBackForce);
             SpellCaster originator = proj.originator.GetComponent<SpellCaster>();
-            originator.invokeChangeFollowers(collDam);
+            if(originator == null) { originator = proj.myCaster; }
+            if(originator != null) {
+                originator.invokeChangeFollowers(collDam);
+            }
+
             // Instantiate special effect
             proj.Die();
             return;

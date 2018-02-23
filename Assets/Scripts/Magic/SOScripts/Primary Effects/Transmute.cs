@@ -19,6 +19,7 @@ public class Transmute : SpellPrimary {
         if (collDam) {
             collDam.InitiateTransmutation(proj.duration, possibleReplacements[Random.Range(0, possibleReplacements.Length)]);
             SpellCaster originator = proj.originator.GetComponent<SpellCaster>();
+            if(originator == null) { originator = proj.myCaster; }
             originator.invokeChangeFollowers(collDam);
         }
         if(proj.bounceCount <= 0)

@@ -43,6 +43,7 @@ public class SpellPrimary : ScriptableObject {
             newProjectile.primaryEffect = this;
             newProjectile.secondaryEffect = secondaryEffect;
             newProjectile.originator = user.returnBody();
+            newProjectile.myCaster = user;
 
             // Modify rigidbody settings for takeoff
             Rigidbody projRbody = newProjectile.GetComponent<Rigidbody>();

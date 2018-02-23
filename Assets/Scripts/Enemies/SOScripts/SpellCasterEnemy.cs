@@ -9,6 +9,7 @@ public class SpellCasterEnemy : EnemyData {
     public SpellSecondary[] possibleSpellSecondaries;
 
     public SpellBook spellBookPrefab;
+    public int maxBooks;
 
     public override void setup(Movement owner)
     {
@@ -24,7 +25,7 @@ public class SpellCasterEnemy : EnemyData {
         if (SpellManager.Instance != null) { // if spell manager is running
             SpellCaster spellCaster = owner.GetComponent<SpellCaster>();
 
-            if (!spellCaster.returnSpell()) {
+            for(int i = 0; i < maxBooks; i++) {
                 
                 SpellPrimary primary = possibleSpellPrimaries[Random.Range(0, possibleSpellPrimaries.Length)];
                 SpellSecondary secondary = possibleSpellSecondaries[Random.Range(0, possibleSpellSecondaries.Length)];
@@ -34,16 +35,6 @@ public class SpellCasterEnemy : EnemyData {
                 newSpellBook.SetupSpell();
             }
         }
-
-        /*
-        SpellBook newSpellBook = Instantiate(spellBookPrefab, owner.transform.position, owner.transform.rotation);
-        newSpellBook.primaryEffect = possibleSpellPrimaries[Random.Range(0, possibleSpellPrimaries.Length)];
-        newSpellBook.secondaryEffect = possibleSpellSecondaries[Random.Range(0, possibleSpellSecondaries.Length)];
-        
-        // Have enemy pick up spellbook
-        SpellCaster spellCaster = owner.GetComponent<SpellCaster>();
-        newSpellBook.Interact(spellCaster);
-        */
 
         base.setup(owner);
     }

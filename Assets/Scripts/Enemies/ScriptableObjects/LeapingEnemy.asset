@@ -18,6 +18,44 @@ MonoBehaviour:
   sightAngle: 41.6
   attackRange: 19.1
   attentionSpan: 12.6
+  firstName:
+  - Goldor
+  - Salazar
+  - Tom
+  - Gorgoth
+  - Vortigon
+  - Malador
+  lastNameP1:
+  - Terror
+  - Sky
+  - Night
+  - Bone
+  - Snake
+  - Tiger
+  lastNameP2:
+  - Bringer
+  - Smasher
+  - Hand
+  - House
+  - Puncher
+  - God
+  verbings:
+  - Windy
+  - Fiery
+  - Dank
+  - Dying
+  - Cursed
+  - Doomed
+  nouns:
+  - Bog
+  - Castle
+  - City
+  - Wasteland
+  - Desert
+  - Woods
+  - Plains
+  - Sea
+  preferredName: 
   attackTargetTag: Player
   damage: 4
   myType: 0

@@ -16,13 +16,20 @@ public class ThrowSideEffect : SpellSecondary {
         projectile.bounceCount = bounceCount;
 
         Missile pRoJeCtIlE = Instantiate(projectile, projectile.transform.position, projectile.transform.rotation);
-        Destroy(projectile.gameObject);
 
         Rigidbody rbody = pRoJeCtIlE.GetComponent<Rigidbody>();
         rbody.mass = modMass;
         rbody.useGravity = true;
         rbody.AddForce(projectile.transform.forward * modForce, ForceMode.Impulse);
 
+        pRoJeCtIlE.power = projectile.power;
+        pRoJeCtIlE.originator = projectile.originator;
+        pRoJeCtIlE.myCaster = projectile.myCaster;
+        pRoJeCtIlE.lifeSpan = projectile.lifeSpan;
+        pRoJeCtIlE.duration = projectile.duration;
+
+        Destroy(projectile.gameObject);
+        
         Collider coll = pRoJeCtIlE.GetComponent<Collider>();
         coll.material = bounceMat;
     }

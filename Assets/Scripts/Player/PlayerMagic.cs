@@ -10,23 +10,30 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public int maxSpells;
     int currentHeld;
 
+    #region Able To Fire
     [SerializeField] bool canFireSpells;
     public bool canShoot() { return canFireSpells; }
     public void setCanShoot(bool can) { canFireSpells = can; }
+    bool canFire;
+    #endregion
 
     public float spellPickUpSpeed;
 
+    #region Body Parts
     public Transform body;
     public Transform Head;
     [SerializeField] Transform gun;
+    #endregion
 
     public delegate void seductionHit(Damageable target, SpellCaster owner);
     public event seductionHit changeFollowerTarget;
 
-    bool canFire;
     public LayerMask interactLayers;
     public float grabRange;
     [SerializeField] Interactable currentInteractable;
+
+    Coroutine enemyDisplayRoutine;
+
     #region UIStuff
 
     [SerializeField] Transform spellSlots;
@@ -36,6 +43,10 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     [SerializeField] Image ammoGaugeFill;
     [SerializeField] Image ammoGaugeBackground;
     [SerializeField] Image reticule;
+    [SerializeField] GameObject enemyDataSection;
+    [SerializeField] Image enemyHealthGauge;
+    [SerializeField] Image enemyHealthGaugeBackground;
+    [SerializeField] Text enemyName;
 
     [SerializeField] Color reticuleNormal;
     [SerializeField] Color reticuleInteractable;
@@ -47,6 +58,11 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         currentHeld = 0;
         canFire = true;
         canFireSpells = true;
+
+        enemyHealthGauge.enabled = false;
+        enemyHealthGaugeBackground.enabled = false;
+        enemyName.enabled = false;
+
         updateCurrentHeld();
 	}
 	
@@ -87,6 +103,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         return null;
     }
 
+    #region process Inputs
     void processNumKeys()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -113,6 +130,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             updateCurrentHeld();
         }
     }
+    #endregion
 
     void updateCurrentHeld() // make sure currentheld is within inventory count
     {
@@ -142,7 +160,43 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             }
         }
     }
-    
+
+    public void displayEnemyData(Damageable enemy)
+    {
+        if(enemy == body.GetComponent<Damageable>()) { return; }
+        if(enemyDisplayRoutine != null) { StopCoroutine(enemyDisplayRoutine); }
+        enemyDisplayRoutine = StartCoroutine(displayCurrentEnemy(enemy));
+    }
+
+    IEnumerator displayCurrentEnemy(Damageable enemy)
+    {
+        float time = 0f;
+        enemyName.enabled = true;
+        enemyHealthGaugeBackground.enabled = true;
+        enemyHealthGauge.enabled = true;
+        enemyName.text = enemy.gameObject.name;
+
+        RectTransform enemyHPBackground = enemyHealthGaugeBackground.GetComponent<RectTransform>();
+        RectTransform enemyHP = enemyHealthGauge.GetComponent<RectTransform>();
+        float sizeModifier = 1f + (100f / enemy.max_health);
+        enemyHPBackground.sizeDelta = new Vector2((enemy.max_health * sizeModifier) + 10, 10);
+        enemyHP.sizeDelta = new Vector2(enemyHPBackground.sizeDelta.x - 10, 5);
+
+        while(time < 5f) {
+            if(enemy == null || enemy.gameObject == null) { break; }
+
+            enemyHealthGauge.fillAmount = (float)enemy.health / enemy.max_health;
+
+            time += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        enemyName.enabled = false;
+        enemyHealthGaugeBackground.enabled = false;
+        enemyHealthGauge.enabled = false;
+        enemyDisplayRoutine = null;
+    }
+
+    #region Triggers
     void OnTriggerStay(Collider coll) {
         Interactable inter = coll.GetComponent<Interactable>();
         if(inter != null && currentInteractable == null) { currentInteractable = inter; }
@@ -152,6 +206,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         Interactable inter = coll.GetComponent<Interactable>();
         if(inter == currentInteractable) { currentInteractable = null; }
     }
+    #endregion
 
     #region SpellCaster Implementations
 
@@ -167,6 +222,10 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public void invokeChangeFollowers(Damageable target)
     {
+        if(target.myMovement != null && target.health > 0 & target.max_health > 0) {
+            displayEnemyData(target);
+        }
+
         if(changeFollowerTarget != null) {
             changeFollowerTarget(target, this);
         }
@@ -194,6 +253,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public Transform returnBody() { return body; }
 
     public Transform returnHead() { return Head; }
+
+    public Transform returnTransform() { return transform; }
 
     public void pickUpSpell(SpellBook newSpell)
     {

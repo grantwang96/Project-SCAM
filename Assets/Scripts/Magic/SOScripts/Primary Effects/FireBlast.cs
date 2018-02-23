@@ -83,17 +83,18 @@ public class FireBlast : SpellPrimary {
             offset.x = projFired.transform.position.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
             offset.y = projFired.transform.position.y + 1f;
             offset.z = projFired.transform.position.z + radius * Mathf.Cos(ang * Mathf.Deg2Rad);
-            subBlast(offset, newPillarOfDoom.position, projFired.originator);
+            subBlast(offset, newPillarOfDoom.position, projFired.originator, projFired.myCaster);
         }
         Destroy(projFired.gameObject);
     }
 
-    void subBlast(Vector3 position, Vector3 startingPos, Transform caster)
+    void subBlast(Vector3 position, Vector3 startingPos, Transform caster, SpellCaster myCaster)
     {
         Missile newSubBlast = Instantiate(projectilePrefab, position, Quaternion.identity);
         newSubBlast.transform.forward = position - startingPos;
         Missile newproj = newSubBlast.GetComponent<Missile>();
         newproj.originator = caster;
+        newproj.myCaster = myCaster;
         newproj.primaryEffect = this;
         newproj.power = power;
         newproj.mainShot = false;
@@ -117,8 +118,7 @@ public class FireBlast : SpellPrimary {
                     knockBack = knockBack.normalized;
                     dam.TakeDamage(proj.originator, proj.power, knockBack, knockBackForce);
                     if(proj.originator == null) { return; }
-                    SpellCaster originator = proj.originator.GetComponent<SpellCaster>();
-                    originator.invokeChangeFollowers(dam);
+                    proj.myCaster.invokeChangeFollowers(dam);
                 }
             }
         }

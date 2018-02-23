@@ -16,6 +16,44 @@ MonoBehaviour:
   maxSpeed: 0
   sightRange: 0
   sightAngle: 0
+  attackRange: 0
+  attentionSpan: 0
+  firstName:
+  - Goldor
+  - Salazar
+  - Tom
+  - Gorgoth
+  - Vortigon
+  - Mal
+  lastNameP1:
+  - Wind
+  - Sky
+  - Doom
+  - Sand
+  - 
+  - 
+  lastNameP2:
+  - Slayer
+  - 
+  - 
+  - 
+  - 
+  - 
+  verbings:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  nouns:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  preferredName: 
   attackTargetTag: Player
   damage: 0
   myType: 0

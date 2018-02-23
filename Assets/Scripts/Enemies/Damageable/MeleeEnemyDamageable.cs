@@ -61,6 +61,7 @@ public class MeleeEnemyDamageable : Damageable {
         Rigidbody replaceRigidBody = myReplace.GetComponent<Rigidbody>();
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
+        replacedBody.parentHit = this;
         replacedBody.setTransmutable(false);
 
         // wait for the spell duration
@@ -68,26 +69,27 @@ public class MeleeEnemyDamageable : Damageable {
 
         // move to transmuted object(in case object was moved)
         myMovement.agent.nextPosition = myReplace.transform.position;
+        myMovement.agent.isStopped = false;
         transform.position = myMovement.agent.nextPosition;
-        
 
         Destroy(myReplace); // Destroy my replacement
 
         // reaactivate colliders and renderers
         myColl.enabled = true;
-        if (allRends.Length > 0) { foreach (Renderer rend in allRends) { rend.enabled = true; } }
+        if (allRends.Length > 0) { foreach (Renderer rend in allRends)
+                if(rend != null) { rend.enabled = true; } }
         replacedBody = null;
         myMovement.hamper--;
     }
 
-    public override void Seduce(float duration, GameObject target, Transform owner)
+    public override void Seduce(float duration, GameObject target, SpellCaster owner)
     {
         base.Seduce(duration, target, owner);
         // if(myMovement.crushTarget != null) { return; }
         // myMovement.changeState(new MeleeEnemySeduced(), myMovement.getCurrentState(), duration);
     }
 
-    public override IEnumerator processSeduction(float duration, GameObject target, Transform owner)
+    public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         myMovement.changeState(new MeleeEnemySeduced(), duration);
         yield return new WaitForSeconds(duration);

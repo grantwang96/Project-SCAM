@@ -113,15 +113,13 @@ public class PlayerMovementV2 : Movement {
     IEnumerator knockingBack(Vector3 force) {
         hamper++;
         Vector3 knock = force;
-        float time = 0f;
         yMove = force.y;
         knock.y = 0;
         Vector3 start = knock;
 
         falling = true;
 
-        while (time < .3f) {
-            if(charCon.isGrounded) { time += Time.deltaTime; }
+        while (!charCon.isGrounded) {
             Move(knock * Time.deltaTime);
             knock = Vector3.Lerp(knock, Vector3.zero, 0.5f);
             yield return new WaitForEndOfFrame();

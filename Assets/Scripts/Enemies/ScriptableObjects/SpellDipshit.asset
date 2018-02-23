@@ -18,6 +18,50 @@ MonoBehaviour:
   sightAngle: 80
   attackRange: 80
   attentionSpan: 12
+  firstName:
+  - Horatio
+  - Franklin
+  - Tim
+  - Salazar
+  - Bubbles
+  - Clair
+  lastNameP1:
+  - Mage
+  - Stone
+  - Smeggle
+  - Bumble
+  - Rip
+  - Sparklez
+  - Wood
+  - Doom
+  lastNameP2:
+  - Bottom
+  - Hand
+  - Mason
+  - Stark
+  - Dale
+  - Mancer
+  - Man
+  - Layer
+  verbings:
+  - Fiery
+  - Stormy
+  - Cursed
+  - Divine
+  - Starving
+  - Hateful
+  - Howling
+  - Blinding
+  nouns:
+  - Castle
+  - Fields
+  - Mountain
+  - Sea
+  - Woods
+  - Desert
+  - Void
+  - Skies
+  preferredName: 
   attackTargetTag: Player
   damage: 10
   myType: 3
@@ -35,3 +79,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e9d46e63b95d1141a6634d9e523f7bf, type: 2}
   spellBookPrefab: {fileID: 114233178495423298, guid: 41e5e204f56f3fe489ea699084c0291d,
     type: 2}
+  maxBooks: 0

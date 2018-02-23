@@ -132,14 +132,14 @@ public abstract class Damageable : MonoBehaviour
         transmutable = newBool;
     }
 
-    public virtual void Seduce(float duration, GameObject target, Transform owner)
+    public virtual void Seduce(float duration, GameObject target, SpellCaster owner)
     {
         if(myMovement.crushTarget != null) { // if already seduced
             myMovement.crush.removeFromSeductionList(this); // remove from the seduction list
         }
         if(seduction != null) { StopCoroutine(seduction); }
         myMovement.attackTarget = null;
-        myMovement.crushTarget = owner;
+        myMovement.crushTarget = owner.returnTransform();
         myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
         Debug.Log("Owner is: " + myMovement.crushTarget);
         Debug.Log("Owner SpellCaster is: " + myMovement.crush);
@@ -147,7 +147,7 @@ public abstract class Damageable : MonoBehaviour
         seduction = StartCoroutine(processSeduction(duration, target, owner));
     }
 
-    public virtual IEnumerator processSeduction(float duration, GameObject target, Transform owner)
+    public virtual IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         yield return null;
         seduction = null;

@@ -63,6 +63,7 @@ public class WizardDamageable : Damageable {
 
         // move to transmuted object(in case object was moved)
         myMovement.agent.nextPosition = myReplace.transform.position;
+        myMovement.agent.isStopped = false;
         transform.position = myMovement.agent.nextPosition;
         
         Destroy(myReplace); // Destroy my replacement
@@ -75,7 +76,7 @@ public class WizardDamageable : Damageable {
         GetComponent<SpellCaster>().setCanShoot(true);
     }
 
-    public override IEnumerator processSeduction(float duration, GameObject target, Transform owner)
+    public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         myMovement.changeState(new WizardEnemySeduced(), duration);
         yield return new WaitForSeconds(duration);
