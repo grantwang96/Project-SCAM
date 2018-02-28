@@ -14,8 +14,16 @@ MonoBehaviour:
   health: 700
   baseSpeed: 2
   maxSpeed: 6
-  sightRange: 30
-  sightAngle: 80
+  sightRange: 0
+  sightAngle: 0
+  attackRange: 0
+  attentionSpan: 0
+  firstName: []
+  lastNameP1: []
+  lastNameP2: []
+  verbings: []
+  nouns: []
+  preferredName: The Punching Bag
   attackTargetTag: Player
   damage: 0
   myType: 0

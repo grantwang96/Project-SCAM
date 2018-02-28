@@ -11,6 +11,8 @@ public class MeleeEnemyIdle : NPCState
         duration = newDuration; // set the duration
         stateStartTime = Time.time;
 
+        myOwner.agent.velocity = Vector3.zero;
+
         anim = myOwner.anim;
         anim.SetInteger("Status", 0);
     }
@@ -56,6 +58,9 @@ public class MeleeEnemyWander : NPCState
 
     public override void Execute()
     {
+        if(myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) { myOwner.agent.isStopped = true; }
+        else { myOwner.agent.isStopped = false; }
+        
         if(myOwner.checkView()) { myOwner.changeState(new MeleeEnemyAggro()); }
 
         // check for obstructions
@@ -73,6 +78,23 @@ public class MeleeEnemyWander : NPCState
 
     public override void Exit() {
 
+    }
+}
+
+public class MeleeEnemyInjured : NPCState
+{
+    public override void Enter(Movement owner, NPCState prevState)
+    {
+        base.Enter(owner, prevState);
+    }
+
+    public override void Execute()
+    {
+        int loops = Mathf.FloorToInt(myOwner.anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        Debug.Log(myOwner.anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        if (myOwner.anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1) { // wait for animation to end
+            myOwner.changeState(previousState);
+        }
     }
 }
 
@@ -100,8 +122,12 @@ public class MeleeEnemyAggro : NPCState
 
     public override void Execute()
     {
+
+        if (myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) { myOwner.agent.isStopped = true; }
+        else { myOwner.agent.isStopped = false; }
+        
         // if you have nothing to chase, stop chasing
-        if(myOwner.attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); }
+        if (myOwner.attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); }
 
         // Check to see if the target is still in view
         targetInView = myOwner.checkView();
@@ -134,7 +160,7 @@ public class MeleeEnemyAggro : NPCState
         // float ang = Vector3.Angle(myOwner.transform.forward, attackTarget.position - myOwner.transform.position);
         float dotprod = Vector3.Dot(myOwner.transform.forward, (attackTarget.position - myOwner.transform.position).normalized);
         
-        if(dist <= myOwner.blueprint.attackRange && dotprod > 0.5f) {
+        if(dist <= myOwner.blueprint.attackRange && dotprod >= myOwner.attackDotProd) {
             myOwner.changeState(new MeleeEnemyAttack());
         }
         myOwner.rbody.AddForce(myOwner.agent.desiredVelocity / myOwner.friction);
@@ -152,21 +178,25 @@ public class MeleeEnemyAttack : NPCState
     {
         base.Enter(owner);
         // anim.Play("Attack");
-        myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
+        myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
+        myOwner.agent.isStopped = true;
+        myOwner.agent.velocity = Vector3.zero;
     }
 
     public override void Enter(Movement owner, NPCState prevState)
     {
         base.Enter(owner, prevState);
         // anim.Play("Attack");
-        myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
+        myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
         Debug.Log(myOwner.transform.name + " attacks!");
+        myOwner.agent.isStopped = true;
+        myOwner.agent.velocity = Vector3.zero;
     }
 
     public override void Execute()
     {
         // check if attack animation is finished
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
+        if(myOwner.attackRoutine == null) {
             if(previousState != null) { myOwner.changeState(previousState); }
             else { myOwner.changeState(new MeleeEnemyAggro()); }
         }
@@ -174,7 +204,8 @@ public class MeleeEnemyAttack : NPCState
 
     public override void Exit()
     {
-        
+        myOwner.agent.isStopped = false;
+        Debug.Log("Exiting Attack...");
     }
 }
 

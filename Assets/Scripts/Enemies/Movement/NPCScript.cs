@@ -59,7 +59,7 @@ public class NPCScript : Movement {
         }
     }
 
-    public override void Teleport(Vector3 newLocation)
+    public override void Teleport(Vector3 newLocation, Vector3 offset)
     {
         Vector3 dir = newLocation - transform.position;
         if(charCon.enabled) { charCon.Move(dir); }

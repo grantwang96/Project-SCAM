@@ -11,7 +11,8 @@ public class Teleport : SpellPrimary {
         base.OnHit(proj, coll);
         if(coll.collider.transform != proj.originator) {
             Movement move = proj.originator.GetComponent<Movement>();
-            move.Teleport(proj.transform.position + Vector3.up * proj.GetComponent<Collider>().bounds.extents.y);
+            Vector3 newpos = proj.transform.position;
+            move.Teleport(newpos, coll.contacts[0].normal);
             proj.bounceCount--;
             if (proj.bounceCount <= 0) { proj.Die(); }
         }

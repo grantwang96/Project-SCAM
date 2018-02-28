@@ -86,6 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   radius: 5
+  initialExplosionRadMod: 2
   force: 15
   shakeForce: 1
   myCaster: {fileID: 0}

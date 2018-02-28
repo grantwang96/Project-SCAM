@@ -7,6 +7,36 @@ public class MeleeEnemyDamageable : Damageable {
     public Rigidbody rbody;
     Coroutine knockBackRoutine;
 
+    public GameObject deathFX;
+
+    public override void Die()
+    {
+        base.Die();
+        Destroy(Instantiate(deathFX, transform.position, transform.rotation), 5f);
+    }
+
+    public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
+    {
+        float dirDotProd = Vector3.Dot(transform.forward, dir); // it's y trajectory (positive means from behind)
+        
+        base.TakeDamage(attacker, hpLost, dir, force);
+
+
+        if (dead) {
+            // handle death animations here
+
+            return;
+        }
+
+        if (dirDotProd < -0.5f) { myMovement.anim.Play("FrontHurt"); } // it came from the front
+        else if (dirDotProd > 0.5f) { /*myMovement.anim.Play("FrontHurt");*/ } // it came from behind
+        else {
+            if (-dir.x > 0) { /*myMovement.anim.Play("FrontHurt");*/ } // it came from the right
+            else { /*myMovement.anim.Play("FrontHurt");*/ } // it came from the left
+        }
+        myMovement.changeState(new MeleeEnemyInjured(), myMovement.getCurrentState());
+    }
+
     public override void knockBack(Vector3 dir, float force)
     {
         if (knockBackRoutine != null) {

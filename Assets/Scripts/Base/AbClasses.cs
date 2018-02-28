@@ -59,22 +59,10 @@ public abstract class Damageable : MonoBehaviour
         }
 
         // calculate damage dealt
-        // Debug.Log(transform.name + " takes " + hpLost + " points of damage!");
         health -= hpLost;
         if(health <= 0 && !dead) { dead = true; } // if this damage kills you
         
         knockBack(dir, force);
-
-        // if this damage kills you
-        /*
-        if(dead) {
-            StopAllCoroutines();
-            Die();
-            return;
-        }
-        else {
-            knockBack(dir, force);
-        }*/
     }
 
     public virtual void Heal(int recover)
@@ -200,6 +188,8 @@ public abstract class Movement : MonoBehaviour
 
     public int damage;
     public int hamper;
+    [Range(0, 1)] public float attackDotProd;
+    public Coroutine attackRoutine;
 
     #region For Seeing things
     [SerializeField] int numRaycasts;
@@ -294,8 +284,8 @@ public abstract class Movement : MonoBehaviour
         rbody.velocity = Vector3.zero;
     }
 
-    public virtual void Teleport(Vector3 newLocation) {
-        rbody.MovePosition(newLocation);
+    public virtual void Teleport(Vector3 newLocation, Vector3 offset) {
+        rbody.MovePosition(newLocation + offset);
     }
 
     public virtual bool checkView()
@@ -369,14 +359,15 @@ public abstract class Movement : MonoBehaviour
 
     public virtual IEnumerator attack(Vector3 target)
     {
-        hamper++;
+        // hamper++;
         float startTime = Time.time;
         // play attack animation
         anim.Play("Attack");
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
             yield return new WaitForEndOfFrame();
         }
-        hamper--;
+        attackRoutine = null;
+        // hamper--;
         // get attack animation length
         // Do attack processing like hitbox, spell spawning, etc.
         // yield return new WaitForSeconds(1f); // set clip length here

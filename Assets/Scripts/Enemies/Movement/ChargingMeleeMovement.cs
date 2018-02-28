@@ -30,11 +30,22 @@ public class ChargingMeleeMovement : Movement {
         agent.velocity = Vector3.zero;
         rbody.velocity = Vector3.zero;
 
+        float dotProd = Vector3.Dot(transform.forward, attackTarget.position - transform.position);
+        while(dotProd < 1f) {
+            Vector3 forward = transform.forward;
+            forward.y = 0;
+            Vector3 targetDir = attackTarget.position - transform.position;
+            targetDir.y = 0;
+            transform.forward = Vector3.Lerp(forward, targetDir, 0.75f);
+            dotProd = Vector3.Dot(transform.forward, attackTarget.position - transform.position);
+            yield return new WaitForFixedUpdate();
+        }
+
         float groundTime = 0f;
         rbody.AddForce(transform.forward + transform.TransformVector(chargingForce), ForceMode.Impulse);
 
         while (groundTime < .3f) {
-            if (rbody.velocity.y == 0) { groundTime += Time.deltaTime; }
+            if (rbody.velocity.y <= 0) { groundTime += Time.deltaTime; }
             yield return new WaitForEndOfFrame();
         }
 
@@ -45,11 +56,15 @@ public class ChargingMeleeMovement : Movement {
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
             yield return new WaitForEndOfFrame();
         }
+
+        yield return new WaitForSeconds(0.5f);
+
         hamper--;
 
         agent.Warp(transform.position);
         agent.isStopped = false;
         agent.updatePosition = true;
         agent.updateRotation = true;
+        attackRoutine = null;
     }
 }

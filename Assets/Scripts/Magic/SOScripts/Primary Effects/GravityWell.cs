@@ -16,9 +16,10 @@ public class GravityWell : SpellPrimary {
     {
         if (proj.friendlyOff && coll.transform == proj.originator) { return; }
         base.OnHit(proj, coll);
+        GravityWellVortex newGravWell = Instantiate(gravWellPrefab, proj.transform.position, Quaternion.identity); // create gravity well
         if (proj.bounceCount <= 0)
         {
-            GravityWellVortex newGravWell = Instantiate(gravWellPrefab, proj.transform.position, Quaternion.identity); // create gravity well
+            
             // Instantiate special effect
             proj.Die();
             return;

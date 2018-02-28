@@ -23,6 +23,9 @@ public class KnockBackSideEffect : SpellSecondary {
         projectile.power *= Mathf.RoundToInt(valueModifier);
         projectile.duration *= valueModifier;
         projectile.friendlyOff = true;
+
+        Debug.DrawRay(user.position, dir, Color.blue, 10f);
+
         if (dam) { dam.knockBack(dir, force); }
         else { Debug.Log("No damageable!"); }
     }

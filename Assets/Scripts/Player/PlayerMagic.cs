@@ -181,6 +181,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         float sizeModifier = 1f + (100f / enemy.max_health);
         enemyHPBackground.sizeDelta = new Vector2((enemy.max_health * sizeModifier) + 10, 10);
         enemyHP.sizeDelta = new Vector2(enemyHPBackground.sizeDelta.x - 10, 5);
+        enemyHP.anchoredPosition = enemyHPBackground.anchoredPosition;
 
         while(time < 5f) {
             if(enemy == null || enemy.gameObject == null) { break; }

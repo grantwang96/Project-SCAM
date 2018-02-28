@@ -74,10 +74,11 @@ public class PlayerMovementV2 : Movement {
         }
     }
 
-    public override void Teleport(Vector3 newLocation)
+    public override void Teleport(Vector3 newLocation, Vector3 offset)
     {
-        Vector3 dir = (newLocation + Vector3.up * charCon.height) - transform.position;
-        if (charCon.enabled) { charCon.Move(dir); }
+        // Vector3 dir = (newLocation + Vector3.up * charCon.height) - transform.position;
+        // if (charCon.enabled) { charCon.Move(dir); }s
+        transform.position = newLocation + offset * charCon.radius + Vector3.up * charCon.height;
     }
 
     public override void setup()
@@ -102,30 +103,43 @@ public class PlayerMovementV2 : Movement {
 
     public override void knockBack(Vector3 dir, float force)
     {
+        /*
         if(movementTakeover != null) {
             StopCoroutine(movementTakeover);
             hamper--;
-        }
+        }*/
         Vector3 knock = dir * force;
         movementTakeover = StartCoroutine(knockingBack(knock));
     }
 
     IEnumerator knockingBack(Vector3 force) {
         hamper++;
+
+        Debug.Log("Force Knockback: " + force);
+
         Vector3 knock = force;
         yMove = force.y;
         knock.y = 0;
         Vector3 start = knock;
 
         falling = true;
-
-        while (!charCon.isGrounded) {
+        yield return new WaitForFixedUpdate();
+        
+        while (!charCon.isGrounded && (charCon.velocity.x != 0 || charCon.velocity.z != 0)) { // once you land or hit a wall
             Move(knock * Time.deltaTime);
-            knock = Vector3.Lerp(knock, Vector3.zero, 0.5f);
             yield return new WaitForEndOfFrame();
         }
-        movementTakeover = null;
+        Debug.Log("Stopped");
         hamper--;
+        float time = 0f;
+        float linearDragMod = 2f;
+        while(knock != Vector3.zero) {
+            Move(knock * Time.deltaTime);
+            time += Time.deltaTime * linearDragMod;
+            knock = Vector3.Lerp(start, Vector3.zero, time);
+            yield return new WaitForFixedUpdate();
+        }
+        movementTakeover = null;
     }
 
     void Jump()

@@ -23,4 +23,16 @@ public class MeleeMovement : Movement {
         anim.Play("Attack");
         return base.attack(target);
     }
+
+    public override void knockBack(Vector3 dir, float force)
+    {
+        base.knockBack(dir, force);
+    }
+
+    void OnCollisionStay(Collision coll)
+    {
+        if(coll.collider.tag == "Ground" && anim.GetCurrentAnimatorStateInfo(0).IsTag("Hurt")) {
+
+        }
+    }
 }

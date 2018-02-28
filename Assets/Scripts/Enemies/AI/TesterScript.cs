@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class TesterScript : MonoBehaviour {
-
+    /*
     public GameObject landMark;
 
     private NavMeshAgent dumbass;
@@ -12,11 +12,16 @@ public class TesterScript : MonoBehaviour {
 
     [Range(1f, 100f)] public float searchRange;
     [Range(-0.5f, 0.5f)] public float dotProdThresh;
+    */
 
     // Use this for initialization
     void Start () {
+        /*
         dumbass = GetComponent<NavMeshAgent>();
         dumbass.updateRotation = false;
+        */
+
+
 	}
 	
 	// Update is called once per frame
@@ -29,13 +34,23 @@ public class TesterScript : MonoBehaviour {
         */
 
         if (Input.GetMouseButtonDown(0)) {
-            TakeCover();
+            // TakeCover();
+
+            foreach(Transform joint in transform)
+            {
+                joint.parent = null;
+                joint.GetComponent<Rigidbody>().isKinematic = false;
+                joint.GetComponent<Rigidbody>().AddExplosionForce(10f, transform.position, 5f);
+            }
         }
+
+        /*
         if (transform.position == dumbass.pathEndPosition) {
             Debug.Log("Reached end!");
-        }
+        }*/
     }
 
+    /*
     void TakeCover() {
         Debug.Log("Bleep");
         List<NavMeshHit> potentialPositions = new List<NavMeshHit>();
@@ -47,11 +62,11 @@ public class TesterScript : MonoBehaviour {
                 Vector3 enemyDir = landMark.transform.position - transform.position;
                 Vector3 dir = landMark.transform.position - hit.position;
                 dir.y = 0;
-                /*
+                
                 float dotProd = Vector3.Dot(hit.normal, enemyDir.normalized);
                 Debug.Log("Hit Position " + hit.position + ". Dot Product is: " + dotProd);
                 if(dotProd < dotProdThresh) { potentialPositions.Add(hit); }
-                */
+                
 
                 float angle = Vector3.Angle(hit.normal, dir.normalized);
                 if(angle >= 90f) { potentialPositions.Add(hit);
@@ -136,5 +151,5 @@ public class TesterScript : MonoBehaviour {
         NavMesh.SamplePosition(randPos, out navHit, range, dumbass.areaMask);
 
         return navHit.position;
-    }
+    }*/
 }

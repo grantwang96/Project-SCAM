@@ -16,7 +16,7 @@ MonoBehaviour:
   maxSpeed: 6
   sightRange: 30
   sightAngle: 80
-  attackRange: 2.9
+  attackRange: 3
   attentionSpan: 6.1
   firstName:
   - Bob

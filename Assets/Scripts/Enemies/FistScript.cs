@@ -6,6 +6,7 @@ public class FistScript : MonoBehaviour {
 
     public int damage;
     public float force;
+    public float upwardForce;
     public Transform myBody;
     public Movement myMovement;
 
@@ -28,6 +29,7 @@ public class FistScript : MonoBehaviour {
         if(myBody == null) { return; }
         if (dam != null && dam != myBody.GetComponent<Damageable>()) {
             Vector3 dir = (coll.transform.position - myBody.position).normalized;
+            dir.y = upwardForce;
             Debug.Log(myBody + " " + myMovement);
             dam.TakeDamage(myBody, myMovement.damage, dir, force);
             // Debug.Log("Hit");

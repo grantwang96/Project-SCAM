@@ -16,7 +16,7 @@ MonoBehaviour:
   title: Ultimate
   description: Really, REALLY, strong
   decoration: {fileID: 4984204316487484, guid: 521344c0cdcdabf44b262c5d5505ff4e, type: 2}
-  force: 40
+  force: 35
   upwardForce: 0.3
   chargeTime: 0
   valueModifier: 3

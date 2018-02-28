@@ -8,6 +8,6 @@ public class TeleportSideEffect : SpellSecondary {
     public override void OnHit(Transform user, Missile projectile) {
         if(user == null) { return; }
         Movement move = user.GetComponent<Movement>();
-        move.Teleport(projectile.transform.position);
+        move.Teleport(projectile.transform.position, Vector3.zero);
     }
 }

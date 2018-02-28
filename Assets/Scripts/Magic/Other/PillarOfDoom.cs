@@ -6,6 +6,7 @@ public class PillarOfDoom : MonoBehaviour {
     
     public int damage; // over time
     public float radius;
+    public float initialExplosionRadMod;
     public float force = 10f;
     float startTime;
     float duration;
@@ -20,11 +21,11 @@ public class PillarOfDoom : MonoBehaviour {
 	void Start () {
         partSys = GetComponent<ParticleSystem>();
         duration = partSys.main.startLifetime.constant;
-        radius = partSys.shape.radius;
+        // radius = partSys.shape.radius;
         var main = partSys.main;
         partSpeed = main.startSpeed.constant;
-
-        RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, radius * 1.5f, Vector3.up, 0f);
+        
+        RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, initialExplosionRadMod * radius, Vector3.up, 0f);
         foreach (RaycastHit hit in rayHits) {
             Damageable dam = hit.collider.GetComponent<Damageable>();
             if (dam != null) {

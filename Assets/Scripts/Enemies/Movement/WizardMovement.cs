@@ -40,6 +40,7 @@ public class WizardMovement : Movement, SpellCaster {
             }
             yield return new WaitForEndOfFrame();
         }
+        attackRoutine = null;
     }
 
     public void pickUpSpell(SpellBook newSpell)
