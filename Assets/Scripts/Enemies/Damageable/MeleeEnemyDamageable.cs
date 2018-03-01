@@ -27,12 +27,7 @@ public class MeleeEnemyDamageable : Damageable {
             return;
         }
 
-        if (dirDotProd < -0.5f) { myMovement.anim.Play("FrontHurt"); } // it came from the front
-        else if (dirDotProd > 0.5f) { myMovement.anim.Play("BackHurt"); } // it came from behind
-        else {
-            if (-dir.x > 0) { myMovement.anim.Play("RightHurt"); } // it came from the right
-            else { myMovement.anim.Play("LeftHurt"); } // it came from the left
-        }
+        PlayHurtAnimation(dirDotProd, dir);
 
         if(attacker != myMovement.attackTarget &&
            myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced)) {
@@ -143,5 +138,15 @@ public class MeleeEnemyDamageable : Damageable {
         yield return new WaitForSeconds(duration);
         myMovement.changeState(new MeleeEnemyIdle());
         seduction = null;
+    }
+
+    public void PlayHurtAnimation(float dirDotProd, Vector3 dir)
+    {
+        if (dirDotProd < -0.5f) { myMovement.anim.Play("FrontHurt"); } // it came from the front
+        else if (dirDotProd > 0.5f) { myMovement.anim.Play("BackHurt"); } // it came from behind
+        else {
+            if (-dir.x > 0) { myMovement.anim.Play("RightHurt"); } // it came from the right
+            else { myMovement.anim.Play("LeftHurt"); } // it came from the left
+        }
     }
 }

@@ -14,8 +14,8 @@ MonoBehaviour:
   health: 700
   baseSpeed: 2
   maxSpeed: 6
-  sightRange: 33.5
-  sightAngle: 77.1
+  sightRange: 0
+  sightAngle: 0
   attackRange: 3
   attentionSpan: 0
   firstName: []
