@@ -25,14 +25,13 @@ public class FistScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider coll)
     {
-        Damageable dam = coll.GetComponent<Damageable>();
         if(myBody == null) { return; }
-        if (dam != null && dam != myBody.GetComponent<Damageable>()) {
+        if (coll.transform == myMovement.attackTarget) {
+            Damageable dam = coll.GetComponent<Damageable>();
+            if(dam == null) { return; }
             Vector3 dir = (coll.transform.position - myBody.position).normalized;
             dir.y = upwardForce;
-            Debug.Log(myBody + " " + myMovement);
             dam.TakeDamage(myBody, myMovement.damage, dir, force);
-            // Debug.Log("Hit");
         }
     }
 }

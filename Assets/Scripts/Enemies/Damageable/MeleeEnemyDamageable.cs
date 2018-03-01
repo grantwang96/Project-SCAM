@@ -6,6 +6,7 @@ public class MeleeEnemyDamageable : Damageable {
 
     public Rigidbody rbody;
     Coroutine knockBackRoutine;
+    Coroutine targetSwitchRoutine;
 
     public GameObject deathFX;
 
@@ -21,20 +22,35 @@ public class MeleeEnemyDamageable : Damageable {
         
         base.TakeDamage(attacker, hpLost, dir, force);
 
-
         if (dead) {
             // handle death animations here
-
             return;
         }
 
         if (dirDotProd < -0.5f) { myMovement.anim.Play("FrontHurt"); } // it came from the front
-        else if (dirDotProd > 0.5f) { /*myMovement.anim.Play("FrontHurt");*/ } // it came from behind
+        else if (dirDotProd > 0.5f) { myMovement.anim.Play("BackHurt"); } // it came from behind
         else {
-            if (-dir.x > 0) { /*myMovement.anim.Play("FrontHurt");*/ } // it came from the right
-            else { /*myMovement.anim.Play("FrontHurt");*/ } // it came from the left
+            if (-dir.x > 0) { myMovement.anim.Play("RightHurt"); } // it came from the right
+            else { myMovement.anim.Play("LeftHurt"); } // it came from the left
+        }
+
+        if(attacker != myMovement.attackTarget &&
+           myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced)) {
+            if(targetSwitchRoutine != null) { StopCoroutine(targetSwitchRoutine); }
+            targetSwitchRoutine = StartCoroutine(SwitchTargets(attacker));
+            myMovement.changeState(new MeleeEnemyAggro());
         }
         myMovement.changeState(new MeleeEnemyInjured(), myMovement.getCurrentState());
+    }
+
+    IEnumerator SwitchTargets(Transform attacker) {
+        myMovement.attackTarget = attacker;
+        if(myMovement.attackTarget == null) { Debug.Log("No attack target!"); yield break; }
+        while(attacker != null) {
+            yield return new WaitForFixedUpdate();
+        }
+        myMovement.attackTarget = myMovement.blueprint.getOriginTarget();
+        targetSwitchRoutine = null;
     }
 
     public override void knockBack(Vector3 dir, float force)
@@ -58,6 +74,7 @@ public class MeleeEnemyDamageable : Damageable {
         rbody.AddForce(dir * force, ForceMode.Impulse);
 
         while (groundTime < .3f) {
+            myMovement.agent.isStopped = true;
             if (rbody.velocity.y == 0) { groundTime += Time.deltaTime; }
             yield return new WaitForEndOfFrame();
         }
@@ -121,6 +138,7 @@ public class MeleeEnemyDamageable : Damageable {
 
     public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
+        myMovement.anim.Play("FrontHurt");
         myMovement.changeState(new MeleeEnemySeduced(), duration);
         yield return new WaitForSeconds(duration);
         myMovement.changeState(new MeleeEnemyIdle());

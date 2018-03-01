@@ -114,9 +114,7 @@ public class PlayerMovementV2 : Movement {
 
     IEnumerator knockingBack(Vector3 force) {
         hamper++;
-
-        Debug.Log("Force Knockback: " + force);
-
+        
         Vector3 knock = force;
         yMove = force.y;
         knock.y = 0;

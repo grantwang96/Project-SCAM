@@ -14,16 +14,16 @@ MonoBehaviour:
   health: 700
   baseSpeed: 2
   maxSpeed: 6
-  sightRange: 0
-  sightAngle: 0
-  attackRange: 0
+  sightRange: 33.5
+  sightAngle: 77.1
+  attackRange: 3
   attentionSpan: 0
   firstName: []
   lastNameP1: []
   lastNameP2: []
   verbings: []
   nouns: []
-  preferredName: The Punching Bag
+  preferredName: Tim
   attackTargetTag: Player
   damage: 0
   myType: 0

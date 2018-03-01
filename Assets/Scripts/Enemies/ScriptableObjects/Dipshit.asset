@@ -17,7 +17,7 @@ MonoBehaviour:
   sightRange: 30
   sightAngle: 80
   attackRange: 3
-  attentionSpan: 6.1
+  attentionSpan: 10
   firstName:
   - Bob
   - Krong
