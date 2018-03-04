@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe4670618b58e84c959ccf62c90314b, type: 3}
   m_Name: Throw
   m_EditorClassIdentifier: 
-  ammo: 0
+  ammo: 1
   coolDown: 0.5
   title: Baseball
   description: To be thrown, not shot

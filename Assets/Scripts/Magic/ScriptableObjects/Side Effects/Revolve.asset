@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a89fbeb0b1601d42946621db5481b37, type: 3}
   m_Name: Revolve
   m_EditorClassIdentifier: 
-  ammo: 10
+  ammo: 3
   coolDown: 0.5
   title: Orbiting
   description: You'll feel like a star!

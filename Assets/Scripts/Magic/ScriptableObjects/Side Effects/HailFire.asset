@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff2e4aa2f7adb14bb36d4558aa74f9b, type: 3}
   m_Name: HailFire
   m_EditorClassIdentifier: 
-  ammo: 3
+  ammo: 1
   coolDown: 1.5
   title: Hailing
   description: Rains spell upon you

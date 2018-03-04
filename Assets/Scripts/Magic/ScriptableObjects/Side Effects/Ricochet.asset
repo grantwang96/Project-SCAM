@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ed95b4bfde3e44a95d43976dd13f38, type: 3}
   m_Name: Ricochet
   m_EditorClassIdentifier: 
-  ammo: 6
+  ammo: 3
   coolDown: 0
   title: Ricocheting
   description: Bounces off surfaces
