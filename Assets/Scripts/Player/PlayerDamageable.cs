@@ -47,7 +47,6 @@ public class PlayerDamageable : Damageable {
         if(health <= 0) { Die(); return; }
         if(attacker == null) { return; }
         PlayerMagic.instance.invokeChangeFollowers(attacker.GetComponent<Damageable>());
-        Debug.Log("Player HP: " + health);
         StartCoroutine(hurtFrames());
     }
 

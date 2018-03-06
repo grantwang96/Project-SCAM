@@ -139,7 +139,6 @@ public class PlayerMovementV2 : Movement {
             Move(knock * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        Debug.Log("Stopped");
         hamper--;
         float time = 0f;
         float linearDragMod = 2f;
@@ -168,7 +167,7 @@ public class PlayerMovementV2 : Movement {
                 Debug.Log("I touched book!");
             }
         }
-        if (tag.Contains("Ground") || tag.Contains("Roof")) {
+        if (tag.Contains("Ground") || tag.Contains("Roof") || tag.Contains("Wall")) {
             if (coll.point.y > transform.position.y && yMove > 0) // If collided with head
             {
                 Debug.Log("I hit my head!");
