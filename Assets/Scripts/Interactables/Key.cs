@@ -16,6 +16,6 @@ public class Key : MonoBehaviour {
 
     void OnDestroy()
     {
-        Debug.Log("Unlocked door!");
+        
     }
 }

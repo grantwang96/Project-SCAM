@@ -76,9 +76,21 @@ public class PlayerMovementV2 : Movement {
 
     public override void Teleport(Vector3 newLocation, Vector3 offset)
     {
-        // Vector3 dir = (newLocation + Vector3.up * charCon.height) - transform.position;
-        // if (charCon.enabled) { charCon.Move(dir); }s
-        transform.position = newLocation + offset * charCon.radius + Vector3.up * charCon.height;
+        Vector3 dir = (newLocation) - transform.position;
+        Debug.DrawRay(newLocation, dir, Color.red, 10f);
+        RaycastHit[] rayHits = Physics.CapsuleCastAll(newLocation - Vector3.one * charCon.height / 2, newLocation + Vector3.one * charCon.height / 2,
+            charCon.radius, dir, .001f);
+        Vector3 newOffset = Vector3.zero;
+        if(rayHits.Length != 0) {
+            for(int i = 0; i < rayHits.Length; i++) {
+                newOffset += rayHits[i].normal;
+            }
+        }
+        // Debug.DrawLine(newLocation, newLocation + newOffset, Color.red, 10f);
+        transform.position = newLocation + newOffset;
+
+        // if (charCon.enabled) { charCon.Move(dir); }
+        // transform.position = newLocation + offset * charCon.radius + Vector3.up * charCon.height;
     }
 
     public override void setup()
