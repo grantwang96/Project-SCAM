@@ -15,6 +15,7 @@ public class MeleeEnemyIdle : NPCState
 
         anim = myOwner.anim;
         anim.SetInteger("Status", 0);
+        myOwner.attackTarget = myOwner.blueprint.getOriginTarget();
     }
 
     public override void Execute() {
@@ -126,9 +127,8 @@ public class MeleeEnemyAggro : NPCState
     public override void Execute()
     {
         // if you have nothing to chase, stop chasing
-        if (myOwner.attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); }
-
-        Debug.Log(attackTarget);
+        if (myOwner.attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); return; }
+        
         float dist = Vector3.Distance(myOwner.transform.position, attackTarget.position);
 
         if (myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
