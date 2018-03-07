@@ -63,9 +63,10 @@ public class WizardDamageable : Damageable {
 
         // move to transmuted object(in case object was moved)
         myMovement.agent.nextPosition = myReplace.transform.position;
+        myMovement.agent.Warp(myReplace.transform.position);
         myMovement.agent.isStopped = false;
         transform.position = myMovement.agent.nextPosition;
-        
+
         Destroy(myReplace); // Destroy my replacement
 
         // reaactivate colliders and renderers

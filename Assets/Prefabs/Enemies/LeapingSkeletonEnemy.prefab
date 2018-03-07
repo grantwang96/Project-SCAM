@@ -37,8 +37,8 @@ GameObject:
   - component: {fileID: 54333894238283588}
   - component: {fileID: 136702122945417942}
   - component: {fileID: 195758302445359732}
-  - component: {fileID: 114338281252474246}
   - component: {fileID: 114734420963928022}
+  - component: {fileID: 114647624528758258}
   m_Layer: 12
   m_Name: LeapingSkeletonEnemy
   m_TagString: Untagged
@@ -730,7 +730,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035468567916540}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3, y: 0, z: -0}
+  m_LocalPosition: {x: -75.439766, y: 5, z: 15.349173}
   m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
   - {fileID: 4044017823861714}
@@ -977,7 +977,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114338281252474246
+--- !u!114 &114647624528758258
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -985,13 +985,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1035468567916540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0725175768b3a904091d713637429dd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 11ce440aee6be7c4492717eb574c6a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   baseSpeed: 0
   maxSpeed: 0
   currSpeed: 0
-  maxWanderDistance: 10
+  maxWanderDistance: 0
   friction: 1
   currVel: {x: 0, y: 0, z: 0}
   sightRange: 0
@@ -1022,6 +1022,7 @@ MonoBehaviour:
   attackTarget: {fileID: 0}
   crushTarget: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
+  chargingForce: {x: 0, y: 4, z: 20}
 --- !u!114 &114674623282616590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1037,7 +1038,7 @@ MonoBehaviour:
   force: 10
   upwardForce: 0.4
   myBody: {fileID: 4594890249279488}
-  myMovement: {fileID: 114338281252474246}
+  myMovement: {fileID: 0}
 --- !u!114 &114734420963928022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1058,7 +1059,7 @@ MonoBehaviour:
   damageable: 1
   myCollider: {fileID: 136702122945417942}
   myRend: {fileID: 0}
-  myMovement: {fileID: 114338281252474246}
+  myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
   rbody: {fileID: 54333894238283588}

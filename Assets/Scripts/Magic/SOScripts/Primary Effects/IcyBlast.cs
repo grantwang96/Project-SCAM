@@ -61,6 +61,11 @@ public class IcyBlast : SpellPrimary {
                     Vector3 knockBack = (missile.transform.position - coll.transform.position).normalized;
                     knockBack.y = upwardKnockup;
                     knockBack = knockBack.normalized;
+                    SpellCaster originator = missile.originator.GetComponent<SpellCaster>();
+                    if (originator == null) { originator = missile.myCaster; }
+                    if (originator != null) {
+                        originator.invokeChangeFollowers(dam);
+                    }
                     dam.TakeDamage(missile.originator, missile.power, knockBack, knockBackForce);
                 }
             }

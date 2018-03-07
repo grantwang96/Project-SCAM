@@ -15,6 +15,7 @@ public class MeleeEnemyIdle : NPCState
 
         anim = myOwner.anim;
         anim.SetInteger("Status", 0);
+        myOwner.attackTarget = myOwner.blueprint.getOriginTarget();
     }
 
     public override void Execute() {
@@ -126,9 +127,9 @@ public class MeleeEnemyAggro : NPCState
     public override void Execute()
     {
         // if you have nothing to chase, stop chasing
-        if (myOwner.attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); }
+        if (myOwner.attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); return; }
+        if(myOwner.transform == null || myOwner.attackTarget == null) { Debug.Log("Nope"); return; }
 
-        Debug.Log(attackTarget);
         float dist = Vector3.Distance(myOwner.transform.position, attackTarget.position);
 
         if (myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
@@ -202,7 +203,7 @@ public class MeleeEnemyAttack : NPCState
         base.Enter(owner, prevState);
         // anim.Play("Attack");
         myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
-        Debug.Log(myOwner.transform.name + " attacks!");
+        // Debug.Log(myOwner.transform.name + " attacks!");
         myOwner.agent.isStopped = true;
     }
 
@@ -219,7 +220,6 @@ public class MeleeEnemyAttack : NPCState
     public override void Exit()
     {
         myOwner.agent.isStopped = false;
-        Debug.Log("Exiting Attack...");
     }
 }
 

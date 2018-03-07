@@ -42,6 +42,7 @@ public class MeleeEnemyDamageable : Damageable {
         myMovement.attackTarget = attacker;
         if(myMovement.attackTarget == null) { Debug.Log("No attack target!"); yield break; }
         while(attacker != null) {
+            if(myMovement.attackTarget != attacker) { yield break; }
             yield return new WaitForFixedUpdate();
         }
         myMovement.attackTarget = myMovement.blueprint.getOriginTarget();
@@ -111,6 +112,7 @@ public class MeleeEnemyDamageable : Damageable {
 
         // move to transmuted object(in case object was moved)
         myMovement.agent.nextPosition = myReplace.transform.position;
+        myMovement.agent.Warp(myReplace.transform.position);
         myMovement.agent.isStopped = false;
         transform.position = myMovement.agent.nextPosition;
 

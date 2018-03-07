@@ -31,7 +31,6 @@ public class PillarOfDoom : MonoBehaviour {
             if (dam != null) {
                 Vector3 dir = (hit.collider.transform.position - transform.position).normalized;
                 dam.TakeDamage(myCaster, damage * 2, dir, force);
-                Debug.Log("Hit " + hit.collider.name);
             }
             else {
                 Rigidbody rbody = hit.collider.attachedRigidbody;
