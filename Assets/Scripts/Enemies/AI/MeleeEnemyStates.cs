@@ -122,13 +122,19 @@ public class MeleeEnemyAggro : NPCState
         duration = myOwner.blueprint.attentionSpan;
 
         // myOwner.agent.isStopped = false;
+        if (myOwner == null || myOwner.transform == null || myOwner.attackTarget == null) {
+            Debug.Log(myOwner.name + " is aggroed against " + myOwner.attackTarget.name);
+        }
     }
 
     public override void Execute()
     {
         // if you have nothing to chase, stop chasing
-        if (myOwner.attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); return; }
-        if(myOwner.transform == null || myOwner.attackTarget == null) { Debug.Log("Nope"); return; }
+        if (myOwner.attackTarget == null || attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); return; }
+        if(myOwner == null || myOwner.transform == null || myOwner.attackTarget == null || attackTarget == null) {
+            // Debug.Log("Nope");
+            return;
+        }
 
         float dist = Vector3.Distance(myOwner.transform.position, attackTarget.position);
 
@@ -244,7 +250,7 @@ public class MeleeEnemySeduced : NPCState
 
     public override void Enter(Movement owner, float newDuration)
     {
-        base.Enter(owner, newDuration); Debug.Log("Seduced for: " + duration);
+        base.Enter(owner, newDuration); // Debug.Log("Seduced for: " + duration);
         // set animator to seduced animations
         anim = myOwner.anim;
 

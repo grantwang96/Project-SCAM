@@ -10,10 +10,19 @@ public class Door : Damageable, Interactable {
     [SerializeField] Transform myHinge;
     [SerializeField] float speed;
     [SerializeField] private bool _locked;
+
+    [SerializeField] private GameObject lock1;
+    [SerializeField] private GameObject lock2;
+
     public bool locked { get { return _locked; } set {
             _locked = value;
-            if(open) { movement = StartCoroutine(doorRotation()); }
-        } }
+            lock1.SetActive(value);
+            lock2.SetActive(value);
+            if (open) {
+                movement = StartCoroutine(doorRotation());
+            }
+        }
+    }
     [SerializeField] private bool open;
 
     Coroutine movement;
@@ -77,6 +86,8 @@ public class Door : Damageable, Interactable {
     {
         if(open) { myHinge.localEulerAngles = openRotation; }
         else { myHinge.localEulerAngles = closedRotation; }
+        lock1.SetActive(_locked);
+        lock2.SetActive(_locked);
     }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)

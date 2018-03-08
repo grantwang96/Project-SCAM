@@ -70,14 +70,19 @@ public class MeleeEnemyDamageable : Damageable {
         rbody.AddForce(dir * force, ForceMode.Impulse);
 
         while (groundTime < .3f) {
-            myMovement.agent.isStopped = true;
-            if (rbody.velocity.y == 0) { groundTime += Time.deltaTime; }
+            RaycastHit rayHit;
+            if (Physics.Raycast(transform.position, Vector3.down, out rayHit, myCollider.bounds.extents.y + 0.1f, ~0, QueryTriggerInteraction.Ignore)) {
+                if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "Wall") { groundTime += Time.deltaTime; }
+            }
+
             yield return new WaitForEndOfFrame();
         }
-        myMovement.agent.Warp(transform.position);
+
+        Debug.Log("Back to work!");
         myMovement.agent.isStopped = false;
         myMovement.agent.updatePosition = true;
         myMovement.agent.updateRotation = true;
+        myMovement.agent.Warp(transform.position);
         knockBackRoutine = null;
     }
 

@@ -293,7 +293,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public void dropSpell(SpellBook dropSpell, Vector3 originPos) // drop the spellbook
     {
-        Debug.Log("Dropped Spell");
+        // Debug.Log("Dropped Spell");
         // unlink spellbook from player
         if(dropSpell.owner == this.GetComponent<SpellCaster>()) { dropSpell.owner = null; }
         if (spellsInventory.Contains(dropSpell)) { spellsInventory.Remove(dropSpell); }

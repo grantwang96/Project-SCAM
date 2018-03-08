@@ -129,8 +129,8 @@ public abstract class Damageable : MonoBehaviour
         myMovement.attackTarget = null;
         myMovement.crushTarget = owner.returnTransform();
         myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
-        Debug.Log("Owner is: " + myMovement.crushTarget);
-        Debug.Log("Owner SpellCaster is: " + myMovement.crush);
+        // Debug.Log("Owner is: " + myMovement.crushTarget);
+        // Debug.Log("Owner SpellCaster is: " + myMovement.crush);
         myMovement.crush.addToSeductionList(this);
         seduction = StartCoroutine(processSeduction(duration, target, owner));
     }

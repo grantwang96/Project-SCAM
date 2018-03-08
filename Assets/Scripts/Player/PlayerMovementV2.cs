@@ -164,13 +164,13 @@ public class PlayerMovementV2 : Movement {
         if (tag.Contains("Book")) {
             SpellBook touchedBook = coll.collider.GetComponent<SpellBook>();
             if (touchedBook) {
-                Debug.Log("I touched book!");
+                // Debug.Log("I touched book!");
             }
         }
         if (tag.Contains("Ground") || tag.Contains("Roof") || tag.Contains("Wall")) {
             if (coll.point.y > transform.position.y && yMove > 0) // If collided with head
             {
-                Debug.Log("I hit my head!");
+                // Debug.Log("I hit my head!");
                 yMove = 0f;
                 return;
             }

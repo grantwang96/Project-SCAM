@@ -66,7 +66,7 @@ public class Movable : Damageable
     public override void setTransmutable(bool newBool)
     {
         transmutable = newBool;
-        Debug.Log(transform.name + " transmutable was set to " + transmutable);
+        // Debug.Log(transform.name + " transmutable was set to " + transmutable);
     }
 
     public override void vortexGrab(Transform center, float force)
