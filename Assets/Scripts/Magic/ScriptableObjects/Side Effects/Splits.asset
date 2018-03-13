@@ -16,6 +16,9 @@ MonoBehaviour:
   title: Bleh
   description: 
   decoration: {fileID: 4100865636128526, guid: 27b550ebe851a1a4abb9d37afce6afd4, type: 2}
+  sideEffect: {fileID: 0}
+  lowerChanceActivate: 0.1
+  upperChanceActivate: 0.3
   splitLowerBound: 20
   splitUpperBound: 30
   lowerHeightOffset: -2

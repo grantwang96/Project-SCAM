@@ -5,7 +5,8 @@ using UnityEngine;
 public class SpellBook : MonoBehaviour, Interactable {
 
     public SpellPrimary primaryEffect;
-    public SpellSecondary secondaryEffect;
+    public List<SideEffect> sideEffects = new List<SideEffect>();
+    // public SpellSecondary secondaryEffect;
 
     [SerializeField] int maxAmmo;
     public int getMaxAmmo() { return maxAmmo; }
@@ -26,14 +27,14 @@ public class SpellBook : MonoBehaviour, Interactable {
     Rigidbody rbody;
 
     public ParticleSystem DieEffect;
-    [SerializeField] private float offChance;
-    public float OffChance { get { return offChance; } }
+
+    [SerializeField] private Missile projectilePrefab;
 
 	// Use this for initialization
 	void Awake () {
         allMeshes = GetComponentsInChildren<MeshRenderer>();
         rbody = GetComponent<Rigidbody>();
-        SetupSpell();
+        // SetupSpell();
     }
 
     void Start()
@@ -43,37 +44,39 @@ public class SpellBook : MonoBehaviour, Interactable {
 
     public void SetupSpell()
     {
-        offChance = Random.Range(0.5f, .9f);
-        if (primaryEffect)
-        {
-            ammo += primaryEffect.ammo;
-            baseColor = primaryEffect.baseColor;
-            baseColor.a = 1f;
-            transform.Find("Cover").GetComponent<Renderer>().material.color = baseColor;
-            spellTitle = primaryEffect.title;
-            spellDescription = "-" + primaryEffect.description;
+        if (primaryEffect) {
+            SetUpPrimary();
+            SetUpSideEffects();
         }
-        if (secondaryEffect)
-        {
-            ammo += secondaryEffect.ammo;
-            // spellTitle = secondaryEffect.title + " " + spellTitle;
-            spellDescription += "\n-" + secondaryEffect.description;
-            if (transform.Find("Sparkles")) {
-                sparklyEffect = null;
-                Destroy(transform.Find("Sparkles").gameObject);
-            }
-            sparklyEffect = Instantiate(secondaryEffect.decoration, transform);
-            sparklyEffect.name = "Sparkles";
-            sparklyEffect.localPosition = Vector3.zero;
-            sparklyEffect.localRotation = transform.rotation;
-            ParticleSystem sparklyParticles = sparklyEffect.GetComponent<ParticleSystem>();
-            if (sparklyParticles)
-            {
-                ParticleSystem.MainModule main = sparklyParticles.main;
-                main.startColor = baseColor;
-            }
-        }
+
         maxAmmo = ammo;
+    }
+
+    private void SetUpPrimary() {
+        ammo += primaryEffect.ammo;
+        baseColor = primaryEffect.baseColor;
+        baseColor.a = 1f;
+        transform.Find("Cover").GetComponent<Renderer>().material.color = baseColor;
+        spellTitle = primaryEffect.title;
+        spellDescription = "-" + primaryEffect.description;
+    }
+
+    private void SetUpSideEffects()
+    {
+        sideEffects.Clear();
+
+        int sideEffectCount = Random.Range(1, 3);
+        List<SpellSecondary> secondaries = new List<SpellSecondary>();
+        for(int i = 0; i < primaryEffect.allowedSecondaries.Length; i++) { secondaries.Add(primaryEffect.allowedSecondaries[i]); }
+
+        for(int i = 0; i < sideEffectCount; i++) {
+            if(i >= secondaries.Count) { break; }
+            SpellSecondary secondary = secondaries[Random.Range(0, primaryEffect.allowedSecondaries.Length)];
+            SideEffect newSideEffect =
+                new SideEffect(secondary, Random.Range(secondary.lowerChanceActivate, secondary.upperChanceActivate));
+            sideEffects.Add(newSideEffect);
+            secondaries.Remove(secondary);
+        }
     }
 	
 	// Update is called once per frame
@@ -85,6 +88,10 @@ public class SpellBook : MonoBehaviour, Interactable {
         if (ammo <= 0 && !_dead) {
             Die();
         }
+    }
+
+    public void FireSpell() {
+        primaryEffect.ActivateSpell(owner, sideEffects, owner.returnGun().forward);
     }
 
     public bool Interact(SpellCaster spellCaster)
@@ -116,7 +123,7 @@ public class SpellBook : MonoBehaviour, Interactable {
         foreach(MeshRenderer mr in allMeshes) {
             mr.enabled = false;
         }
-        sparklyEffect.gameObject.SetActive(false);
+        // sparklyEffect.gameObject.SetActive(false);
         GetComponent<SphereCollider>().enabled = false;
     }
 
@@ -125,7 +132,7 @@ public class SpellBook : MonoBehaviour, Interactable {
         foreach (MeshRenderer mr in allMeshes) {
             mr.enabled = true;
         }
-        sparklyEffect.gameObject.SetActive(true);
+        // sparklyEffect.gameObject.SetActive(true);
         GetComponent<SphereCollider>().enabled = true;
     }
 
@@ -165,5 +172,16 @@ public class SpellBook : MonoBehaviour, Interactable {
             Interact(coll.GetComponent<SpellCaster>());
         }
         */
+    }
+
+    [System.Serializable]
+    public struct SideEffect
+    {
+        public SpellSecondary effect;
+        public float chanceEffect;
+        public SideEffect(SpellSecondary se, float c) {
+            effect = se;
+            chanceEffect = c;
+        }
     }
 }

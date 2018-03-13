@@ -71,14 +71,18 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
 
+        gun.forward = Camera.main.transform.forward;
+
         if(currentInteractable == null) { reticule.color = reticuleNormal;  }
         else { reticule.color = reticuleInteractable; }
         
-        if (Input.GetButtonDown("Fire1")) { // make sure player hits shoot button and has something to shoot
+        if (Input.GetButtonDown("Fire1") && spellsInventory.Count != 0) { // make sure player hits shoot button and has something to shoot
             // if(interactable != null) { interactable.Interact(this); }
             // else if (spellsInventory.Count != 0) { fireSpell(); }
-            if(currentInteractable != null) { currentInteractable.Interact(this); currentInteractable = null; }
-            else if(spellsInventory.Count != 0) { fireSpell(); }
+            fireSpell();
+        }
+        if(Input.GetButtonDown("Interact") && currentInteractable != null) {
+            currentInteractable.Interact(this); currentInteractable = null;
         }
         if (spellsInventory.Count > 0 && ammoGaugeBackground.gameObject.activeInHierarchy) { // update the ammo gauge
             ammoGaugeFill.fillAmount = (float)spellsInventory[currentHeld].getAmmo() / spellsInventory[currentHeld].getMaxAmmo();
@@ -235,7 +239,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public void fireSpell() // Shoot the spell
     {
         if (!canFire) { return; } // If cooling down
-        spellsInventory[currentHeld].primaryEffect.ActivateSpell(this, spellsInventory[currentHeld].secondaryEffect, Head.forward, spellsInventory[currentHeld].OffChance); // activate currently held spellbook
+        spellsInventory[currentHeld].FireSpell(); // activate currently held spellbook
         spellsInventory[currentHeld].useAmmo(); // the player uses ammo in a spellbook
 
         spellslot data = spellSlots.GetChild(currentHeld).GetComponent<spellslot>();
@@ -245,7 +249,9 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
         // Calculate and initiate cooldown
         float coolDown = spellsInventory[currentHeld].primaryEffect.coolDown;
-        coolDown += spellsInventory[currentHeld].secondaryEffect.coolDown;
+        for(int i = 0; i < spellsInventory[currentHeld].sideEffects.Count; i++)  {
+            coolDown += spellsInventory[currentHeld].sideEffects[i].effect.coolDown;
+        }
         StartCoroutine(fireCoolDown(coolDown));
     }
 

@@ -22,21 +22,26 @@ public class Missile : MonoBehaviour {
     public float duration = 0f;
 
     public SpellPrimary primaryEffect;
-    public SpellSecondary secondaryEffect;
+    public List<SpellBook.SideEffect> sideEffects;
 
     public ParticleSystem sparkles;
     public TrailRenderer trail;
 
     public ParticleSystem bounceEffect;
     [SerializeField] ParticleSystem deathEffect;
-
-    public float messUpChance;
-    public bool derped;
+    
     public Coroutine messUpEffect; // movement coroutine that overrides/modifies normal movement
 
 	// Use this for initialization
 	void Start () {
         startTime = Time.time;
+        if(sideEffects.Count != 0) {
+            for (int i = 0; i < sideEffects.Count; i++) {
+                if(Random.value < sideEffects[i].chanceEffect) {
+                    sideEffects[i].effect.MessUp(originator, this);
+                }
+            }
+        }
         // StartCoroutine(delayEffectiveness());
 	}
 
@@ -47,6 +52,11 @@ public class Missile : MonoBehaviour {
     void OnCollisionEnter(Collision coll) {
         if (primaryEffect) { // if primaryEffect is not null
             primaryEffect.OnHit(this, coll);
+            for(int i = 0; i < sideEffects.Count; i++) {
+                if(Random.value < sideEffects[i].chanceEffect) {
+                    sideEffects[i].effect.OnHit(originator, this, coll);
+                }
+            }
         }
         else {
             // Uh...whelp

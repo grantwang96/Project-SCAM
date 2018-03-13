@@ -104,7 +104,7 @@ public class EnemySpellCasterMovement : Movement, SpellCaster
         gun.forward = targetingDir;
         anim.Play("Attack");
         bool fired = false;
-        if (heldSpell != null) { heldSpell.primaryEffect.ActivateSpell(this, heldSpell.secondaryEffect, Head.forward, heldSpell.OffChance); }
+        if (heldSpell != null) { heldSpell.FireSpell(); }
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             if(anim.GetCurrentAnimatorStateInfo(0).length >= 0.5f && !fired) {

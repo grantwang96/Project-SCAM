@@ -17,6 +17,8 @@ MonoBehaviour:
   description: 
   decoration: {fileID: 4592192625969944, guid: c642c5f471c641944afabf6266119b5d, type: 2}
   sideEffect: {fileID: 0}
+  lowerChanceActivate: 0.15
+  upperChanceActivate: 0.25
   speed: 50
   possibleReplacedObjects:
   - {fileID: 54626294483853854, guid: 8a63f009c03facc45a2128fca82a9d48, type: 2}

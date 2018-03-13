@@ -67,7 +67,7 @@ public class WizardMovement : Movement, SpellCaster {
 
     public void fireSpell()
     {
-        if(currSpell != null && canShootSpells) { currSpell.primaryEffect.ActivateSpell(this, currSpell.secondaryEffect, gun.forward, currSpell.OffChance); }
+        if(currSpell != null && canShootSpells) { currSpell.FireSpell(); }
         else { Debug.Log("I don't has spell"); }
     }
 

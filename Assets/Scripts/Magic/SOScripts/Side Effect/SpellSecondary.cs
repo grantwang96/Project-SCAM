@@ -13,6 +13,9 @@ public class SpellSecondary : ScriptableObject {
     public Transform decoration;
     public Transform sideEffect;
 
+    public float lowerChanceActivate;
+    public float upperChanceActivate;
+
     public virtual void setup(SpellBook spellBook)
     {
 

@@ -19,7 +19,6 @@ public class SpellManager : MonoBehaviour {
     {
         SpellBook newSpellBook = Instantiate(spellBookPrefab, position, Quaternion.identity);
         newSpellBook.primaryEffect = primarySpellEffects[Random.Range(0, primarySpellEffects.Count)];
-        newSpellBook.secondaryEffect = secondarySpellEffects[Random.Range(0, secondarySpellEffects.Count)];
         return newSpellBook;
     }
 
@@ -27,7 +26,6 @@ public class SpellManager : MonoBehaviour {
     {
         SpellBook newSpellBook = Instantiate(spellBookPrefab, Vector3.zero, Quaternion.identity);
         newSpellBook.primaryEffect = primary;
-        newSpellBook.secondaryEffect = secondarySpellEffects[Random.Range(0, secondarySpellEffects.Count)];
         return newSpellBook;
     }
 
@@ -35,7 +33,6 @@ public class SpellManager : MonoBehaviour {
     {
         SpellBook newSpellBook = Instantiate(spellBookPrefab, position, Quaternion.identity);
         newSpellBook.primaryEffect = primary;
-        newSpellBook.secondaryEffect = secondarySpellEffects[Random.Range(0, secondarySpellEffects.Count)];
         return newSpellBook;
     }
 
@@ -43,7 +40,6 @@ public class SpellManager : MonoBehaviour {
     {
         SpellBook newSpellBook = Instantiate(spellBookPrefab, position, Quaternion.identity);
         newSpellBook.primaryEffect = primary;
-        newSpellBook.secondaryEffect = secondary;
         return newSpellBook;
     }
 
@@ -51,28 +47,23 @@ public class SpellManager : MonoBehaviour {
     {
         SpellBook newSpellBook = Instantiate(spellBookPrefab, position, Quaternion.identity);
         newSpellBook.primaryEffect = primarySpellEffects[Random.Range(0, primarySpellEffects.Count)];
-        newSpellBook.secondaryEffect = secondarySpellEffects[Random.Range(0, secondarySpellEffects.Count)];
     }
 
     public void SpawnSpellBook(SpellPrimary primary, Vector3 position)
     {
         SpellBook newSpellBook = Instantiate(spellBookPrefab, position, Quaternion.identity);
         newSpellBook.primaryEffect = primary;
-        newSpellBook.secondaryEffect = secondarySpellEffects[Random.Range(0, secondarySpellEffects.Count)];
     }
 
     public void SpawnSpellBook(SpellSecondary secondary, Vector3 position)
     {
         SpellBook newSpellBook = Instantiate(spellBookPrefab, position, Quaternion.identity);
-        newSpellBook.secondaryEffect = secondary;
-        newSpellBook.secondaryEffect = secondarySpellEffects[Random.Range(0, secondarySpellEffects.Count)];
     }
 
     public void SpawnSpellBook(SpellPrimary primary, SpellSecondary secondary, Vector3 position)
     {
         SpellBook newSpellBook = Instantiate(spellBookPrefab, position, Quaternion.identity);
         newSpellBook.primaryEffect = primary;
-        newSpellBook.secondaryEffect = secondary;
     }
 
     public void spawnSpellEffect(Vector3 position) // create visual panache at spawn location

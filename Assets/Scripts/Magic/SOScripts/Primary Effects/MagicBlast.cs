@@ -8,8 +8,9 @@ public class MagicBlast : SpellPrimary { // Standard damaging magic attack
     public float knockBackForce;
     public float upwardKnockup;
 
-    public override void ActivateSpell(SpellCaster user, SpellSecondary secondaryEffect, Vector3 fireDir, float chanceFail) {
-        base.ActivateSpell(user, secondaryEffect, fireDir, chanceFail);
+    public override void ActivateSpell(SpellCaster user, List<SpellBook.SideEffect> sideEffects, Vector3 fireDir)
+    {
+        base.ActivateSpell(user, sideEffects, fireDir);
     }
 
     public override void OnHit(Missile proj, Collision coll) {

@@ -235,7 +235,11 @@ public class WizardEnemyAttack : NPCState
     {
         int fireCount = Random.Range(2, 5);
         SpellBook spellbook = myOwner.GetComponent<SpellCaster>().returnSpell();
-        float cooldown = spellbook.primaryEffect.coolDown + spellbook.secondaryEffect.coolDown;
+        float cooldown = spellbook.primaryEffect.coolDown;
+        for(int i = 0; i < spellbook.sideEffects.Count; i++) {
+            cooldown += spellbook.sideEffects[i].effect.coolDown;
+        }
+        if(cooldown < 0) { cooldown = Time.deltaTime; }
         for (int i = 0; i < fireCount; i++) {
             if(myOwner.attackTarget == null) { break; }
             myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));

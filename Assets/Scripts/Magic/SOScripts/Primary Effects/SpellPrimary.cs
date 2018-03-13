@@ -20,8 +20,9 @@ public class SpellPrimary : ScriptableObject {
 
     public Missile projectilePrefab; // projectile used
     public ParticleSystem castEffect; // particle effect when firing spell
+    public SpellSecondary[] allowedSecondaries;
 
-    public virtual void ActivateSpell(SpellCaster user, SpellSecondary secondaryEffect, Vector3 fireDir, float chanceFail) // When the spell is fired
+    public virtual void ActivateSpell(SpellCaster user, List<SpellBook.SideEffect> sideEffects, Vector3 fireDir) // When the spell is fired
     {
         Transform firingPoint = user.returnGun();
         if (firingPoint)
@@ -41,11 +42,9 @@ public class SpellPrimary : ScriptableObject {
             newProjectile.power = power;
             newProjectile.duration = duration;
             newProjectile.primaryEffect = this;
-            newProjectile.secondaryEffect = secondaryEffect;
+            newProjectile.sideEffects = sideEffects;
             newProjectile.originator = user.returnBody();
             newProjectile.myCaster = user;
-            newProjectile.messUpChance = chanceFail;
-            if(Random.value < chanceFail) { newProjectile.derped = true; }
 
             // Modify rigidbody settings for takeoff
             Rigidbody projRbody = newProjectile.GetComponent<Rigidbody>();
@@ -58,19 +57,12 @@ public class SpellPrimary : ScriptableObject {
             TrailRenderer trail = newProjectile.trail;
             trail.startColor = baseColor;
             trail.endColor = baseColor;
-
-            // Apply secondary effects
-            if(secondaryEffect != null && newProjectile.derped) {
-                secondaryEffect.MessUp(user.returnBody(), newProjectile);
-            }
         }
     }
 
     public virtual void OnHit(Missile proj, Collision coll) // When the spell hits something
     {
-        if(proj.derped) {
-            proj.secondaryEffect.OnHit(proj.originator, proj, coll);
-        }
+        
     }
 
     public virtual void bounce(Missile proj)

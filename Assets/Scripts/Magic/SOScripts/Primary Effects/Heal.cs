@@ -7,7 +7,7 @@ public class Heal : SpellPrimary {
 
     public Transform healEffect;
 
-    public override void ActivateSpell(SpellCaster user, SpellSecondary secondaryEffect, Vector3 fireDir, float chanceFail) {
+    public override void ActivateSpell(SpellCaster user, List<SpellBook.SideEffect> sideEffects, Vector3 fireDir) {
         if (user.returnGun()) {
 
             // Create a cast effect
@@ -23,7 +23,7 @@ public class Heal : SpellPrimary {
             newProjectile.power = power;
             newProjectile.duration = duration;
             newProjectile.primaryEffect = this;
-            newProjectile.secondaryEffect = secondaryEffect;
+            newProjectile.sideEffects = sideEffects;
             newProjectile.originator = user.returnBody();
 
             // Healing missiles do not have velocity!
@@ -37,12 +37,6 @@ public class Heal : SpellPrimary {
             TrailRenderer trail = newProjectile.trail;
             trail.startColor = baseColor;
             trail.endColor = baseColor;
-
-            // Apply secondary effects
-            if (secondaryEffect != null){
-                secondaryEffect.MessUp(user.returnBody(), newProjectile);
-            }
-
         }
     }
 

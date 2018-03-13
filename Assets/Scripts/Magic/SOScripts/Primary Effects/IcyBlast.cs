@@ -28,9 +28,9 @@ public class IcyBlast : SpellPrimary {
     public float knockBackForce;
     public float upwardKnockup;
 
-    public override void ActivateSpell(SpellCaster user, SpellSecondary secondaryEffect, Vector3 fireDir, float chanceFail)
+    public override void ActivateSpell(SpellCaster user, List<SpellBook.SideEffect> sideEffects, Vector3 fireDir)
     {
-        base.ActivateSpell(user, secondaryEffect, fireDir, chanceFail);
+        base.ActivateSpell(user, sideEffects, fireDir);
     }
 
     public override void OnHit(Missile proj, Collision coll)

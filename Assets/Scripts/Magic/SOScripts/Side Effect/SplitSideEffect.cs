@@ -30,7 +30,8 @@ public class SplitSideEffect : SpellSecondary {
     {
         Missile newproj = Instantiate(projectile, startpos, Quaternion.identity);
         newproj.transform.forward = startpos - origin;
-        newproj.derped = false;
+        newproj.dead = false;
+        for(int i = 0; i < newproj.sideEffects.Count; i++) { if(newproj.sideEffects[i].effect == this) { newproj.sideEffects.RemoveAt(i); break; } }
 
         Rigidbody rbody = newproj.GetComponent<Rigidbody>();
         rbody.AddForce(newproj.transform.forward * projectile.GetComponent<Rigidbody>().velocity.magnitude * 2, ForceMode.Impulse);
