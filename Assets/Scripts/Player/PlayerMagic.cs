@@ -235,7 +235,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public void fireSpell() // Shoot the spell
     {
         if (!canFire) { return; } // If cooling down
-        spellsInventory[currentHeld].primaryEffect.ActivateSpell(this, spellsInventory[currentHeld].secondaryEffect, Head.forward); // activate currently held spellbook
+        spellsInventory[currentHeld].primaryEffect.ActivateSpell(this, spellsInventory[currentHeld].secondaryEffect, Head.forward, spellsInventory[currentHeld].OffChance); // activate currently held spellbook
         spellsInventory[currentHeld].useAmmo(); // the player uses ammo in a spellbook
 
         spellslot data = spellSlots.GetChild(currentHeld).GetComponent<spellslot>();

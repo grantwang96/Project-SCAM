@@ -35,10 +35,10 @@ public class WizardDamageable : Damageable {
             yield return new WaitForEndOfFrame();
         }
 
-        myMovement.agent.Warp(transform.position);
         myMovement.agent.isStopped = false;
         myMovement.agent.updatePosition = true;
         myMovement.agent.updateRotation = true;
+        myMovement.agent.Warp(transform.position);
         knockBackRoutine = null;
     }
 

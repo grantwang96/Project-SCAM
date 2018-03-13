@@ -21,7 +21,7 @@ public class HailSideEffect : SpellSecondary {
         projectile.StartCoroutine(hailFire(user, projectile));
     }
 
-    public override void OnHit(Transform user, Missile projectile)
+    public override void OnHit(Transform user, Missile projectile, Collision coll)
     {
         
     }

@@ -7,7 +7,7 @@ public class Heal : SpellPrimary {
 
     public Transform healEffect;
 
-    public override void ActivateSpell(SpellCaster user, SpellSecondary secondaryEffect, Vector3 fireDir) {
+    public override void ActivateSpell(SpellCaster user, SpellSecondary secondaryEffect, Vector3 fireDir, float chanceFail) {
         if (user.returnGun()) {
 
             // Create a cast effect

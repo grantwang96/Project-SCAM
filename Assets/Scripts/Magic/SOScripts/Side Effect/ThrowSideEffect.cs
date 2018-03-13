@@ -34,7 +34,7 @@ public class ThrowSideEffect : SpellSecondary {
         coll.material = bounceMat;
     }
 
-    public override void OnHit(Transform user, Missile projectile)
+    public override void OnHit(Transform user, Missile projectile, Collision coll)
     {
         
     }

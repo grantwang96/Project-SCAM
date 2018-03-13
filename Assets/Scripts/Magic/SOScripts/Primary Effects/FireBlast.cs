@@ -20,9 +20,9 @@ public class FireBlast : SpellPrimary {
     public float knockBackForce;
     public float upwardKnockup;
 
-    public override void ActivateSpell(SpellCaster user, SpellSecondary secondaryEffect, Vector3 fireDir)
+    public override void ActivateSpell(SpellCaster user, SpellSecondary secondaryEffect, Vector3 fireDir, float chanceFail)
     {
-        base.ActivateSpell(user, secondaryEffect, fireDir);
+        base.ActivateSpell(user, secondaryEffect, fireDir, chanceFail);
     }
 
     public override void OnHit(Missile proj, Collision coll)
