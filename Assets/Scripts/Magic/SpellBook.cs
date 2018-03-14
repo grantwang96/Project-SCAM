@@ -71,7 +71,7 @@ public class SpellBook : MonoBehaviour, Interactable {
 
         for(int i = 0; i < sideEffectCount; i++) {
             if(i >= secondaries.Count) { break; }
-            SpellSecondary secondary = secondaries[Random.Range(0, primaryEffect.allowedSecondaries.Length)];
+            SpellSecondary secondary = secondaries[Random.Range(0, secondaries.Count)];
             SideEffect newSideEffect =
                 new SideEffect(secondary, Random.Range(secondary.lowerChanceActivate, secondary.upperChanceActivate));
             sideEffects.Add(newSideEffect);

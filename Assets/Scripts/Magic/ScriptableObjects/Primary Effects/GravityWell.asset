@@ -25,5 +25,9 @@ MonoBehaviour:
     type: 2}
   castEffect: {fileID: 198545228210204070, guid: 828a4427cc7df2942a99b970db3979fe,
     type: 2}
+  allowedSecondaries:
+  - {fileID: 11400000, guid: 48cde5fe022ca524caf01032d1a3b142, type: 2}
+  - {fileID: 11400000, guid: 2e9d46e63b95d1141a6634d9e523f7bf, type: 2}
+  - {fileID: 11400000, guid: 36dadef48a528da46b2494bfa8be3803, type: 2}
   gravWellPrefab: {fileID: 114587544601297498, guid: 6cdbedd6cfc2e9049b2df75031665480,
     type: 2}

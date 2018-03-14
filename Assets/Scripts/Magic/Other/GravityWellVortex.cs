@@ -88,14 +88,21 @@ public class GravityWellVortex : MonoBehaviour {
 
     void OnTriggerEnter(Collider coll)
     {
+        
+    }
+
+    void OnTriggerStay(Collider coll)
+    {
         Damageable dam = coll.GetComponent<Damageable>();
-        if(dam) {
+        if (dam)
+        {
             Vector3 dir = (transform.position - coll.transform.position).normalized;
             dir += pointShift;
             dir.y = 2f;
             dam.knockBack(dir, force);
         }
-        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) {
+        else if (coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic)
+        {
             Vector3 dir = (transform.position - coll.transform.position).normalized;
             dir += pointShift;
             dir.y = 2f;
