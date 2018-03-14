@@ -115,11 +115,10 @@ public class PlayerMovementV2 : Movement {
 
     public override void knockBack(Vector3 dir, float force)
     {
-        /*
         if(movementTakeover != null) {
             StopCoroutine(movementTakeover);
             hamper--;
-        }*/
+        }
         Vector3 knock = dir * force;
         movementTakeover = StartCoroutine(knockingBack(knock));
     }
