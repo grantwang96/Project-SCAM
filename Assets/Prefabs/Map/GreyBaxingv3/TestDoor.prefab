@@ -45,7 +45,7 @@ GameObject:
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
-  m_StaticEditorFlags: 10
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1233109262964028
 GameObject:
@@ -75,7 +75,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1611471958511096
 GameObject:
@@ -111,7 +111,7 @@ GameObject:
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
-  m_StaticEditorFlags: 10
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1666554925897750
 GameObject:
