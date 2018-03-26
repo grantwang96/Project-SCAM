@@ -7,7 +7,7 @@ public class PlayerMovementV2 : Movement {
     public int drunkMod;
     public float slownessSeverity;
     public float linearDrag;
-
+    
     public float jumpForce;
     Vector3 moveDir;
 
@@ -15,6 +15,7 @@ public class PlayerMovementV2 : Movement {
     [SerializeField] float yMove;
 
     public CharacterController charCon;
+    public ParticleSystem windCurrent;
     Coroutine movementTakeover;
 
     // public PlayerMagic myPlayerMagic;
@@ -35,11 +36,22 @@ public class PlayerMovementV2 : Movement {
 
     void FixedUpdate()
     {
-        if (yMove > Physics.gravity.y) { yMove += Time.deltaTime * Physics.gravity.y; }
         Vector3 move = moveDir * slownessSeverity * drunkMod; // Get the total movement
+
+        if (yMove > Physics.gravity.y) {
+            yMove += Time.deltaTime * Physics.gravity.y;
+        }
+        /*
+        if (charCon.enabled && !charCon.isGrounded) {
+            float magnitude = (move + (Vector3.up * yMove)).magnitude;
+            if (magnitude > 15f && !windCurrent.isPlaying) { windCurrent.Play(); }
+            else if (windCurrent.isPlaying) { windCurrent.Stop(); }
+        }
+        */
+
         // if(hamper <= 0) { Move(move * Time.deltaTime); }
         Move(move * Time.deltaTime);
-        if(charCon != null && charCon.enabled) { charCon.Move(Vector3.up * yMove * Time.deltaTime); }
+        charCon.Move(Vector3.up * yMove * Time.deltaTime);
     }
 
     void calculateMove()
@@ -106,8 +118,14 @@ public class PlayerMovementV2 : Movement {
         float horizontal = 0f;
         float vertical = 0f;
         // if (hamper > 0) { return; }
-        horizontal = Input.GetAxis("Horizontal"); // Get player inputs
-        vertical = Input.GetAxis("Vertical"); // Get player inputs
+        if(Input.GetJoystickNames().Length > 0) {
+            horizontal = Input.GetAxis("Con_Horizontal"); // Get player inputs
+            vertical = Input.GetAxis("Con_Vertical"); // Get player inputs
+        }
+        else {
+            horizontal = Input.GetAxis("Keyboard_Horizontal"); // Get player inputs
+            vertical = Input.GetAxis("Keyboard_Vertical"); // Get player inputs
+        }
 
         if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
         moveDir = ((transform.forward * vertical * currSpeed) + (transform.right * horizontal * currSpeed));
@@ -115,7 +133,6 @@ public class PlayerMovementV2 : Movement {
 
     public override void knockBack(Vector3 dir, float force)
     {
-        
         if(movementTakeover != null) {
             StopCoroutine(movementTakeover);
             hamper--;
@@ -168,7 +185,8 @@ public class PlayerMovementV2 : Movement {
             }
         }
         if (tag.Contains("Ground") || tag.Contains("Roof") || tag.Contains("Wall")) {
-            if (coll.point.y > transform.position.y && yMove > 0) // If collided with head
+            
+            if ((charCon.collisionFlags & CollisionFlags.CollidedAbove) != 0 && yMove > 0) // If collided with head
             {
                 // Debug.Log("I hit my head!");
                 yMove = 0f;
@@ -190,7 +208,7 @@ public class PlayerMovementV2 : Movement {
             }
             if(coll.collider.attachedRigidbody != null) {
                 Vector3 velocity = coll.collider.transform.position - transform.position;
-                coll.collider.attachedRigidbody.AddForce(velocity.normalized * currSpeed * 6f);
+                coll.collider.attachedRigidbody.AddForce(velocity.normalized * currSpeed * 8f);
             }
         }
     }

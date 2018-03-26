@@ -51,7 +51,15 @@ public class MeleeEnemyDamageable : Damageable {
 
     public override void knockBack(Vector3 dir, float force)
     {
+
         if (knockBackRoutine != null) {
+            myMovement.agent.isStopped = false;
+            myMovement.agent.updatePosition = true;
+            myMovement.agent.updateRotation = true;
+            if(myMovement.agent.Warp(transform.position)) {
+                Debug.Log("Success!");
+            }
+            
             StopCoroutine(knockBackRoutine);
         }
         knockBackRoutine = StartCoroutine(knockingBack(dir, force));
@@ -59,30 +67,36 @@ public class MeleeEnemyDamageable : Damageable {
 
     IEnumerator knockingBack(Vector3 dir, float force)
     {
+        
         myMovement.agent.isStopped = true;
         myMovement.agent.updatePosition = false;
         myMovement.agent.updateRotation = false;
 
         myMovement.agent.velocity = Vector3.zero;
+        
+        // myMovement.agent.enabled = false;
         rbody.velocity = Vector3.zero;
 
         float groundTime = 0f;
         rbody.AddForce(dir * force, ForceMode.Impulse);
 
         while (groundTime < .3f) {
+            
             RaycastHit rayHit;
             if (Physics.Raycast(transform.position, Vector3.down, out rayHit, myCollider.bounds.extents.y + 0.1f, ~0, QueryTriggerInteraction.Ignore)) {
                 if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "Wall") { groundTime += Time.deltaTime; }
             }
-
             yield return new WaitForEndOfFrame();
         }
 
         Debug.Log("Back to work!");
+        myMovement.agent.enabled = true;
         myMovement.agent.isStopped = false;
         myMovement.agent.updatePosition = true;
         myMovement.agent.updateRotation = true;
-        myMovement.agent.Warp(transform.position);
+        if (myMovement.agent.Warp(transform.position)) {
+            Debug.Log("Success!");
+        }
         knockBackRoutine = null;
     }
 

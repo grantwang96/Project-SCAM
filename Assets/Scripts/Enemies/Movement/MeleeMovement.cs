@@ -28,11 +28,4 @@ public class MeleeMovement : Movement {
     {
         base.knockBack(dir, force);
     }
-
-    void OnCollisionStay(Collision coll)
-    {
-        if(coll.collider.tag == "Ground" && anim.GetCurrentAnimatorStateInfo(0).IsTag("Hurt")) {
-
-        }
-    }
 }

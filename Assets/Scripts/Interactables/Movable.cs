@@ -12,6 +12,13 @@ public class Movable : Damageable
     Transform attackTarget;
     SpellCaster myOwner;
 
+    public override void Start()
+    {
+        rbody = GetComponent<Rigidbody>();
+        myCollider = GetComponent<Collider>();
+        myRend = GetComponent<MeshRenderer>();
+    }
+
     public GameObject getGameObject()
     {
         return gameObject;

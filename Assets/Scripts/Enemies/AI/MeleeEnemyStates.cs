@@ -11,7 +11,7 @@ public class MeleeEnemyIdle : NPCState
         duration = newDuration; // set the duration
         stateStartTime = Time.time;
 
-        myOwner.agent.velocity = Vector3.zero;
+        if (myOwner.agent.enabled) { myOwner.agent.velocity = Vector3.zero; }
 
         anim = myOwner.anim;
         anim.SetInteger("Status", 0);
@@ -143,7 +143,7 @@ public class MeleeEnemyAggro : NPCState
             Vector3 attackDir = myOwner.attackTarget.position - myOwner.transform.position;
             attackDir.y = 0;
             myOwner.transform.rotation = Quaternion.Lerp(myOwner.transform.rotation, Quaternion.LookRotation(attackDir), 0.5f);
-            myOwner.agent.isStopped = true;
+            // myOwner.agent.isStopped = true;
         }
         else if(dist < myOwner.blueprint.attackRange) {
             Vector3 attackDir = myOwner.attackTarget.position - myOwner.transform.position;
@@ -185,7 +185,7 @@ public class MeleeEnemyAggro : NPCState
         if(dist <= myOwner.blueprint.attackRange && dotprod >= myOwner.attackDotProd) {
             myOwner.changeState(new MeleeEnemyAttack());
         }
-        myOwner.rbody.AddForce(myOwner.agent.desiredVelocity / myOwner.friction);
+        // myOwner.rbody.AddForce(myOwner.agent.desiredVelocity / myOwner.friction);
     }
 
     public override void Exit()
@@ -201,7 +201,8 @@ public class MeleeEnemyAttack : NPCState
         base.Enter(owner);
         // anim.Play("Attack");
         myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
-        myOwner.agent.isStopped = true;
+        if(myOwner.agent.enabled) { myOwner.agent.isStopped = true; }
+        // myOwner.agent.isStopped = true;
     }
 
     public override void Enter(Movement owner, NPCState prevState)
@@ -210,13 +211,13 @@ public class MeleeEnemyAttack : NPCState
         // anim.Play("Attack");
         myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
         // Debug.Log(myOwner.transform.name + " attacks!");
-        myOwner.agent.isStopped = true;
+        if (myOwner.agent.enabled) { myOwner.agent.isStopped = true; }
     }
 
     public override void Execute()
     {
         // check if attack animation is finished
-        myOwner.agent.velocity = Vector3.zero;
+        if(myOwner.agent.enabled) { myOwner.agent.velocity = Vector3.zero; }
         if (myOwner.attackRoutine == null) {
             if(previousState != null) { myOwner.changeState(previousState); }
             else { myOwner.changeState(new MeleeEnemyAggro()); }
@@ -225,7 +226,7 @@ public class MeleeEnemyAttack : NPCState
 
     public override void Exit()
     {
-        myOwner.agent.isStopped = false;
+        if(myOwner.agent.enabled) { myOwner.agent.isStopped = false; }
     }
 }
 

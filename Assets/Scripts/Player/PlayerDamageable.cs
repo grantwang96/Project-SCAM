@@ -42,18 +42,34 @@ public class PlayerDamageable : Damageable {
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
     {
         if (hurt) { return; }
+        
         // Visual hurt effects
+        
         base.TakeDamage(attacker, hpLost, dir, force);
         if(health <= 0) { Die(); return; }
         if(attacker == null) { return; }
         PlayerMagic.instance.invokeChangeFollowers(attacker.GetComponent<Damageable>());
-        StartCoroutine(hurtFrames());
+        StartCoroutine(hurtFrames(hpLost));
     }
 
-    IEnumerator hurtFrames()
+    IEnumerator hurtFrames(int hpLost)
     {
         hurt = true;
-        yield return new WaitForSeconds(hurtTime);
+        float time = 0f;
+
+        Camera.main.transform.localEulerAngles = Vector3.zero;
+        float xRot = 20f * hpLost / max_health;
+        float yRot = Random.Range(-5, 5);
+        float zRot = Random.Range(-5, 5);
+        Vector3 startRot = new Vector3(xRot, yRot, zRot);
+        Camera.main.transform.localEulerAngles = startRot;
+
+        while(time < hurtTime) {
+            Camera.main.transform.localEulerAngles = Vector3.Lerp(startRot, Vector3.zero, time / hurtTime);
+            yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
+        }
+        Camera.main.transform.localEulerAngles = Vector3.zero;
         hurt = false;
     }
 

@@ -420,7 +420,7 @@ public abstract class NPCState
         turnDurationTime = Random.Range(1f, 2f);
         anim = myOwner.anim;
         maxAngleChange = 60f;
-        myOwner.agent.ResetPath();
+        if(myOwner.agent.enabled) { myOwner.agent.ResetPath(); }
     }
 
     public virtual void Enter(Movement owner, float newDuration)
