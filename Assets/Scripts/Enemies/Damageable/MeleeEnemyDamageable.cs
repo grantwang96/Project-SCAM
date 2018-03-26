@@ -51,7 +51,6 @@ public class MeleeEnemyDamageable : Damageable {
 
     public override void knockBack(Vector3 dir, float force)
     {
-
         if (knockBackRoutine != null) {
             myMovement.agent.isStopped = false;
             myMovement.agent.updatePosition = true;
@@ -92,11 +91,12 @@ public class MeleeEnemyDamageable : Damageable {
         Debug.Log("Back to work!");
         myMovement.agent.enabled = true;
         myMovement.agent.isStopped = false;
-        myMovement.agent.updatePosition = true;
-        myMovement.agent.updateRotation = true;
-        if (myMovement.agent.Warp(transform.position)) {
+        if (myMovement.agent.Warp(transform.position))
+        {
             Debug.Log("Success!");
         }
+        myMovement.agent.updatePosition = true;
+        myMovement.agent.updateRotation = true;
         knockBackRoutine = null;
     }
 
