@@ -245,6 +245,7 @@ public abstract class Movement : MonoBehaviour
         Debug.DrawRay(Head.position, agent.desiredVelocity, Color.green);
         foreach (RaycastHit rayhit in rayHits) {
             if(rayhit.collider.tag == "Wall" || rayhit.collider.tag == "Ground") {
+                Debug.Log("Oh my!");
                 return rayhit.transform;
             }
         }
