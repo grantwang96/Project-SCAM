@@ -70,17 +70,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeeae57e23765cb4987ea1c2720b156c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
-  lifeTime: 10
+  force: 30
+  lifeTime: 5
   range: 1
   rangeIncreaseFactor: 1.5
-  maxRange: 6
+  maxRange: 5
   speed: 360
   initialEmissionRate: 20
   maxEmissionRate: 100
   effects: {fileID: 198500439158983158}
   rangeFinder: {fileID: 135065444317742362}
   pointShift: {x: 0, y: 0, z: 0}
+  forceMod: 10
+  heightForce: 0.5
   explosionPrefab: {fileID: 4144202165767728, guid: 09536a8fb3eb4a84a9384b4efd32bf8f,
     type: 2}
   myOwner: {fileID: 0}

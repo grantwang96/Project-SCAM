@@ -129,8 +129,8 @@ public abstract class Damageable : MonoBehaviour
         myMovement.attackTarget = null;
         myMovement.crushTarget = owner.returnTransform();
         myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
-        Debug.Log("Owner is: " + myMovement.crushTarget);
-        Debug.Log("Owner SpellCaster is: " + myMovement.crush);
+        // Debug.Log("Owner is: " + myMovement.crushTarget);
+        // Debug.Log("Owner SpellCaster is: " + myMovement.crush);
         myMovement.crush.addToSeductionList(this);
         seduction = StartCoroutine(processSeduction(duration, target, owner));
     }
@@ -245,6 +245,7 @@ public abstract class Movement : MonoBehaviour
         Debug.DrawRay(Head.position, agent.desiredVelocity, Color.green);
         foreach (RaycastHit rayhit in rayHits) {
             if(rayhit.collider.tag == "Wall" || rayhit.collider.tag == "Ground") {
+                Debug.Log("Oh my!");
                 return rayhit.transform;
             }
         }
@@ -420,7 +421,7 @@ public abstract class NPCState
         turnDurationTime = Random.Range(1f, 2f);
         anim = myOwner.anim;
         maxAngleChange = 60f;
-        myOwner.agent.ResetPath();
+        if(myOwner.agent.enabled) { myOwner.agent.ResetPath(); }
     }
 
     public virtual void Enter(Movement owner, float newDuration)

@@ -34,8 +34,8 @@ public class KnockBackSideEffect : SpellSecondary {
         yield return new WaitForSeconds(chargeTime);
     }
 
-    public override void OnHit(Transform user, Missile projectile)
+    public override void OnHit(Transform user, Missile projectile, Collision coll)
     {
-        base.OnHit(user, projectile);
+        base.OnHit(user, projectile, coll);
     }
 }

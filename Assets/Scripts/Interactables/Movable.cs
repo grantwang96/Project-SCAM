@@ -8,8 +8,16 @@ public class Movable : Damageable
     [SerializeField] bool transmuted = false;
 
     Coroutine seduction;
+    [SerializeField] Rigidbody rbody;
     Transform attackTarget;
     SpellCaster myOwner;
+
+    public override void Start()
+    {
+        rbody = GetComponent<Rigidbody>();
+        myCollider = GetComponent<Collider>();
+        myRend = GetComponent<MeshRenderer>();
+    }
 
     public GameObject getGameObject()
     {
@@ -66,7 +74,7 @@ public class Movable : Damageable
     public override void setTransmutable(bool newBool)
     {
         transmutable = newBool;
-        Debug.Log(transform.name + " transmutable was set to " + transmutable);
+        // Debug.Log(transform.name + " transmutable was set to " + transmutable);
     }
 
     public override void vortexGrab(Transform center, float force)
@@ -141,6 +149,15 @@ public class Movable : Damageable
         if (goodTargets.Count > 0) {
             Damageable target = goodTargets[UnityEngine.Random.Range(0, goodTargets.Count)];
             attackTarget = target.transform;
+        }
+    }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        float magnitude = rbody.velocity.magnitude;
+        if(magnitude > 20f) {
+            Damageable dam = coll.collider.GetComponent<Damageable>();
+            if(dam) { dam.TakeDamage(transform, Mathf.CeilToInt(magnitude - 20), rbody.velocity.normalized, magnitude); }
         }
     }
 }

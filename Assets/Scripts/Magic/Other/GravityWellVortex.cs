@@ -19,6 +19,8 @@ public class GravityWellVortex : MonoBehaviour {
     public ParticleSystem effects;
     public SphereCollider rangeFinder;
     public Vector3 pointShift; // vector between edge before and after turn
+    public float forceMod;
+    public float heightForce;
 
     float startTime;
     public Transform explosionPrefab;
@@ -85,7 +87,7 @@ public class GravityWellVortex : MonoBehaviour {
     {
 
     }
-
+    /*
     void OnTriggerEnter(Collider coll)
     {
         Damageable dam = coll.GetComponent<Damageable>();
@@ -101,27 +103,29 @@ public class GravityWellVortex : MonoBehaviour {
             dir.y = 2f;
             coll.attachedRigidbody.AddForce(dir * force, ForceMode.Impulse);
         }
-    }
+    }*/
 
     void OnTriggerExit(Collider coll)
     {
         
     }
-
-    /*
+    
     void OnTriggerStay(Collider coll)
     {
-        Damageable colldam = coll.GetComponent<Damageable>();
-        Vector3 dir = (transform.position - coll.transform.position).normalized;
-        dir += pointShift.normalized * force;
-        if (colldam != null) {
-            colldam.knockBack(dir, force);
+        Damageable dam = coll.GetComponent<Damageable>();
+        if(dam) {
+            Vector3 dir = (transform.position - coll.transform.position).normalized;
+            dir += pointShift * forceMod;
+            dir.y = heightForce;
+            dam.knockBack(dir, force);
         }
-        else if(coll.attachedRigidbody != null) {
-            coll.attachedRigidbody.AddForce(dir * force);
+        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic && coll.tag == "Furniture") {
+            Vector3 dir = (transform.position - coll.transform.position).normalized;
+            dir += pointShift * forceMod;
+            dir.y = heightForce;
+            coll.attachedRigidbody.AddForce(dir * force, ForceMode.Impulse);
         }
     }
-    */
 
     void Die()
     {

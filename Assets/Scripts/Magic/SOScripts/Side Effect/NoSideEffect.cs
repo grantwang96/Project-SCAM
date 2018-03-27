@@ -10,7 +10,7 @@ public class NoSideEffect : SpellSecondary {
         
     }
 
-    public override void OnHit(Transform user, Missile projectile)
+    public override void OnHit(Transform user, Missile projectile, Collision coll)
     {
         
     }

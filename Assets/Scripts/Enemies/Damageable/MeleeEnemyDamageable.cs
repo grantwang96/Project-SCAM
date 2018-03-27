@@ -51,33 +51,58 @@ public class MeleeEnemyDamageable : Damageable {
 
     public override void knockBack(Vector3 dir, float force)
     {
+        myMovement.agent.updatePosition = false;
+        myMovement.agent.updateRotation = false;
+        myMovement.agent.isStopped = true;
+        myMovement.agent.velocity = Vector3.zero;
+        rbody.velocity = Vector3.zero;
+        rbody.AddForce(dir * force, ForceMode.Impulse);
+
+        /*
         if (knockBackRoutine != null) {
             StopCoroutine(knockBackRoutine);
-        }
-        knockBackRoutine = StartCoroutine(knockingBack(dir, force));
+        }*/
+        // knockBackRoutine = StartCoroutine(knockingBack(dir, force));
     }
 
     IEnumerator knockingBack(Vector3 dir, float force)
     {
         myMovement.agent.isStopped = true;
+        Vector3 prevDestination = myMovement.agent.destination;
+        myMovement.agent.ResetPath();
         myMovement.agent.updatePosition = false;
         myMovement.agent.updateRotation = false;
 
         myMovement.agent.velocity = Vector3.zero;
+        
+        // myMovement.agent.enabled = false;
         rbody.velocity = Vector3.zero;
 
         float groundTime = 0f;
         rbody.AddForce(dir * force, ForceMode.Impulse);
 
         while (groundTime < .3f) {
-            myMovement.agent.isStopped = true;
-            if (rbody.velocity.y == 0) { groundTime += Time.deltaTime; }
+            
+            RaycastHit rayHit;
+            if (Physics.Raycast(transform.position, Vector3.down, out rayHit, myCollider.bounds.extents.y + 0.1f, ~0, QueryTriggerInteraction.Ignore)) {
+                if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "Wall") { groundTime += Time.deltaTime; Debug.Log("Grounded"); }
+            }
             yield return new WaitForEndOfFrame();
         }
-        myMovement.agent.Warp(transform.position);
+
+        Debug.Log("Back to work!");
+        myMovement.agent.enabled = true;
         myMovement.agent.isStopped = false;
+        if (myMovement.agent.Warp(transform.position)) {
+            Debug.Log("Success!");
+        }
+        else {
+            Debug.Log("Fail");
+        }
+        Debug.Log(myMovement.agent.nextPosition);
         myMovement.agent.updatePosition = true;
         myMovement.agent.updateRotation = true;
+        myMovement.agent.SetDestination(prevDestination);
         knockBackRoutine = null;
     }
 
