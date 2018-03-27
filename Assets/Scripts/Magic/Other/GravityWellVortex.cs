@@ -119,7 +119,7 @@ public class GravityWellVortex : MonoBehaviour {
             dir.y = heightForce;
             dam.knockBack(dir, force);
         }
-        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) {
+        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic && coll.tag == "Furniture") {
             Vector3 dir = (transform.position - coll.transform.position).normalized;
             dir += pointShift * forceMod;
             dir.y = heightForce;

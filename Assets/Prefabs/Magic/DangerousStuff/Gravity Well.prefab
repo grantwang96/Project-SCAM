@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 30
-  lifeTime: 10
+  lifeTime: 5
   range: 1
   rangeIncreaseFactor: 1.5
   maxRange: 5
