@@ -28,6 +28,8 @@ public class GravityWellVortex : MonoBehaviour {
     public Transform myOwner;
     Rigidbody rbody;
 
+    List<GameObject> losers = new List<GameObject>();
+
 	// Use this for initialization
 	void Start () {
         rbody = GetComponent<Rigidbody>();
@@ -87,23 +89,11 @@ public class GravityWellVortex : MonoBehaviour {
     {
 
     }
-    /*
+    
     void OnTriggerEnter(Collider coll)
     {
-        Damageable dam = coll.GetComponent<Damageable>();
-        if(dam) {
-            Vector3 dir = (transform.position - coll.transform.position).normalized;
-            dir += pointShift;
-            dir.y = 2f;
-            dam.knockBack(dir, force);
-        }
-        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) {
-            Vector3 dir = (transform.position - coll.transform.position).normalized;
-            dir += pointShift;
-            dir.y = 2f;
-            coll.attachedRigidbody.AddForce(dir * force, ForceMode.Impulse);
-        }
-    }*/
+        
+    }
 
     void OnTriggerExit(Collider coll)
     {
@@ -119,7 +109,7 @@ public class GravityWellVortex : MonoBehaviour {
             dir.y = heightForce;
             dam.knockBack(dir, force);
         }
-        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic && coll.tag == "Furniture") {
+        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) {
             Vector3 dir = (transform.position - coll.transform.position).normalized;
             dir += pointShift * forceMod;
             dir.y = heightForce;

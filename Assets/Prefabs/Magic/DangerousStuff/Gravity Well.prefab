@@ -70,11 +70,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeeae57e23765cb4987ea1c2720b156c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 30
+  force: 40
   lifeTime: 5
   range: 1
   rangeIncreaseFactor: 1.5
-  maxRange: 5
+  maxRange: 4
   speed: 360
   initialEmissionRate: 20
   maxEmissionRate: 100
