@@ -19,7 +19,9 @@ public class MeleeMovement : Movement {
         if(isGrounded) {
             agent.updatePosition = true;
             agent.updateRotation = true;
-            agent.Warp(transform.position);
+            if(agent.nextPosition != transform.position) {
+                agent.Warp(transform.position);
+            }
             agent.isStopped = false;
         }
         base.Update();
