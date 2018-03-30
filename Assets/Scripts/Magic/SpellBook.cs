@@ -43,7 +43,8 @@ public class SpellBook : MonoBehaviour, Interactable {
 
     public void SetupSpell()
     {
-        offChance = Random.Range(0.5f, .9f);
+        // offChance = Random.Range(0.5f, .9f);
+        offChance = 1f;
         if (primaryEffect)
         {
             ammo += primaryEffect.ammo;

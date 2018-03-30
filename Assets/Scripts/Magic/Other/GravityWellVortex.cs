@@ -34,13 +34,13 @@ public class GravityWellVortex : MonoBehaviour {
 	void Start () {
         rbody = GetComponent<Rigidbody>();
         rbody.isKinematic = true;
-        range = 0.33f;
+        range = 0.01f;
         rangeFinder = GetComponent<SphereCollider>();
         effects = GetComponent<ParticleSystem>();
         rangeFinder.radius = range;
         ParticleSystem.ShapeModule shapeModule = effects.shape;
         shapeModule.radius = range;
-        effects.startSpeed = -range;
+        effects.startSpeed = range;
         ParticleSystem.EmissionModule emModule = effects.emission;
         maxEmissionRate = emModule.rate.constant;
         emModule.rateOverTime = initialEmissionRate;
@@ -113,7 +113,7 @@ public class GravityWellVortex : MonoBehaviour {
             Vector3 dir = (transform.position - coll.transform.position).normalized;
             dir += pointShift * forceMod;
             dir.y = heightForce;
-            coll.attachedRigidbody.AddForce(dir * force, ForceMode.Impulse);
+            coll.attachedRigidbody.AddForce(dir * force);
         }
     }
 
