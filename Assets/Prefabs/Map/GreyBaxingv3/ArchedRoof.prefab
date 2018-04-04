@@ -514,14 +514,14 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1573448910667480}
-  m_Mesh: {fileID: 4300000, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
+  m_Mesh: {fileID: 4300004, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
 --- !u!33 &33275505009741848
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1262634748036728}
-  m_Mesh: {fileID: 4300000, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
+  m_Mesh: {fileID: 4300004, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
 --- !u!33 &33297697963797236
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -535,28 +535,28 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1406960290681536}
-  m_Mesh: {fileID: 4300000, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
+  m_Mesh: {fileID: 4300004, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
 --- !u!33 &33754971862782500
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1924502311567016}
-  m_Mesh: {fileID: 4300000, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
+  m_Mesh: {fileID: 4300004, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
 --- !u!33 &33836643054303712
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1962717927849468}
-  m_Mesh: {fileID: 4300000, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
+  m_Mesh: {fileID: 4300004, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
 --- !u!33 &33914550326527026
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1747114553879848}
-  m_Mesh: {fileID: 4300000, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
+  m_Mesh: {fileID: 4300004, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
 --- !u!65 &65139069894103840
 BoxCollider:
   m_ObjectHideFlags: 1
