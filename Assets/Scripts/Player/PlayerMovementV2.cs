@@ -51,6 +51,7 @@ public class PlayerMovementV2 : Movement {
 
         // if(hamper <= 0) { Move(move * Time.deltaTime); }
         Move(move * Time.deltaTime);
+        if(!charCon.enabled) { return; }
         charCon.Move(Vector3.up * yMove * Time.deltaTime);
     }
 

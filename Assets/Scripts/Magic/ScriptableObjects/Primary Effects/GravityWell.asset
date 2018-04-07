@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c908fb9e54dccf340a30986b25f4c597, type: 3}
   m_Name: GravityWell
   m_EditorClassIdentifier: 
-  force: 60
+  force: 100
   power: 8
   duration: 0
   powerLevelModifier: 1

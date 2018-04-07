@@ -56,8 +56,8 @@ public class MeleeEnemyWander : NPCState
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
         target = myOwner.getRandomLocation(myOwner.transform.position, myOwner.maxWanderDistance);
         if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(target); }
-        Debug.Log("Begin Wander...");
-        Debug.Log("Status=" + anim.GetInteger("Status"));
+        // Debug.Log("Begin Wander...");
+        // Debug.Log("Status=" + anim.GetInteger("Status"));
   }
 
     public override void Execute()
@@ -67,7 +67,7 @@ public class MeleeEnemyWander : NPCState
         else { myOwner.agent.SetDestination(target); }
         */
 
-        Debug.Log("Status=" + anim.GetInteger("Status"));
+        // Debug.Log("Status=" + anim.GetInteger("Status"));
 
         if (myOwner.checkView()) {
             myOwner.anim.Play("Notice");

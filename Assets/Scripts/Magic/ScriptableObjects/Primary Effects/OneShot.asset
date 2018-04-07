@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d865f22706ee2142b99990066aebcb9, type: 3}
   m_Name: OneShot
   m_EditorClassIdentifier: 
-  force: 50
+  force: 100
   power: 10
   duration: 0
   powerLevelModifier: 1
