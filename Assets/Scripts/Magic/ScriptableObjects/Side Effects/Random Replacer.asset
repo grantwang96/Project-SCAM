@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammo: 4
   coolDown: 0
-  title: Rando
+  title: Temperamental
   description: 
   decoration: {fileID: 4592192625969944, guid: c642c5f471c641944afabf6266119b5d, type: 2}
   sideEffect: {fileID: 0}

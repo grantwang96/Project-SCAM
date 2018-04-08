@@ -23,7 +23,8 @@ public class PlayerDamageable : Damageable {
     public Image statusEffectPrefab;
     public Transform statusEffectBar;
 
-    public Image healthBar;
+    // public Image healthBar;
+    public MeshRenderer healthBar;
 
 	// Use this for initialization
 	public override void Start () {
@@ -36,8 +37,10 @@ public class PlayerDamageable : Damageable {
 	// Update is called once per frame
 	public override void Update () {
         // update healthbar
-        healthBar.fillAmount = (float)health / max_health;
-	}
+        // healthBar.fillAmount = (float)health / max_health;
+        healthBar.transform.localScale = new Vector3(.7f, (float)health / max_health, .7f);
+        healthBar.material.color = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+    }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
     {
@@ -239,6 +242,7 @@ public class PlayerDamageable : Damageable {
         Transform oldTransmuteStatus = statusEffectBar.Find("transmutedStatus");
         if(oldTransmuteStatus) { Destroy(oldTransmuteStatus.gameObject); }
         Image newTransmuteStatus = Instantiate(statusEffectPrefab, statusEffectBar);
+        newTransmuteStatus.rectTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180));
         newTransmuteStatus.name = "transmutedStatus";
         float time = 0f;
         while(time < duration) {
