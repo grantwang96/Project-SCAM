@@ -13,9 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammo: 3
   coolDown: 1
-  title: Ultimate
+  title: Maximum Overcharge
   description: Really, REALLY, strong
   decoration: {fileID: 4984204316487484, guid: 521344c0cdcdabf44b262c5d5505ff4e, type: 2}
+  sideEffect: {fileID: 0}
   force: 35
   upwardForce: 0.3
   chargeTime: 0

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammo: 3
   coolDown: 1
-  title: Bleh
+  title: Exploding
   description: 
   decoration: {fileID: 4100865636128526, guid: 27b550ebe851a1a4abb9d37afce6afd4, type: 2}
+  sideEffect: {fileID: 0}
   splitLowerBound: 20
   splitUpperBound: 30
   lowerHeightOffset: -2
