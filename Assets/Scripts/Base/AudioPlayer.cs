@@ -13,10 +13,16 @@ public class AudioPlayer : MonoBehaviour {
 	
 	public void Start() {
 		source = GetComponent<AudioSource>();
+
+		if (labels.Length != clips.Length) {
+			throw new UnityException("labels and clips lengths don't match!");
+		}
 	}
 
 	public void PlayClip(string label) {
 		//plays clip that shares index of label in array labels
+
+
 		int index = -1;
 		for (int i = 0; i < labels.Length; i ++) {
 			if (labels[i] == label) {
@@ -25,6 +31,9 @@ public class AudioPlayer : MonoBehaviour {
 		}
 		if (index > 0) {
 			source.PlayOneShot(clips[index]);
+		}
+		else {
+			Debug.Log(label + " not found!");
 		}
 	}
 }
