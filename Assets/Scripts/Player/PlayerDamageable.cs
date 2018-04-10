@@ -26,10 +26,13 @@ public class PlayerDamageable : Damageable {
     // public Image healthBar;
     public MeshRenderer healthBar;
 
+	AudioPlayer sounds;
+
 	// Use this for initialization
 	public override void Start () {
         base.Start();
         Instance = this;
+		sounds = GetComponent<AudioPlayer>();
         // playerCanvas = Instantiate(playerCanvasPrefab);
         // healthBar = playerCanvas.Find("HealthBar").GetComponent<Image>();
 	}
@@ -52,6 +55,8 @@ public class PlayerDamageable : Damageable {
         if(health <= 0) { Die(); return; }
         if(attacker == null) { return; }
         PlayerMagic.instance.invokeChangeFollowers(attacker.GetComponent<Damageable>());
+
+		sounds.PlayClip("hurt");
         StartCoroutine(hurtFrames(hpLost));
     }
 
