@@ -99,5 +99,9 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
     {
         door.locked = true;
     }
-    
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
