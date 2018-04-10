@@ -19,9 +19,9 @@ public class WaterPhysics : MonoBehaviour {
 		}
 	}
 
-	float easeWater(float curr) {
-		
-	}
+//	float easeWater(float curr) {
+//		
+//	}
 
 	//Buoyant force = rho * g * V(displaced)
 	void OnTriggerStay(Collider other) {
