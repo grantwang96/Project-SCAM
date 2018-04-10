@@ -30,6 +30,8 @@ public class Missile : MonoBehaviour {
     public ParticleSystem bounceEffect;
     [SerializeField] ParticleSystem deathEffect;
 
+    public float messUpChance;
+    public bool derped;
     public Coroutine messUpEffect; // movement coroutine that overrides/modifies normal movement
 
 	// Use this for initialization

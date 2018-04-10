@@ -11,10 +11,11 @@ public class MeleeEnemyIdle : NPCState
         duration = newDuration; // set the duration
         stateStartTime = Time.time;
 
-        myOwner.agent.velocity = Vector3.zero;
+        if (myOwner.agent.enabled) { myOwner.agent.velocity = Vector3.zero; }
 
         anim = myOwner.anim;
         anim.SetInteger("Status", 0);
+        myOwner.attackTarget = myOwner.blueprint.getOriginTarget();
     }
 
     public override void Execute() {
@@ -42,6 +43,7 @@ public class MeleeEnemyIdle : NPCState
 
 public class MeleeEnemyWander : NPCState
 {
+    Vector3 target;
     public override void Enter(Movement owner)
     {
         myOwner = owner;
@@ -52,17 +54,22 @@ public class MeleeEnemyWander : NPCState
         if(myOwner.agent.enabled) { myOwner.agent.speed = myOwner.baseSpeed; }
 
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
-        Vector3 target = myOwner.getRandomLocation(myOwner.transform.position, myOwner.maxWanderDistance);
-        if (myOwner.agent.enabled) { myOwner.agent.SetDestination(target); }
-  
+        target = myOwner.getRandomLocation(myOwner.transform.position, myOwner.maxWanderDistance);
+        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(target); }
+        // Debug.Log("Begin Wander...");
+        // Debug.Log("Status=" + anim.GetInteger("Status"));
   }
 
     public override void Execute()
     {
-        if(myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) { myOwner.agent.isStopped = true; }
-        else { myOwner.agent.isStopped = false; }
-        
-        if(myOwner.checkView()) {
+        /*
+        if(myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) { myOwner.agent.SetDestination(myOwner.transform.position); }
+        else { myOwner.agent.SetDestination(target); }
+        */
+
+        // Debug.Log("Status=" + anim.GetInteger("Status"));
+
+        if (myOwner.checkView()) {
             myOwner.anim.Play("Notice");
             myOwner.changeState(new MeleeEnemyAggro());
         }
@@ -70,11 +77,13 @@ public class MeleeEnemyWander : NPCState
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
         if (obstruction != null) {
+            Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle());
         }
 
         float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
+            Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }
         if(myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
@@ -119,16 +128,21 @@ public class MeleeEnemyAggro : NPCState
         anim = myOwner.anim;
         anim.SetInteger("Status", 2);
         duration = myOwner.blueprint.attentionSpan;
-
-        // myOwner.agent.isStopped = false;
+        
+        if (myOwner == null || myOwner.transform == null || myOwner.attackTarget == null) {
+            Debug.Log(myOwner.name + " is aggroed against " + myOwner.attackTarget.name);
+        }
     }
 
     public override void Execute()
     {
         // if you have nothing to chase, stop chasing
-        if (myOwner.attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); }
+        if (myOwner.attackTarget == null || attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); return; }
+        if(myOwner == null || myOwner.transform == null || myOwner.attackTarget == null || attackTarget == null) {
+            // Debug.Log("Nope");
+            return;
+        }
 
-        Debug.Log(attackTarget);
         float dist = Vector3.Distance(myOwner.transform.position, attackTarget.position);
 
         if (myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
@@ -136,14 +150,13 @@ public class MeleeEnemyAggro : NPCState
             Vector3 attackDir = myOwner.attackTarget.position - myOwner.transform.position;
             attackDir.y = 0;
             myOwner.transform.rotation = Quaternion.Lerp(myOwner.transform.rotation, Quaternion.LookRotation(attackDir), 0.5f);
-            myOwner.agent.isStopped = true;
+            myOwner.agent.velocity = Vector3.zero;
         }
         else if(dist < myOwner.blueprint.attackRange) {
             Vector3 attackDir = myOwner.attackTarget.position - myOwner.transform.position;
             attackDir.y = 0;
             myOwner.transform.rotation = Quaternion.Lerp(myOwner.transform.rotation, Quaternion.LookRotation(attackDir), 0.5f);
         }
-        else { myOwner.agent.isStopped = false; }
         
         // Check to see if the target is still in view
         targetInView = myOwner.checkView();
@@ -157,7 +170,7 @@ public class MeleeEnemyAggro : NPCState
             lostTargetViewTime = 0f;
         }
 
-        if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
+        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
 
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
@@ -178,7 +191,7 @@ public class MeleeEnemyAggro : NPCState
         if(dist <= myOwner.blueprint.attackRange && dotprod >= myOwner.attackDotProd) {
             myOwner.changeState(new MeleeEnemyAttack());
         }
-        myOwner.rbody.AddForce(myOwner.agent.desiredVelocity / myOwner.friction);
+        // myOwner.rbody.AddForce(myOwner.agent.desiredVelocity / myOwner.friction);
     }
 
     public override void Exit()
@@ -194,7 +207,8 @@ public class MeleeEnemyAttack : NPCState
         base.Enter(owner);
         // anim.Play("Attack");
         myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
-        myOwner.agent.isStopped = true;
+        if(myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.transform.position); }
+        // myOwner.agent.isStopped = true;
     }
 
     public override void Enter(Movement owner, NPCState prevState)
@@ -202,14 +216,15 @@ public class MeleeEnemyAttack : NPCState
         base.Enter(owner, prevState);
         // anim.Play("Attack");
         myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
-        Debug.Log(myOwner.transform.name + " attacks!");
-        myOwner.agent.isStopped = true;
+        if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.transform.position); }
+        // Debug.Log(myOwner.transform.name + " attacks!");
+        // if (myOwner.agent.enabled) { myOwner.agent.velocity = Vector3.zero; }
     }
 
     public override void Execute()
     {
         // check if attack animation is finished
-        myOwner.agent.velocity = Vector3.zero;
+        if(myOwner.agent.enabled) { myOwner.agent.velocity = Vector3.zero; }
         if (myOwner.attackRoutine == null) {
             if(previousState != null) { myOwner.changeState(previousState); }
             else { myOwner.changeState(new MeleeEnemyAggro()); }
@@ -218,8 +233,7 @@ public class MeleeEnemyAttack : NPCState
 
     public override void Exit()
     {
-        myOwner.agent.isStopped = false;
-        Debug.Log("Exiting Attack...");
+        if(myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
     }
 }
 
@@ -244,7 +258,7 @@ public class MeleeEnemySeduced : NPCState
 
     public override void Enter(Movement owner, float newDuration)
     {
-        base.Enter(owner, newDuration); Debug.Log("Seduced for: " + duration);
+        base.Enter(owner, newDuration); // Debug.Log("Seduced for: " + duration);
         // set animator to seduced animations
         anim = myOwner.anim;
 
@@ -262,10 +276,12 @@ public class MeleeEnemySeduced : NPCState
         if(myOwner.crush == null || myOwner.crushTarget == null) { Debug.Log("No Crush"); stateChange(); return; }
 
         if (myOwner.anim.GetCurrentAnimatorStateInfo(0).IsTag("Hurt")) {
-            myOwner.agent.isStopped = true;
+            // myOwner.agent.isStopped = true;
+            // myOwner.agent.updatePosition = true;
+            myOwner.agent.Warp(myOwner.transform.position);
         }
         else {
-            myOwner.agent.isStopped = false;
+            // myOwner.agent.isStopped = false;
         }
 
         if (myOwner.agent.velocity.magnitude > myOwner.agent.speed / 2) {

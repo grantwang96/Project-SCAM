@@ -18,7 +18,7 @@ public class RicochetSideEffect : SpellSecondary {
         coll.material = physMat;
     }
 
-    public override void OnHit(Transform user, Missile projectile)
+    public override void OnHit(Transform user, Missile projectile, Collision coll)
     {
         Rigidbody rbody = projectile.GetComponent<Rigidbody>();
         rbody.velocity *= forceModifier;

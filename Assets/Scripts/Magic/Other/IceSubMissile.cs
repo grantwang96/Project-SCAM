@@ -25,7 +25,6 @@ public class IceSubMissile : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if(partSys.isStopped) {
-            Debug.Log("Bleh");
             Destroy(gameObject);
         }
 	}

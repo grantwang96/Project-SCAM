@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5cc55aa419bee647a5ecbb95b1a704e, type: 3}
   m_Name: Ice
   m_EditorClassIdentifier: 
-  force: 50
+  force: 100
   power: 10
   duration: 0
   powerLevelModifier: 1
@@ -19,7 +19,7 @@ MonoBehaviour:
   baseColor: {r: 0, g: 0.13103437, b: 1, a: 0.7058824}
   ammo: 4
   coolDown: 0.4
-  title: Ice Blast
+  title: Frost Ray
   description: Creates an icy surface
   projectilePrefab: {fileID: 114765780417504250, guid: 88670340bf7213645838c2e6f7ce896e,
     type: 2}

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public static PlayerMagic instance;
-    List<SpellBook> spellsInventory = new List<SpellBook>();
+    [SerializeField] List<SpellBook> spellsInventory = new List<SpellBook>();
     public int maxSpells;
     int currentHeld;
 
@@ -32,6 +32,11 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public float grabRange;
     [SerializeField] Interactable currentInteractable;
 
+    public TextMesh currentSpellTitle;
+    public TextMesh currentSpellDescription;
+    public TextMesh ammoCount;
+    public MeshRenderer currentSpellCover;
+
     Coroutine enemyDisplayRoutine;
 
     #region UIStuff
@@ -45,11 +50,15 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     [SerializeField] Image reticule;
     [SerializeField] GameObject enemyDataSection;
     [SerializeField] Image enemyHealthGauge;
+    [SerializeField] Image enemyHealthMask;
     [SerializeField] Image enemyHealthGaugeBackground;
     [SerializeField] Text enemyName;
 
     [SerializeField] Color reticuleNormal;
     [SerializeField] Color reticuleInteractable;
+
+    public Sprite shootReticuleSprite;
+    public Sprite interactReticuleSprite;
     #endregion
 
     // Use this for initialization
@@ -60,14 +69,18 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         canFireSpells = true;
 
         enemyHealthGauge.enabled = false;
+        enemyHealthMask.enabled = false;
         enemyHealthGaugeBackground.enabled = false;
         enemyName.enabled = false;
 
-        updateCurrentHeld();
-	}
+        // updateCurrentHeld();
+        UpdateSpellData();
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameManager.Instance.menuMode) { return; }
+
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
 
@@ -75,10 +88,12 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         else { reticule.color = reticuleInteractable; }
         
         if (Input.GetButtonDown("Fire1")) { // make sure player hits shoot button and has something to shoot
+            fireSpell();
             // if(interactable != null) { interactable.Interact(this); }
             // else if (spellsInventory.Count != 0) { fireSpell(); }
-            if(currentInteractable != null) { currentInteractable.Interact(this); currentInteractable = null; }
-            else if(spellsInventory.Count != 0) { fireSpell(); }
+        }
+        if(Input.GetButtonDown("Fire2") && currentInteractable != null) {
+            currentInteractable.Interact(this); currentInteractable = null;
         }
         if (spellsInventory.Count > 0 && ammoGaugeBackground.gameObject.activeInHierarchy) { // update the ammo gauge
             ammoGaugeFill.fillAmount = (float)spellsInventory[currentHeld].getAmmo() / spellsInventory[currentHeld].getMaxAmmo();
@@ -108,15 +123,18 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             currentHeld = 0;
-            updateCurrentHeld();
+            // updateCurrentHeld();
+            UpdateSpellData();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && spellsInventory.Count > 1) {
             currentHeld = 1;
-            updateCurrentHeld();
+            // updateCurrentHeld();
+            UpdateSpellData();
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && spellsInventory.Count > 2) {
             currentHeld = 2;
-            updateCurrentHeld();
+            // updateCurrentHeld();
+            UpdateSpellData();
         }
     }
 
@@ -127,7 +145,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         {
             if (mouse > 0) { currentHeld--; }
             else if (mouse < 0) { currentHeld++; }
-            updateCurrentHeld();
+            // updateCurrentHeld();
+            UpdateSpellData();
         }
     }
     #endregion
@@ -161,6 +180,26 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
     }
 
+    void UpdateSpellData()
+    {
+        if (spellsInventory.Count == 0) { // shut everything off
+            currentHeld = 0;
+            currentSpellTitle.text = "";
+            currentSpellDescription.text = "";
+            ammoCount.text = "";
+            currentSpellCover.material.color = new Color(.3f, .3f, .3f);
+        }
+        else { // update the ammo gauge and makesure current held is within inventory count
+            if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
+            else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
+
+            currentSpellTitle.text = spellsInventory[currentHeld].primaryEffect.title;
+            currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
+            ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();
+            currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
+        }
+    }
+
     public void displayEnemyData(Damageable enemy)
     {
         if(enemy == body.GetComponent<Damageable>()) { return; }
@@ -173,14 +212,17 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         float time = 0f;
         enemyName.enabled = true;
         enemyHealthGaugeBackground.enabled = true;
+        enemyHealthMask.enabled = true;
         enemyHealthGauge.enabled = true;
         enemyName.text = enemy.gameObject.name;
 
         RectTransform enemyHPBackground = enemyHealthGaugeBackground.GetComponent<RectTransform>();
         RectTransform enemyHP = enemyHealthGauge.GetComponent<RectTransform>();
+        RectTransform enemyHPMask = enemyHealthMask.GetComponent<RectTransform>();
         float sizeModifier = 1f + (100f / enemy.max_health);
-        enemyHPBackground.sizeDelta = new Vector2((enemy.max_health * sizeModifier) + 10, 10);
-        enemyHP.sizeDelta = new Vector2(enemyHPBackground.sizeDelta.x - 10, 5);
+        enemyHPBackground.sizeDelta = new Vector2((enemy.max_health * sizeModifier), 15);
+        enemyHPMask.sizeDelta = enemyHPBackground.sizeDelta;
+        enemyHP.sizeDelta = new Vector2(enemyHPBackground.sizeDelta.x, 30);
         enemyHP.anchoredPosition = enemyHPBackground.anchoredPosition;
 
         while(time < 5f) {
@@ -193,6 +235,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
         enemyName.enabled = false;
         enemyHealthGaugeBackground.enabled = false;
+        enemyHealthMask.enabled = false;
         enemyHealthGauge.enabled = false;
         enemyDisplayRoutine = null;
     }
@@ -235,13 +278,18 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public void fireSpell() // Shoot the spell
     {
         if (!canFire) { return; } // If cooling down
-        spellsInventory[currentHeld].primaryEffect.ActivateSpell(this, spellsInventory[currentHeld].secondaryEffect, Head.forward); // activate currently held spellbook
+        if(spellsInventory.Count == 0) { return; }
+        spellsInventory[currentHeld].primaryEffect.ActivateSpell(this, spellsInventory[currentHeld].secondaryEffect, Head.forward, spellsInventory[currentHeld].OffChance); // activate currently held spellbook
         spellsInventory[currentHeld].useAmmo(); // the player uses ammo in a spellbook
 
+        /*
         spellslot data = spellSlots.GetChild(currentHeld).GetComponent<spellslot>();
         data.modifyDetails(spellsInventory[currentHeld].spellTitle, spellsInventory[currentHeld].spellDescription,
             spellsInventory[currentHeld].getAmmo(), spellsInventory[currentHeld].getMaxAmmo(), spellsInventory[currentHeld].baseColor);
         // data.ammoBarInner.fillAmount = (float)spellsInventory[currentHeld].getAmmo() / spellsInventory[currentHeld].getMaxAmmo();
+        */
+
+        UpdateSpellData();
 
         // Calculate and initiate cooldown
         float coolDown = spellsInventory[currentHeld].primaryEffect.coolDown;
@@ -269,7 +317,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             spellsInventory.Add(newSpell);
             currentHeld = spellsInventory.Count - 1;
         }
-        updateCurrentHeld();
+        // updateCurrentHeld();
+        UpdateSpellData();
         newSpell.Deactivate();
         newSpell.transform.localPosition = Vector3.zero;
         newSpell.transform.localRotation = Quaternion.identity;
@@ -293,7 +342,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public void dropSpell(SpellBook dropSpell, Vector3 originPos) // drop the spellbook
     {
-        Debug.Log("Dropped Spell");
+        // Debug.Log("Dropped Spell");
         // unlink spellbook from player
         if(dropSpell.owner == this.GetComponent<SpellCaster>()) { dropSpell.owner = null; }
         if (spellsInventory.Contains(dropSpell)) { spellsInventory.Remove(dropSpell); }
@@ -322,7 +371,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             dropSpell.transform.position = Vector3.Lerp(dropSpell.transform.position, originPos, Time.deltaTime / spellPickUpSpeed); // shift book to position
             yield return new WaitForEndOfFrame();
         }
-        updateCurrentHeld();
+        // updateCurrentHeld();
+        UpdateSpellData();
     }
 
     public SpellBook returnSpell()

@@ -11,12 +11,13 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
 
     public SpellSpawn[] spellSpawns;
     public LayerMask spellBooksLayer;
-    public float spawnFrequency;
 
-    public Text enemyCounter;
+    public bool gameIsRunning;
+    public bool menuMode;
 
-    [SerializeField] private bool isSpellSpawning;
-    [SerializeField] private bool combatTesting;
+    [SerializeField] GameObject PauseCanvas;
+    [SerializeField] GameObject PausePanel;
+    public GameObject currentMenuPanel;
 
     #region Prefabs N Stuff
     public GameHint messagePrefab;
@@ -25,59 +26,37 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
     // Use this for initialization
     void Start () {
         Instance = this;
-        if (isSpellSpawning) { StartCoroutine(spellSpawning()); }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if(combatTesting) { CombatTesting(); }
+        if(Input.GetButtonDown("Cancel") && !menuMode) {
+            TogglePauseMenu();
+        }
 	}
 
-    void CombatTesting()
-    {
-        if (enemiesOnScreen.Count > 0)
-        {
-            for (int i = 0; i < enemiesOnScreen.Count; i++)
-            {
-                if (enemiesOnScreen[i] == null) { enemiesOnScreen.Remove(enemiesOnScreen[i]); }
-            }
+    public void TogglePauseMenu() {
+        if(menuMode) {
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            PauseCanvas.SetActive(false);
         }
         else {
-            InitiateWinState();
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            PauseCanvas.SetActive(true);
         }
-        enemyCounter.text = "Enemies Remaining: " + enemiesOnScreen.Count;
+        menuMode = !menuMode;
+        SetCurrentMenu(PausePanel);
     }
 
-    IEnumerator spellSpawning()
+    public void SetCurrentMenu(GameObject currMenu)
     {
-        if(spellSpawns.Length == 0) {
-            Debug.LogError("List of spell spawns is empty!");
-            yield break;
-        }
-        foreach(SpellSpawn spawn in spellSpawns) { spawn.SpawnSpell(); }
-        // shuffle(spellSpawns);
-        /*
-        int i = 0;
-        while (true) {
-            SpellSpawn nextSpawn = spellSpawns[i];
-            Collider[] colls = Physics.OverlapSphere(nextSpawn.spawnPoint.position, .5f, spellBooksLayer);
-            if(colls.Length == 0) {
-                nextSpawn.SpawnSpell();
-            }
-            i++;
-            if(i >= spellSpawns.Length) { i = 0; }
-            yield return new WaitForSeconds(spawnFrequency);
-        }
-        */
-        while(true) {
-            yield return new WaitForSeconds(spawnFrequency);
-            foreach (SpellSpawn spawn in spellSpawns) {
-                spawn.SpawnSpell();
-                yield return new WaitForEndOfFrame();
-            }
-        }
+        currentMenuPanel = currMenu;
     }
-
+    
     void shuffle<T>(T[] array)
     {
         for(int i = 0; i < array.Length; i++)
@@ -120,5 +99,9 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
     {
         door.locked = true;
     }
-    
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

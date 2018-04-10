@@ -26,6 +26,8 @@ public class SpellBook : MonoBehaviour, Interactable {
     Rigidbody rbody;
 
     public ParticleSystem DieEffect;
+    [SerializeField] private float offChance;
+    public float OffChance { get { return offChance; } }
 
 	// Use this for initialization
 	void Awake () {
@@ -41,6 +43,8 @@ public class SpellBook : MonoBehaviour, Interactable {
 
     public void SetupSpell()
     {
+        // offChance = Random.Range(0.5f, .9f);
+        offChance = 1f;
         if (primaryEffect)
         {
             ammo += primaryEffect.ammo;

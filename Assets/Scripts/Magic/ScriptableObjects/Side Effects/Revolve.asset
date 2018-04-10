@@ -16,7 +16,8 @@ MonoBehaviour:
   title: Orbiting
   description: You'll feel like a star!
   decoration: {fileID: 4510937749999608, guid: c887b558e3cd4dd4f9c107f4bf27a499, type: 2}
-  forwardTime: 0.1
+  sideEffect: {fileID: 0}
+  forwardTime: 0.02
   modifiedLifeSpan: 30
   speed: 500
   axisPrefab: {fileID: 54266635993642852, guid: 648adc492b88c6c4f81746e7eda5eb21,
