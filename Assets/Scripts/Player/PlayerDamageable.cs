@@ -41,7 +41,12 @@ public class PlayerDamageable : Damageable {
 	public override void Update () {
         // update healthbar
         // healthBar.fillAmount = (float)health / max_health;
-        healthBar.transform.localScale = new Vector3(.7f, (float)health / max_health, .7f);
+
+        float fillAmount = (float)health / max_health;
+        if(fillAmount > 1f) { fillAmount = 1f; }
+        else if(fillAmount < 0) { fillAmount = 0f; }
+
+        healthBar.transform.localScale = new Vector3(.7f, fillAmount, .7f);
         healthBar.material.color = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
     }
 
