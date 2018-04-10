@@ -92,6 +92,7 @@ public class SpellBook : MonoBehaviour, Interactable {
     {
         if (_dead || owner != null) { return false; }
         owner = spellCaster;
+
         spellCaster.pickUpSpell(this);
         return true;
     }

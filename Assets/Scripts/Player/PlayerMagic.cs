@@ -61,6 +61,12 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public Sprite interactReticuleSprite;
     #endregion
 
+	#region Audio
+
+	AudioPlayer sounds;
+
+	#endregion
+
     // Use this for initialization
     void Start () {
         instance = this;
@@ -72,6 +78,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         enemyHealthMask.enabled = false;
         enemyHealthGaugeBackground.enabled = false;
         enemyName.enabled = false;
+
+		sounds = GetComponentInParent<AudioPlayer>();
 
         // updateCurrentHeld();
         UpdateSpellData();
@@ -147,6 +155,9 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             else if (mouse < 0) { currentHeld++; }
             // updateCurrentHeld();
             UpdateSpellData();
+
+			//play audio
+			sounds.PlayClip("swap");
         }
     }
     #endregion
@@ -295,6 +306,9 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         float coolDown = spellsInventory[currentHeld].primaryEffect.coolDown;
         coolDown += spellsInventory[currentHeld].secondaryEffect.coolDown;
         StartCoroutine(fireCoolDown(coolDown));
+
+		//sound
+		sounds.PlayClip("fire");
     }
 
     public Transform returnGun() { return gun; }
@@ -322,6 +336,9 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         newSpell.Deactivate();
         newSpell.transform.localPosition = Vector3.zero;
         newSpell.transform.localRotation = Quaternion.identity;
+
+		//audio
+		sounds.PlayClip("pickup");
         // StartCoroutine(pickUpProcess(newSpell)); // visualize pick up
     }
 
@@ -357,6 +374,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         // dropSpell.Die();
 
         // visualize dropping book
+
+		sounds.PlayClip("out_of_spell");
         StartCoroutine(dropSpellProcess(dropSpell, originPos));
     }
 

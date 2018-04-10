@@ -26,10 +26,13 @@ public class PlayerDamageable : Damageable {
     // public Image healthBar;
     public MeshRenderer healthBar;
 
+	AudioPlayer sounds;
+
 	// Use this for initialization
 	public override void Start () {
         base.Start();
         Instance = this;
+		sounds = GetComponent<AudioPlayer>();
         // playerCanvas = Instantiate(playerCanvasPrefab);
         // healthBar = playerCanvas.Find("HealthBar").GetComponent<Image>();
 	}
@@ -38,7 +41,12 @@ public class PlayerDamageable : Damageable {
 	public override void Update () {
         // update healthbar
         // healthBar.fillAmount = (float)health / max_health;
-        healthBar.transform.localScale = new Vector3(.7f, (float)health / max_health, .7f);
+
+        float fillAmount = (float)health / max_health;
+        if(fillAmount > 1f) { fillAmount = 1f; }
+        else if(fillAmount < 0) { fillAmount = 0f; }
+
+        healthBar.transform.localScale = new Vector3(.7f, fillAmount, .7f);
         healthBar.material.color = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
     }
 
@@ -52,6 +60,8 @@ public class PlayerDamageable : Damageable {
         if(health <= 0) { Die(); return; }
         if(attacker == null) { return; }
         PlayerMagic.instance.invokeChangeFollowers(attacker.GetComponent<Damageable>());
+
+		sounds.PlayClip("hurt");
         StartCoroutine(hurtFrames(hpLost));
     }
 
