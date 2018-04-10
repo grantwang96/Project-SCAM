@@ -23,7 +23,8 @@ public class PlayerDamageable : Damageable {
     public Image statusEffectPrefab;
     public Transform statusEffectBar;
 
-    public Image healthBar;
+    // public Image healthBar;
+    public MeshRenderer healthBar;
 
 	// Use this for initialization
 	public override void Start () {
@@ -36,8 +37,10 @@ public class PlayerDamageable : Damageable {
 	// Update is called once per frame
 	public override void Update () {
         // update healthbar
-        healthBar.fillAmount = (float)health / max_health;
-	}
+        // healthBar.fillAmount = (float)health / max_health;
+        healthBar.transform.localScale = new Vector3(.7f, (float)health / max_health, .7f);
+        healthBar.material.color = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+    }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
     {
@@ -198,8 +201,8 @@ public class PlayerDamageable : Damageable {
         Collider newBodyColl = newBody.GetComponent<Collider>();
         
         //shut off unnecessary components of newbody
-        // newrbody.isKinematic = true;
-        // newrbody.useGravity = false;
+        newrbody.isKinematic = true;
+        newrbody.useGravity = false;
         newDam.parentHit = this;
         newDam.transmutable = false;
 
@@ -210,7 +213,7 @@ public class PlayerDamageable : Damageable {
         gun.localPosition += Vector3.forward * .5f;
 
         CharacterController charCon = GetComponent<CharacterController>();
-        /*
+
         // change player's collider to become similar to newbody's
         float newHeight = newBodyColl.bounds.extents.y * 2;
         float newRadius = (newBodyColl.bounds.extents.x + newBodyColl.bounds.extents.z) / 2;
@@ -219,38 +222,30 @@ public class PlayerDamageable : Damageable {
         float originRadius = charCon.radius; // save for later
         charCon.height = newHeight;
         charCon.radius = newRadius;
-        // charCon.detectCollisions = true;
-        */
+        charCon.detectCollisions = true;
+
         myMovement.Head.position = transform.position + Vector3.up * charCon.height / 2;
         myMovement.Head.forward = transform.forward;
-        charCon.enabled = false;
+        // charCon.enabled = false;
         Camera.main.transform.position -= transform.forward * 3f;
         Camera.main.transform.LookAt(myMovement.Head);
 
         gun.parent = myMovement.Head;
         Vector3 localPos = myMovement.Head.localPosition;
-        myMovement.Head.parent = null;
+        myMovement.Head.parent = newrbody.transform;
+        myMovement.Head.position = newrbody.transform.TransformPoint(localPos);
+        myMovement.Head.forward = newrbody.transform.forward;
 
         // myPlayMagic.enabled = false; // ALLOW FOR SPELL COMBAT
-        myMovement.hamper += 1;
+        // myMovement.hamper += 1;
 
         Transform oldTransmuteStatus = statusEffectBar.Find("transmutedStatus");
         if(oldTransmuteStatus) { Destroy(oldTransmuteStatus.gameObject); }
         Image newTransmuteStatus = Instantiate(statusEffectPrefab, statusEffectBar);
+        newTransmuteStatus.rectTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180));
         newTransmuteStatus.name = "transmutedStatus";
-
-        // StatusBarHandler.instance.applyStatus("transmute", duration);
         float time = 0f;
         while(time < duration) {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-            // transform.position = newrbody.position;
-            myMovement.Head.position = newrbody.transform.TransformPoint(localPos);
-
-            newrbody.AddForce((myMovement.Head.forward * vertical + myMovement.Head.right * horizontal)
-                * myMovement.maxSpeed);
-            if(newrbody.velocity.magnitude > myMovement.maxSpeed) { newrbody.velocity = new Vector3(horizontal, 0f, vertical) * myMovement.maxSpeed; }
-
             newTransmuteStatus.fillAmount = 1f - (time / duration);
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
@@ -263,8 +258,8 @@ public class PlayerDamageable : Damageable {
  
         charCon.enabled = true;
         charCon.detectCollisions = true;
-        // charCon.height = originHeight;
-        // charCon.radius = originRadius;
+        charCon.height = originHeight;
+        charCon.radius = originRadius;
         myMovement.Head.position = transform.position + Vector3.up * charCon.height / 2;
         myMovement.Head.parent = transform;
         myMovement.Head.forward = transform.forward;
@@ -275,7 +270,7 @@ public class PlayerDamageable : Damageable {
         Camera.main.transform.rotation = myMovement.Head.rotation;
 
         // re-enable spell combat and transmutable
-        myMovement.hamper--;
+        // myMovement.hamper--;
         setTransmutable(true);
 
         // get rid of newbody

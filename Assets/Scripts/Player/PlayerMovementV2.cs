@@ -51,6 +51,7 @@ public class PlayerMovementV2 : Movement {
 
         // if(hamper <= 0) { Move(move * Time.deltaTime); }
         Move(move * Time.deltaTime);
+        if(!charCon.enabled) { return; }
         charCon.Move(Vector3.up * yMove * Time.deltaTime);
     }
 
@@ -115,19 +116,15 @@ public class PlayerMovementV2 : Movement {
 
     public override void processMovement()
     {
+        if(GameManager.Instance.menuMode) { return; }
+
         float horizontal = 0f;
         float vertical = 0f;
+        horizontal = Input.GetAxis("Horizontal"); // Get player inputs
+        vertical = Input.GetAxis("Vertical"); // Get player inputs
         // if (hamper > 0) { return; }
-        if(Input.GetJoystickNames().Length > 0) {
-            horizontal = Input.GetAxis("Con_Horizontal"); // Get player inputs
-            vertical = Input.GetAxis("Con_Vertical"); // Get player inputs
-        }
-        else {
-            horizontal = Input.GetAxis("Keyboard_Horizontal"); // Get player inputs
-            vertical = Input.GetAxis("Keyboard_Vertical"); // Get player inputs
-        }
 
-        if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+        if (Input.GetButtonDown("Jump")) { Jump(); }
         moveDir = ((transform.forward * vertical * currSpeed) + (transform.right * horizontal * currSpeed));
     }
 

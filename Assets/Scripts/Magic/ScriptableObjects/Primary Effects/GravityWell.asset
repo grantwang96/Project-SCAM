@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c908fb9e54dccf340a30986b25f4c597, type: 3}
   m_Name: GravityWell
   m_EditorClassIdentifier: 
-  force: 60
+  force: 100
   power: 8
   duration: 0
   powerLevelModifier: 1
@@ -19,7 +19,7 @@ MonoBehaviour:
   baseColor: {r: 0, g: 0.8758622, b: 1, a: 0.7058824}
   ammo: 4
   coolDown: 0.5
-  title: Gravity Vortex
+  title: Whirling Vortex
   description: Traps foes in whirlpool
   projectilePrefab: {fileID: 114765780417504250, guid: 88670340bf7213645838c2e6f7ce896e,
     type: 2}

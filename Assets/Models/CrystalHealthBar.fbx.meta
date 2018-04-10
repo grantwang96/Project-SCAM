@@ -1,0 +1,177 @@
+fileFormatVersion: 2
+guid: 736ac1a03ddcbe0428d653bccc07c471
+timeCreated: 1523114406
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: pTorus10
+    100004: pTorus2
+    100006: pTorus3
+    100008: pTorus4
+    100010: pTorus5
+    100012: pTorus6
+    100014: pTorus7
+    100016: pTorus8
+    100018: pTorus9
+    100020: Chain
+    100022: MainCrystal
+    100024: pTorus12
+    100026: pTorus13
+    100028: pTorus14
+    100030: pTorus16
+    100032: polySurface2
+    100034: pTorus17
+    400000: //RootNode
+    400002: pTorus10
+    400004: pTorus2
+    400006: pTorus3
+    400008: pTorus4
+    400010: pTorus5
+    400012: pTorus6
+    400014: pTorus7
+    400016: pTorus8
+    400018: pTorus9
+    400020: Chain
+    400022: MainCrystal
+    400024: pTorus12
+    400026: pTorus13
+    400028: pTorus14
+    400030: pTorus16
+    400032: polySurface2
+    400034: pTorus17
+    2100000: lambert1
+    2100002: Crystal
+    2300000: pTorus10
+    2300002: pTorus2
+    2300004: pTorus3
+    2300006: pTorus4
+    2300008: pTorus5
+    2300010: pTorus6
+    2300012: pTorus7
+    2300014: pTorus8
+    2300016: pTorus9
+    2300018: Chain
+    2300020: MainCrystal
+    2300022: pTorus12
+    2300024: pTorus13
+    2300026: pTorus14
+    2300028: pTorus16
+    2300030: polySurface2
+    2300032: pTorus17
+    3300000: pTorus10
+    3300002: pTorus2
+    3300004: pTorus3
+    3300006: pTorus4
+    3300008: pTorus5
+    3300010: pTorus6
+    3300012: pTorus7
+    3300014: pTorus8
+    3300016: pTorus9
+    3300018: Chain
+    3300020: MainCrystal
+    3300022: pTorus12
+    3300024: pTorus13
+    3300026: pTorus14
+    3300028: pTorus16
+    3300030: polySurface2
+    3300032: pTorus17
+    4300000: pTorus2
+    4300002: pTorus3
+    4300004: pTorus4
+    4300006: pTorus5
+    4300008: pTorus6
+    4300010: pTorus7
+    4300012: pTorus8
+    4300014: pTorus9
+    4300016: pTorus10
+    4300018: MainCrystal
+    4300020: pTorus12
+    4300022: pTorus13
+    4300024: pTorus14
+    4300026: Chain
+    4300028: pTorus16
+    4300030: polySurface2
+    4300032: pTorus17
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 5
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -18,7 +18,13 @@ public class GravityWellVortex : MonoBehaviour {
 
     public ParticleSystem effects;
     public SphereCollider rangeFinder;
-    public Vector3 pointShift; // vector between edge before and after turn
+
+    public Transform measuringStick;
+
+    Vector3 before;
+    Vector3 after;
+    public Vector3 pointShift;
+
     public float forceMod;
     public float heightForce;
 
@@ -32,13 +38,13 @@ public class GravityWellVortex : MonoBehaviour {
 	void Start () {
         rbody = GetComponent<Rigidbody>();
         rbody.isKinematic = true;
-        range = 0.33f;
+        range = 0.01f;
         rangeFinder = GetComponent<SphereCollider>();
         effects = GetComponent<ParticleSystem>();
         rangeFinder.radius = range;
         ParticleSystem.ShapeModule shapeModule = effects.shape;
         shapeModule.radius = range;
-        effects.startSpeed = -range;
+        effects.startSpeed = range;
         ParticleSystem.EmissionModule emModule = effects.emission;
         maxEmissionRate = emModule.rate.constant;
         emModule.rateOverTime = initialEmissionRate;
@@ -65,65 +71,60 @@ public class GravityWellVortex : MonoBehaviour {
             currEmission += Time.deltaTime * (range/maxRange * (maxEmissionRate - initialEmissionRate));
             emModule.rateOverTime = currEmission;
             effects.startSpeed = -range;
+            measuringStick.localPosition = Vector3.forward * range;
         }
 	}
 
     void FixedUpdate()
     {
-        Vector3 before = transform.position + transform.forward * range;
+        before = measuringStick.transform.position;
         rbody.MoveRotation(Quaternion.Euler(transform.eulerAngles + Vector3.up * speed * Time.deltaTime));
-        Vector3 after = transform.position + transform.forward * range;
-        pointShift = transform.InverseTransformDirection(after - before);
-        /*
-        foreach(Transform child in transform) {
-            Damageable dam = child.GetComponent<Damageable>();
-            Vector3 move = pointShift + (transform.position - child.position);
-            if(dam) { dam.knockBack(move.normalized, force); }
-            else if(child.GetComponent<Rigidbody>()) { child.GetComponent<Rigidbody>().AddForce(move.normalized * force); }
-        }*/
     }
 
     void LateUpdate()
     {
-
+        after = measuringStick.transform.position;
+        pointShift = after - before;
     }
-    /*
+    
     void OnTriggerEnter(Collider coll)
     {
-        Damageable dam = coll.GetComponent<Damageable>();
-        if(dam) {
-            Vector3 dir = (transform.position - coll.transform.position).normalized;
-            dir += pointShift;
-            dir.y = 2f;
-            dam.knockBack(dir, force);
-        }
-        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) {
-            Vector3 dir = (transform.position - coll.transform.position).normalized;
-            dir += pointShift;
-            dir.y = 2f;
-            coll.attachedRigidbody.AddForce(dir * force, ForceMode.Impulse);
-        }
-    }*/
+
+    }
 
     void OnTriggerExit(Collider coll)
     {
-        
+
     }
     
     void OnTriggerStay(Collider coll)
     {
+        float heightDiff = Mathf.Abs(coll.transform.position.y - transform.position.y);
+        if (heightDiff > range / 2f) { return; }
+
         Damageable dam = coll.GetComponent<Damageable>();
         if(dam) {
-            Vector3 dir = (transform.position - coll.transform.position).normalized;
-            dir += pointShift * forceMod;
+
+            float dist = Vector3.Distance(coll.transform.position, transform.position);
+            float angle = Vector3.SignedAngle(transform.forward, coll.transform.position - transform.position, Vector3.up);
+            float angleInRadians = angle * Mathf.Deg2Rad;
+            Vector3 beforePos = new Vector3(Mathf.Cos(angleInRadians), 0f, Mathf.Sin(angleInRadians)) * range;
+            beforePos += transform.position;
+            angle += speed * Time.deltaTime;
+            Vector3 afterPos = new Vector3(Mathf.Cos(angleInRadians), 0f, Mathf.Sin(angleInRadians)) * range;
+            afterPos += transform.position;
+            Vector3 dir = (afterPos - beforePos).normalized;
+
+            dir += (transform.position - coll.transform.position).normalized * forceMod * range / dist;
             dir.y = heightForce;
+
             dam.knockBack(dir, force);
         }
-        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic && coll.tag == "Furniture") {
+        else if(coll.attachedRigidbody != null && !coll.attachedRigidbody.isKinematic) {
             Vector3 dir = (transform.position - coll.transform.position).normalized;
             dir += pointShift * forceMod;
             dir.y = heightForce;
-            coll.attachedRigidbody.AddForce(dir * force, ForceMode.Impulse);
+            coll.attachedRigidbody.AddForce(dir * force);
         }
     }
 
@@ -161,4 +162,5 @@ public class GravityWellVortex : MonoBehaviour {
 
         return direction.normalized * gravityForce * Time.fixedDeltaTime;
     }
+
 }

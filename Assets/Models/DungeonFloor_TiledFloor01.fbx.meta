@@ -1,0 +1,182 @@
+fileFormatVersion: 2
+guid: 1fc0cabbf93c2ee46a1cf1554acdc7a3
+timeCreated: 1523321026
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: DungeonFloor_TiledFloor01
+    100004: DungeonFloor_TiledFloor01 1
+    100006: DungeonFloor_TiledFloor1
+    100008: polySurface117
+    100010: polySurface118
+    100012: polySurface119
+    100014: polySurface120
+    100016: polySurface121
+    100018: polySurface122
+    100020: polySurface123
+    100022: polySurface125
+    100024: polySurface126
+    100026: polySurface127
+    100028: polySurface128
+    100030: polySurface129
+    100032: polySurface130
+    100034: polySurface131
+    100036: polySurface132
+    100038: polySurface133
+    100040: polySurface134
+    100042: polySurface135
+    100044: transform28
+    100046: transform29
+    100048: transform30
+    100050: transform31
+    100052: transform32
+    100054: transform33
+    100056: transform34
+    100058: transform35
+    100060: transform36
+    100062: transform37
+    100064: transform38
+    100066: transform39
+    100068: transform40
+    100070: transform41
+    100072: transform42
+    100074: transform43
+    100076: transform44
+    100078: transform45
+    100080: transform46
+    100082: transform47
+    400000: //RootNode
+    400002: DungeonFloor_TiledFloor01
+    400004: DungeonFloor_TiledFloor01 1
+    400006: DungeonFloor_TiledFloor1
+    400008: polySurface117
+    400010: polySurface118
+    400012: polySurface119
+    400014: polySurface120
+    400016: polySurface121
+    400018: polySurface122
+    400020: polySurface123
+    400022: polySurface125
+    400024: polySurface126
+    400026: polySurface127
+    400028: polySurface128
+    400030: polySurface129
+    400032: polySurface130
+    400034: polySurface131
+    400036: polySurface132
+    400038: polySurface133
+    400040: polySurface134
+    400042: polySurface135
+    400044: transform28
+    400046: transform29
+    400048: transform30
+    400050: transform31
+    400052: transform32
+    400054: transform33
+    400056: transform34
+    400058: transform35
+    400060: transform36
+    400062: transform37
+    400064: transform38
+    400066: transform39
+    400068: transform40
+    400070: transform41
+    400072: transform42
+    400074: transform43
+    400076: transform44
+    400078: transform45
+    400080: transform46
+    400082: transform47
+    2100000: lambert9
+    2100002: lambert1
+    2300000: //RootNode
+    2300002: DungeonFloor_TiledFloor1
+    3300000: //RootNode
+    3300002: DungeonFloor_TiledFloor1
+    4300000: polySurface135
+    4300002: DungeonFloor_TiledFloor01
+    4300004: DungeonFloor_TiledFloor02
+    4300006: DungeonFloor_TiledFloor1
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
