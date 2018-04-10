@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4364553068864844}
-  - component: {fileID: 95800229416461770}
   m_Layer: 0
   m_Name: SingleDoorFrame
   m_TagString: Untagged
@@ -43,7 +42,7 @@ GameObject:
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 4294967294
   m_IsActive: 1
 --- !u!4 &4364553068864844
 Transform:
@@ -127,20 +126,3 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300018, guid: 2a54b24dbfdd1cf44baba3efaf4bcaee, type: 3}
---- !u!95 &95800229416461770
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1119010707353948}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 2a54b24dbfdd1cf44baba3efaf4bcaee, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1

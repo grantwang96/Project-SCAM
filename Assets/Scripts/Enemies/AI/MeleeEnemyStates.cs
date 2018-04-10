@@ -83,8 +83,6 @@ public class MeleeEnemyWander : NPCState
 
         float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
-            Debug.Log("My Location is: " + myOwner.transform.position);
-            Debug.Log("Target location is: " + myOwner.agent.destination);
             Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }

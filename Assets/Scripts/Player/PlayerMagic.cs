@@ -79,6 +79,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameManager.Instance.menuMode) { return; }
+
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
 
@@ -276,6 +278,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public void fireSpell() // Shoot the spell
     {
         if (!canFire) { return; } // If cooling down
+        if(spellsInventory.Count == 0) { return; }
         spellsInventory[currentHeld].primaryEffect.ActivateSpell(this, spellsInventory[currentHeld].secondaryEffect, Head.forward, spellsInventory[currentHeld].OffChance); // activate currently held spellbook
         spellsInventory[currentHeld].useAmmo(); // the player uses ammo in a spellbook
 

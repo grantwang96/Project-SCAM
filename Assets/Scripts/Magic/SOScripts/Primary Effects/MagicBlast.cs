@@ -31,13 +31,12 @@ public class MagicBlast : SpellPrimary { // Standard damaging magic attack
             if(originator != null) {
                 originator.invokeChangeFollowers(collDam);
             }
-
             // Instantiate special effect
-            proj.Die();
             return;
         }
         Rigidbody rbody = coll.collider.attachedRigidbody;
         if(rbody != null) { rbody.AddExplosionForce(knockBackForce, proj.transform.position, 1f); }
+
         if (proj.bounceCount <= 0) {
             proj.Die();
         }
