@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 95836291059299868}
   - component: {fileID: 65238456595992892}
   m_Layer: 0
-  m_Name: DungeonWall_Clean
+  m_Name: DungeonWall_BrickWall_01
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -36,9 +36,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1877886118474636}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 2.5, z: 0}
-  m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -7.5, y: 7.5, z: -35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -57,7 +57,8 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2f64ab89e1f84f942a78a7cb64f2ca8c, type: 2}
+  - {fileID: 2100000, guid: 1923e439eaa433a4cab6c1883d2d5182, type: 2}
+  - {fileID: 2100000, guid: 347feaf7f76dcb1478d3f689208b7e57, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,7 +84,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1877886118474636}
-  m_Mesh: {fileID: 4300004, guid: 6a6c60cf52e9f69459f7810351aafc57, type: 3}
+  m_Mesh: {fileID: 4300002, guid: 7e5a9182d6409d043b2cb7b4867f742a, type: 3}
 --- !u!65 &65238456595992892
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -94,7 +95,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 1}
+  m_Size: {x: 5, y: 5, z: 1.25}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95836291059299868
 Animator:

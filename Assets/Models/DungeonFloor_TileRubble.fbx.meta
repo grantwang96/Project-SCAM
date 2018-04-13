@@ -1,0 +1,181 @@
+fileFormatVersion: 2
+guid: 733b8d2438345014481b6781339ed342
+timeCreated: 1523654067
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: DungeonFloor_Rubble_Tiles
+    100002: //RootNode
+    100004: polySurface196
+    100006: polySurface197
+    100008: polySurface198
+    100010: polySurface199
+    100012: polySurface200
+    100014: polySurface201
+    100016: polySurface202
+    100018: polySurface203
+    100020: polySurface204
+    100022: polySurface205
+    100024: polySurface206
+    100026: polySurface207
+    100028: polySurface208
+    100030: polySurface210
+    100032: polySurface211
+    100034: polySurface213
+    100036: polySurface214
+    400000: DungeonFloor_Rubble_Tiles
+    400002: //RootNode
+    400004: polySurface196
+    400006: polySurface197
+    400008: polySurface198
+    400010: polySurface199
+    400012: polySurface200
+    400014: polySurface201
+    400016: polySurface202
+    400018: polySurface203
+    400020: polySurface204
+    400022: polySurface205
+    400024: polySurface206
+    400026: polySurface207
+    400028: polySurface208
+    400030: polySurface210
+    400032: polySurface211
+    400034: polySurface213
+    400036: polySurface214
+    2100000: lambert9
+    2300000: DungeonFloor_Rubble_Tiles
+    2300002: polySurface196
+    2300004: polySurface197
+    2300006: polySurface198
+    2300008: polySurface199
+    2300010: polySurface200
+    2300012: polySurface201
+    2300014: polySurface202
+    2300016: polySurface203
+    2300018: polySurface204
+    2300020: polySurface205
+    2300022: polySurface206
+    2300024: polySurface207
+    2300026: polySurface208
+    2300028: polySurface210
+    2300030: polySurface211
+    2300032: polySurface213
+    2300034: polySurface214
+    3300000: DungeonFloor_Rubble_Tiles
+    3300002: polySurface196
+    3300004: polySurface197
+    3300006: polySurface198
+    3300008: polySurface199
+    3300010: polySurface200
+    3300012: polySurface201
+    3300014: polySurface202
+    3300016: polySurface203
+    3300018: polySurface204
+    3300020: polySurface205
+    3300022: polySurface206
+    3300024: polySurface207
+    3300026: polySurface208
+    3300028: polySurface210
+    3300030: polySurface211
+    3300032: polySurface213
+    3300034: polySurface214
+    4300000: polySurface196
+    4300002: polySurface197
+    4300004: polySurface198
+    4300006: polySurface199
+    4300008: polySurface200
+    4300010: polySurface201
+    4300012: polySurface202
+    4300014: polySurface203
+    4300016: polySurface204
+    4300018: polySurface205
+    4300020: polySurface206
+    4300022: polySurface207
+    4300024: polySurface208
+    4300026: DungeonFloor_Rubble_Tiles
+    4300028: polySurface210
+    4300030: polySurface211
+    4300032: polySurface213
+    4300034: polySurface214
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

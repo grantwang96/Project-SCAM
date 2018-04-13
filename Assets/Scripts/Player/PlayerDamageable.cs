@@ -33,15 +33,10 @@ public class PlayerDamageable : Damageable {
         base.Start();
         Instance = this;
 		sounds = GetComponent<AudioPlayer>();
-        // playerCanvas = Instantiate(playerCanvasPrefab);
-        // healthBar = playerCanvas.Find("HealthBar").GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
 	public override void Update () {
-        // update healthbar
-        // healthBar.fillAmount = (float)health / max_health;
-
         float fillAmount = (float)health / max_health;
         if(fillAmount > 1f) { fillAmount = 1f; }
         else if(fillAmount < 0) { fillAmount = 0f; }

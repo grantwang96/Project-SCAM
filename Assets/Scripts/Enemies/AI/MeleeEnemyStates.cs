@@ -44,6 +44,9 @@ public class MeleeEnemyIdle : NPCState
 public class MeleeEnemyWander : NPCState
 {
     Vector3 target;
+    float wanderTimeLimit = 10f;
+    float time = 0f;
+
     public override void Enter(Movement owner)
     {
         myOwner = owner;
@@ -62,12 +65,9 @@ public class MeleeEnemyWander : NPCState
 
     public override void Execute()
     {
-        /*
         if(myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) { myOwner.agent.SetDestination(myOwner.transform.position); }
         else { myOwner.agent.SetDestination(target); }
-        */
-
-        // Debug.Log("Status=" + anim.GetInteger("Status"));
+        if(time > wanderTimeLimit) { myOwner.changeState(new MeleeEnemyWander()); }
 
         if (myOwner.checkView()) {
             myOwner.anim.Play("Notice");
@@ -87,6 +87,7 @@ public class MeleeEnemyWander : NPCState
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }
         if(myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
+        time += Time.deltaTime;
     }
 
     public override void Exit() {

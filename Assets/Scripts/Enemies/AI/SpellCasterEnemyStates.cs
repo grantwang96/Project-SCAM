@@ -392,3 +392,20 @@ public class WizardEnemySeduced : NPCState
         }
     }
 }
+
+public class WizardEnemyInjured : NPCState
+{
+    public override void Enter(Movement owner, NPCState prevState)
+    {
+        base.Enter(owner, prevState);
+    }
+
+    public override void Execute()
+    {
+        int loops = Mathf.FloorToInt(myOwner.anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        if (myOwner.anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        { // wait for animation to end
+            myOwner.changeState(previousState);
+        }
+    }
+}

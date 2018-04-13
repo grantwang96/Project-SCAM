@@ -9,10 +9,18 @@ public class MeleeEnemyDamageable : Damageable {
     Coroutine targetSwitchRoutine;
 
     public GameObject deathFX;
+    public GameObject specialDrop;
 
-    public override void Die()
-    {
+    public override void Die() {
         base.Die();
+        // play some death animations
+        // play some death sfxs
+
+        myMovement.blueprint.DropLoot(transform.position + Vector3.up);
+        // activate special drop if you have one
+        if(specialDrop != null) {
+            specialDrop.SetActive(true);
+        }
         Destroy(Instantiate(deathFX, transform.position, transform.rotation), 5f);
     }
 
