@@ -199,6 +199,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             currentSpellDescription.text = "";
             ammoCount.text = "";
             currentSpellCover.material.color = new Color(.3f, .3f, .3f);
+			StartCoroutine(PlayDropSound());
+
         }
         else { // update the ammo gauge and makesure current held is within inventory count
             if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
@@ -210,6 +212,11 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
         }
     }
+
+	IEnumerator PlayDropSound() {
+		yield return new WaitForSeconds(sounds.GetClip("fire").length);
+		sounds.PlayClip("out_of_spell");
+	}
 
     public void displayEnemyData(Damageable enemy)
     {

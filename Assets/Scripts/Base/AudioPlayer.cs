@@ -9,6 +9,8 @@ public class AudioPlayer : MonoBehaviour {
 
 	public AudioClip[] clips;
 
+	Dictionary<string, AudioClip> lib = new Dictionary<string, AudioClip>();
+
 	AudioSource source;
 	
 	public void Start() {
@@ -17,23 +19,36 @@ public class AudioPlayer : MonoBehaviour {
 		if (labels.Length != clips.Length) {
 			throw new UnityException("labels and clips lengths don't match!");
 		}
+
+		for (int i = 0; i < labels.Length; i ++) {
+			Debug.Log("loading " + labels[i]);
+			lib.Add(labels[i], clips[i]);
+		}
+
+		Debug.Log(lib.Keys);
 	}
 
 	public void PlayClip(string label) {
 		//plays clip that shares index of label in array labels
 
+		AudioClip toPlay;
 
-		int index = -1;
-		for (int i = 0; i < labels.Length; i ++) {
-			if (labels[i] == label) {
-				index = i;
-			}
-		}
-		if (index > 0) {
-			source.PlayOneShot(clips[index]);
+		lib.TryGetValue(label, out toPlay);
+
+		if (toPlay != null) {
+			source.PlayOneShot(toPlay);
 		}
 		else {
-			Debug.Log(label + " not found!");
+			Debug.Log(label + " clip not found!");
 		}
+
+	}
+
+	public AudioClip GetClip(string label) {
+		AudioClip toRet;
+
+		lib.TryGetValue(label, out toRet);
+
+		return toRet;
 	}
 }
