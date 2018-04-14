@@ -117,14 +117,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 	}
 
 	public void ResetSpellsToSerialized(List<string> jsons) {
-//		spellsInventory.Clear();
 		for (int i = 0; i < jsons.Count; i ++) {
-//			SpellBook spell = spellsInventory[i];
-			Debug.Log("Spell " + i);
-			Debug.Log(jsons[i]);
 			JsonUtility.FromJsonOverwrite(jsons[i], spellsInventory[i]);
-			Debug.Log(JsonUtility.ToJson(spellsInventory[i]));
-//			spellsInventory.Add(spell);
 		}
 	}
 

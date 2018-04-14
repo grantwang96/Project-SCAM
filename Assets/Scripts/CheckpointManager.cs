@@ -55,14 +55,14 @@ public class CheckpointManager : MonoBehaviour {
 	}
 
 	public void ResetToLastCheckpoint() {
-		Debug.Log("Resetting...");
-		Debug.Log(savedMagic);
 		JsonUtility.FromJsonOverwrite(savedDmg, playerDmg);
 		JsonUtility.FromJsonOverwrite(savedMagic, playerMagic);
 		playerMagic.ResetSpellsToSerialized(savedSpellInv);
-		Debug.Log(playerMagic);
+
 		player.transform.position = savedPos;
 		player.transform.rotation = savedRot;
+		player.gameObject.GetComponent<CharacterController>().Move(Vector3.zero);
+
 		if (OnReset != null) {
 			OnReset();
 		}
