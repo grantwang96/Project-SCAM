@@ -56,8 +56,10 @@ public class CheckpointManager : MonoBehaviour {
 
 	public void ResetToLastCheckpoint() {
 		JsonUtility.FromJsonOverwrite(savedDmg, playerDmg);
+
 		JsonUtility.FromJsonOverwrite(savedMagic, playerMagic);
 		playerMagic.ResetSpellsToSerialized(savedSpellInv);
+		playerMagic.UpdateUI();
 
 		player.transform.position = savedPos;
 		player.transform.rotation = savedRot;

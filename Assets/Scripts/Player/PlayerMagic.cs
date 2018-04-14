@@ -122,6 +122,13 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 		}
 	}
 
+	public void UpdateUI() {
+		currentSpellTitle.text = spellsInventory[currentHeld].primaryEffect.title;
+		currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
+		ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();
+		currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
+	}
+
 	#endregion
 
     Interactable processLooking() {
@@ -192,17 +199,17 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
             else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
-            foreach(Transform child in spellSlots) {
-                spellslot data = child.GetComponent<spellslot>();
-                if (child.GetSiblingIndex() == currentHeld) {
-                    SpellBook currSpell = spellsInventory[currentHeld];
-                    data.Select(currSpell.spellTitle, currSpell.spellDescription, currSpell.getAmmo(), currSpell.getMaxAmmo(), currSpell.baseColor);
-                }
-                else {
-                    if(child.GetSiblingIndex() >= spellsInventory.Count) { data.setTitle("None Held"); }
-                    data.Deselect();
-                }
-            }
+			foreach(Transform child in spellSlots) {
+				spellslot data = child.GetComponent<spellslot>();
+				if (child.GetSiblingIndex() == currentHeld) {
+					SpellBook currSpell = spellsInventory[currentHeld];
+					data.Select(currSpell.spellTitle, currSpell.spellDescription, currSpell.getAmmo(), currSpell.getMaxAmmo(), currSpell.baseColor);
+				}
+				else {
+					if(child.GetSiblingIndex() >= spellsInventory.Count) { data.setTitle("None Held"); }
+					data.Deselect();
+				}
+			}
         }
     }
 
@@ -219,10 +226,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
             else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
-            currentSpellTitle.text = spellsInventory[currentHeld].primaryEffect.title;
-            currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
-            ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();
-            currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
+			UpdateUI();
         }
     }
 
