@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
 public class PlayerDamageable : Damageable {
 
     public static PlayerDamageable Instance;
@@ -83,7 +84,8 @@ public class PlayerDamageable : Damageable {
 
     public override void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+//       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		CheckpointManager.Instance.ResetToLastCheckpoint();
     }
 
     /*
@@ -282,10 +284,10 @@ public class PlayerDamageable : Damageable {
         Destroy(newBody);
     }
 
-    public override void Seduce(float duration, GameObject target, SpellCaster owner)
-    {
-        
-    }
+//    public override void Seduce(float duration, GameObject target, SpellCaster owner)
+//    {
+//        
+//    }
 
     public override void knockBack(Vector3 dir, float force)
     {
