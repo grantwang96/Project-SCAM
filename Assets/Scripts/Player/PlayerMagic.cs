@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public static PlayerMagic instance;
@@ -108,6 +109,26 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
         processLooking();
     }
+
+	#region for checkpointing
+
+	public List<SpellBook> GetSpellsInventory() {
+		return spellsInventory;
+	}
+
+	public void ResetSpellsToSerialized(List<string> jsons) {
+//		spellsInventory.Clear();
+		for (int i = 0; i < jsons.Count; i ++) {
+//			SpellBook spell = spellsInventory[i];
+			Debug.Log("Spell " + i);
+			Debug.Log(jsons[i]);
+			JsonUtility.FromJsonOverwrite(jsons[i], spellsInventory[i]);
+			Debug.Log(JsonUtility.ToJson(spellsInventory[i]));
+//			spellsInventory.Add(spell);
+		}
+	}
+
+	#endregion
 
     Interactable processLooking() {
         Ray ray = new Ray(Head.position, Head.forward);

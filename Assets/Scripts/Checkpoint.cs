@@ -5,12 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Checkpoint : MonoBehaviour {
 
-	Collider col;
-
-	void Start() {
-		col.isTrigger = true;
-	}
-
 	void OnTriggerEnter(Collider other) {
 		if (other.CompareTag("Player")) {
 			CheckpointManager.Instance.SaveCheckpoint();
