@@ -22,8 +22,7 @@ public class RangedEnemyDamageable : Damageable {
 
         myMovement.blueprint.DropLoot(transform.position + Vector3.up);
         // activate special drop if you have one
-        if (specialDrop != null)
-        {
+        if (specialDrop != null) {
             specialDrop.SetActive(true);
         }
         Destroy(Instantiate(deathFX, transform.position, transform.rotation), 5f);
@@ -35,8 +34,9 @@ public class RangedEnemyDamageable : Damageable {
 
         base.TakeDamage(attacker, hpLost, dir, force);
 
-        if (dead)
-        {
+        Debug.Log("Ow");
+
+        if (dead) {
             // handle death animations here
             return;
         }

@@ -60,6 +60,14 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public Sprite shootReticuleSprite;
     public Sprite interactReticuleSprite;
+
+    public Transform bookUI;
+    public Vector3 bookNormalPosition;
+    public Vector3 startSwitchPosition;
+    public Vector3 bookNormalRotation;
+    public Vector3 startSwitchRotation;
+    Coroutine bookSwapRoutine;
+    public float swapSpeed;
     #endregion
 
 	#region Audio
@@ -128,6 +136,31 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 		ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();
 		currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
 	}
+
+    IEnumerator switchBooks() {
+        Vector3 startPos = bookUI.localPosition;
+        Vector3 startRot = bookUI.localRotation.eulerAngles;
+        float time = 0f;
+
+        while(time < 1f) {
+            time += Time.deltaTime * swapSpeed;
+            bookUI.localPosition = Vector3.Lerp(startPos, startSwitchPosition, time);
+            bookUI.localRotation = Quaternion.Lerp(Quaternion.Euler(startRot), Quaternion.Euler(startSwitchRotation), time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        UpdateUI();
+        time = 0f;
+
+        while(time < 1f) {
+            time += Time.deltaTime * swapSpeed;
+            bookUI.localPosition = Vector3.Lerp(startPos, bookNormalPosition, time);
+            bookUI.localRotation = Quaternion.Lerp(Quaternion.Euler(startSwitchRotation), Quaternion.Euler(bookNormalRotation), time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        bookSwapRoutine = null;
+    }
 
 	#endregion
 
@@ -213,8 +246,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
     }
 
-    void UpdateSpellData()
-    {
+    void UpdateSpellData() {
         if (spellsInventory.Count == 0) { // shut everything off
             currentHeld = 0;
             currentSpellTitle.text = "";
@@ -225,8 +257,9 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         else { // update the ammo gauge and makesure current held is within inventory count
             if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
             else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
-
-			UpdateUI();
+            if(bookSwapRoutine != null) { StopCoroutine(bookSwapRoutine); }
+            bookSwapRoutine = StartCoroutine(switchBooks());
+			// UpdateUI();
         }
     }
 
@@ -349,9 +382,9 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         else { // otherwise just add the spell
             spellsInventory.Add(newSpell);
             currentHeld = spellsInventory.Count - 1;
+            UpdateSpellData();
         }
         // updateCurrentHeld();
-        UpdateSpellData();
         newSpell.Deactivate();
         newSpell.transform.localPosition = Vector3.zero;
         newSpell.transform.localRotation = Quaternion.identity;

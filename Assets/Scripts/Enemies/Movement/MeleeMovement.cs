@@ -11,6 +11,7 @@ public class MeleeMovement : Movement {
     public override void setup() {
         agent = GetComponent<NavMeshAgent>(); // set the agent
         base.setup();
+        changeState(new MeleeEnemyIdle());
     }
 
     public override void Update()

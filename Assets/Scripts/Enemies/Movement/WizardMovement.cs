@@ -22,6 +22,7 @@ public class WizardMovement : Movement, SpellCaster {
     {
         canShootSpells = true;
         base.Start();
+        changeState(new WizardEnemyIdle());
     }
 
     public override IEnumerator attack(Vector3 target)

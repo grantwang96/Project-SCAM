@@ -232,8 +232,7 @@ public class MeleeEnemyAttack : NPCState
         }
     }
 
-    public override void Exit()
-    {
+    public override void Exit() {
         if(myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
     }
 }

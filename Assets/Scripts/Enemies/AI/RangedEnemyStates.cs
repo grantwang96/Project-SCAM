@@ -115,8 +115,7 @@ public class RangedEnemyAggro : NPCState
         targetInView = myOwner.checkView();
 
         // Enter idle if target has been out of view too long
-        if (!targetInView)
-        {
+        if (!targetInView) {
             hasCoverPosition = false;
             lostTargetViewTime += Time.deltaTime;
             if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
@@ -160,6 +159,24 @@ public class RangedEnemyAggro : NPCState
     }
 }
 
+public class RangedEnemyChase : NPCState
+{
+    public override void Enter(Movement owner)
+    {
+        base.Enter(owner);
+    }
+
+    public override void Execute()
+    {
+        base.Execute();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+}
+
 public class RangedEnemyAttack : NPCState
 {
     public override void Enter(Movement owner)
@@ -187,18 +204,14 @@ public class RangedEnemyAttack : NPCState
     IEnumerator attackProcessing()
     {
         int fireCount = Random.Range(2, 5);
-        SpellBook spellbook = myOwner.GetComponent<SpellCaster>().returnSpell();
-        float cooldown = spellbook.primaryEffect.coolDown + spellbook.secondaryEffect.coolDown;
-        for (int i = 0; i < fireCount; i++)
-        {
+        for (int i = 0; i < fireCount; i++) {
             if (myOwner.attackTarget == null) { break; }
             myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
             yield return new WaitForEndOfFrame();
-            while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-            {
+            while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) {
                 yield return new WaitForEndOfFrame();
             }
-            yield return new WaitForSeconds(cooldown);
+            yield return new WaitForSeconds(0.25f);
         }
         myOwner.changeState(new RangedEnemyAggro());
     }

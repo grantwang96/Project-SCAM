@@ -10,7 +10,8 @@ public class RangedMovement : Movement {
     public bool getCanShoot() { return canShoot; }
     public void setCanShoot(bool can) { canShoot = can; }
 
-    public Rigidbody projectilePrefab;
+    public Projectile projectilePrefab;
+    public float throwForce;
 
     public override void setup()
     {
@@ -21,6 +22,7 @@ public class RangedMovement : Movement {
     {
         canShoot = true;
         base.Start();
+        changeState(new RangedEnemyIdle());
     }
 
     public override IEnumerator attack(Vector3 target)
@@ -30,16 +32,33 @@ public class RangedMovement : Movement {
         gun.forward = targetingDir;
         anim.Play("Attack");
 
-        Rigidbody newProjectile = Instantiate(projectilePrefab, gun);
-        newProjectile.isKinematic = true;
-        newProjectile.useGravity = false;
+        Projectile newProjectile = Instantiate(projectilePrefab, gun);
+        newProjectile.transform.position = gun.position;
+        newProjectile.rbody.isKinematic = true;
+        newProjectile.rbody.useGravity = false;
+        newProjectile.owner = transform;
+        newProjectile.damage = damage;
+
+        Debug.Log("Pew");
 
         bool fired = false;
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForEndOfFrame();
 
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
-            if (anim.GetCurrentAnimatorStateInfo(0).length >= 0.5f && !fired) {
-                Vector3 vel = gun.forward;
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f && !fired) {
+
+                float targetDistance = Vector3.Distance(transform.position, attackTarget.position);
+                Debug.Log(targetDistance);
+
+                Vector3 vel = attackTarget.position - gun.position;
+                vel.y += (4f * targetDistance / throwForce);
+                vel = vel.normalized;
+
+                newProjectile.transform.SetParent(null);
+                newProjectile.rbody.isKinematic = false;
+                newProjectile.rbody.useGravity = true;
+                newProjectile.rbody.AddForce(vel * throwForce * newProjectile.rbody.mass, ForceMode.Impulse);
+
                 fired = true;
             }
             yield return new WaitForEndOfFrame();
