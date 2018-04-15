@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour {
+	//triggers checkpoint serialization/deserialization and handles those events for player
 
 	//singleton
 	static CheckpointManager instance;
@@ -24,11 +25,17 @@ public class CheckpointManager : MonoBehaviour {
 
 	List<string> savedSpellInv;
 
+	//events
 	public delegate void ResetAction();
 	public static event ResetAction OnReset;
 
-	// Use this for initialization
-	void Start () {
+	public delegate void CheckpointAction();
+	public static event CheckpointAction OnCheckpoint;
+
+	//enemies to respawn on checkpoint
+	List<GameObject> respawnList;
+
+	void Awake () {
 		if (instance == null) {
 			instance = this;
 		}
@@ -36,10 +43,14 @@ public class CheckpointManager : MonoBehaviour {
 			throw new UnityException("Error: trying to initialize a CheckpointManager while one exists already");
 		}
 
+		respawnList = new List<GameObject>();
+
 		SaveCheckpoint();
 	}
 
 	public void SaveCheckpoint() {
+		respawnList.Clear();
+
 		savedDmg = JsonUtility.ToJson(playerDmg);
 
 		savedMagic = JsonUtility.ToJson(playerMagic);
@@ -52,9 +63,19 @@ public class CheckpointManager : MonoBehaviour {
 
 		savedPos = player.position;
 		savedRot = player.rotation;
+
+		if (OnCheckpoint != null) {
+			OnCheckpoint();
+		}
 	}
 
 	public void ResetToLastCheckpoint() {
+		//reset enemies
+		foreach(GameObject enemy in respawnList) {
+			enemy.SetActive(true);
+		}
+		respawnList.Clear();
+
 		JsonUtility.FromJsonOverwrite(savedDmg, playerDmg);
 
 		JsonUtility.FromJsonOverwrite(savedMagic, playerMagic);
@@ -68,5 +89,9 @@ public class CheckpointManager : MonoBehaviour {
 		if (OnReset != null) {
 			OnReset();
 		}
+	}
+
+	public void AddEnemyToRespawnList(GameObject enemy) {
+		respawnList.Add(enemy);
 	}
 }
