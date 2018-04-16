@@ -163,6 +163,7 @@ public abstract class Damageable : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public abstract class Movement : MonoBehaviour
 {
     public float baseSpeed;
@@ -215,10 +216,19 @@ public abstract class Movement : MonoBehaviour
         setup();
     }
 
-    public virtual void Start()
-    {
-        
-    }
+	public virtual void Start(){}
+
+	protected virtual void OnEnable() 
+	{
+		CheckpointManager.OnReset += ToIdle;
+	}
+
+	protected virtual void OnDisable()
+	{
+		CheckpointManager.OnReset -= ToIdle;
+	}
+
+	protected abstract void ToIdle();
 
     public virtual void Update()
     {
@@ -293,7 +303,10 @@ public abstract class Movement : MonoBehaviour
 
     public virtual bool checkView()
     {
-        if(attackTarget == null) { return false; }
+        if(attackTarget == null || !attackTarget.gameObject.activeInHierarchy) { 
+			attackTarget = null;
+			return false; 
+		}
 
         float dist = Vector3.Distance(transform.position, attackTarget.position);
         float angle = Vector3.Angle(Head.forward, attackTarget.position - Head.position);

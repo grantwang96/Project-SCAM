@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
 public class MeleeMovement : Movement {
 
     public Vector3 destination;
@@ -13,6 +14,10 @@ public class MeleeMovement : Movement {
         base.setup();
         changeState(new MeleeEnemyIdle());
     }
+
+	protected override void ToIdle() {
+		changeState(new MeleeEnemyIdle());
+	}
 
     public override void Update()
     {
