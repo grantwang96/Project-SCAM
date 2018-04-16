@@ -26,6 +26,7 @@ public class PlayerDamageable : Damageable {
 
     // public Image healthBar;
     public MeshRenderer healthBar;
+	public MeshRenderer encasing;
 
 	AudioPlayer sounds;
 
@@ -48,7 +49,9 @@ public class PlayerDamageable : Damageable {
         else if(fillAmount < 0) { fillAmount = 0f; }
 
         healthBar.transform.localScale = new Vector3(.7f, fillAmount, .7f);
-        healthBar.material.color = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+		Color c = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+		healthBar.material.color = c;
+		encasing.material.SetColor("_RimColor", c);
     }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
