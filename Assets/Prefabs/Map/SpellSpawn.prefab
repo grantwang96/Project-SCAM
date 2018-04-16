@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4066648469724436}
   - component: {fileID: 114889004423109004}
+  - component: {fileID: 114479879166970670}
   m_Layer: 0
   m_Name: SpellSpawn
   m_TagString: Untagged
@@ -49,7 +50,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1214201073216096}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalPosition: {x: 12.5, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4800258352442012}
@@ -69,6 +70,17 @@ Transform:
   m_Father: {fileID: 4066648469724436}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114479879166970670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1214201073216096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9603990d2582d46dd9514d682a04171f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114889004423109004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,8 +92,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ecb23eec22a3b94c971de05a2ad753e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OverridePrimaryEffects: []
-  OverrideSecondaryEffects: []
+  OverridePrimaryEffects:
+  - {fileID: 11400000, guid: 437f5c5bdc67d9d4ba582a07f5e280dc, type: 2}
+  - {fileID: 11400000, guid: 0dbc7bd6bd1a3dc42bf917fbb7474704, type: 2}
+  OverrideSecondaryEffects:
+  - {fileID: 11400000, guid: 2ba6a0d701e3e0742b9da7d870ab3aef, type: 2}
+  - {fileID: 11400000, guid: a90e707d7f6a8cc48a856dc052f35c34, type: 2}
+  - {fileID: 11400000, guid: 36dadef48a528da46b2494bfa8be3803, type: 2}
   bookPrefab: {fileID: 114233178495423298, guid: 41e5e204f56f3fe489ea699084c0291d,
     type: 2}
   spawnPoint: {fileID: 4800258352442012}
