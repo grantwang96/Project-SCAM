@@ -303,7 +303,10 @@ public abstract class Movement : MonoBehaviour
 
     public virtual bool checkView()
     {
-        if(attackTarget == null) { return false; }
+        if(attackTarget == null || !attackTarget.gameObject.activeInHierarchy) { 
+			attackTarget = null;
+			return false; 
+		}
 
         float dist = Vector3.Distance(transform.position, attackTarget.position);
         float angle = Vector3.Angle(Head.forward, attackTarget.position - Head.position);
