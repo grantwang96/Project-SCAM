@@ -13,7 +13,6 @@ public class MenuPanel : MonoBehaviour {
     public Vector3 targetPosition;
     public float targetRotation;
     public float speed;
-    public float timeStep;
 
     private static bool moving = false;
 
@@ -55,7 +54,7 @@ public class MenuPanel : MonoBehaviour {
             rect.anchoredPosition = Vector3.Lerp(startPosition, targetPosition, time);
             rect.localEulerAngles = Vector3.Lerp(new Vector3(0, 0, startRotation), new Vector3(0, 0, targetRotation), time);
             yield return new WaitForEndOfFrame();
-            time += speed * timeStep;
+            time += speed * Time.unscaledDeltaTime;
         }
         rect.anchoredPosition = targetPosition;
         rect.localEulerAngles = new Vector3(0, 0, targetRotation);
@@ -71,7 +70,7 @@ public class MenuPanel : MonoBehaviour {
             rect.anchoredPosition = Vector3.Lerp(targetPosition, startPosition, time);
             rect.localEulerAngles = Vector3.Lerp(new Vector3(0, 0, targetRotation), new Vector3(0, 0, startRotation), time);
             yield return new WaitForEndOfFrame();
-            time += speed * timeStep;
+            time += speed * Time.unscaledDeltaTime;
         }
         rect.anchoredPosition = startPosition;
         rect.localEulerAngles = new Vector3(0, 0, startRotation);
