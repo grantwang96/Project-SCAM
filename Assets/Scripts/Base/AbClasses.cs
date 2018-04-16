@@ -163,6 +163,7 @@ public abstract class Damageable : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public abstract class Movement : MonoBehaviour
 {
     public float baseSpeed;
@@ -215,10 +216,19 @@ public abstract class Movement : MonoBehaviour
         setup();
     }
 
-    public virtual void Start()
-    {
-        
-    }
+	public virtual void Start(){}
+
+	protected virtual void OnEnable() 
+	{
+		CheckpointManager.OnReset += ToIdle;
+	}
+
+	protected virtual void OnDisable()
+	{
+		CheckpointManager.OnReset -= ToIdle;
+	}
+
+	protected abstract void ToIdle();
 
     public virtual void Update()
     {

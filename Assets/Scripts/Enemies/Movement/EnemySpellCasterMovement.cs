@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class EnemySpellCasterMovement : Movement, SpellCaster
 {
     #region Public Variables
@@ -22,6 +23,11 @@ public class EnemySpellCasterMovement : Movement, SpellCaster
     public event seductionHit changeFollowerTarget;
 
     #endregion
+
+	protected override void ToIdle()
+	{
+		changeState(new WizardEnemyIdle());
+	}
 
     #region Movement Implementations
 

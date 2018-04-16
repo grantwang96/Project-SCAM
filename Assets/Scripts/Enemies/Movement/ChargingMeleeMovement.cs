@@ -14,6 +14,11 @@ public class ChargingMeleeMovement : Movement {
         base.setup();
     }
 
+	protected override void ToIdle() 
+	{
+		changeState(new MeleeEnemyIdle());
+	}
+
     public override void Update()
     {
         destination = agent.destination;

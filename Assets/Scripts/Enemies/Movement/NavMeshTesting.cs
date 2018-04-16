@@ -25,6 +25,10 @@ public class NavMeshTesting : Movement {
         
     }
 
+	protected override void ToIdle() {
+		//left empty because idk what this script is for
+	}
+
     /*
     public Vector3 getRandomLocation(Vector3 origin, float range) {
         Vector3 randPos = Random.insideUnitSphere * maxWanderDistance;
