@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class NPCScript : Movement {
 
     public Collider FistColl;
@@ -27,6 +28,10 @@ public class NPCScript : Movement {
     {
         processMovement();
     }
+
+	protected override void ToIdle() {
+		//left empty because idk what this script is for
+	}
 
     void FixedUpdate()
     {
