@@ -14,6 +14,9 @@ public class EnemySerializer : MonoBehaviour {
 	Damageable damageable;
 	string savedDamageable;
 
+	Movement movement;
+	string savedMovement;
+
 	void OnEnable() {
 		CheckpointManager.OnCheckpoint += Serialize;
 		CheckpointManager.OnReset += Deserialize;
@@ -26,6 +29,7 @@ public class EnemySerializer : MonoBehaviour {
 
 	void Awake () {
 		damageable = GetComponent<Damageable>();
+		movement = GetComponent<Movement>();
 
 		Serialize();
 	}
@@ -35,11 +39,13 @@ public class EnemySerializer : MonoBehaviour {
 		savedRotation = transform.rotation;
 
 		savedDamageable = JsonUtility.ToJson(damageable);
+		savedMovement = JsonUtility.ToJson(movement);
 	}
 
 	void Deserialize() {
 		transform.SetPositionAndRotation(savedPosition, savedRotation);
 		JsonUtility.FromJsonOverwrite(savedDamageable, damageable);
+		JsonUtility.FromJsonOverwrite(savedMovement, movement);
 	}
 
 }
