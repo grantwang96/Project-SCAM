@@ -156,7 +156,10 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void Die()
     {
-        Destroy(gameObject);
+//        Destroy(gameObject);
+		//keeping disabled for checkpoint restoration
+		CheckpointManager.Instance.AddEnemyToRespawnList(gameObject);
+		gameObject.SetActive(false);
     }
 }
 
