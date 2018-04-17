@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
 public class PlayerDamageable : Damageable {
 
     public static PlayerDamageable Instance;
@@ -25,6 +26,7 @@ public class PlayerDamageable : Damageable {
 
     // public Image healthBar;
     public MeshRenderer healthBar;
+	public MeshRenderer encasing;
 
 	AudioPlayer sounds;
 
@@ -41,8 +43,15 @@ public class PlayerDamageable : Damageable {
 	public override void Update () {
         // update healthbar
         // healthBar.fillAmount = (float)health / max_health;
-        healthBar.transform.localScale = new Vector3(.7f, (float)health / max_health, .7f);
-        healthBar.material.color = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+
+        float fillAmount = (float)health / max_health;
+        if(fillAmount > 1f) { fillAmount = 1f; }
+        else if(fillAmount < 0) { fillAmount = 0f; }
+
+        healthBar.transform.localScale = new Vector3(.7f, fillAmount, .7f);
+		Color c = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+		healthBar.material.color = c;
+		encasing.material.SetColor("_RimColor", c);
     }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
@@ -83,7 +92,8 @@ public class PlayerDamageable : Damageable {
 
     public override void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+//       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		CheckpointManager.Instance.ResetToLastCheckpoint();
     }
 
     /*
@@ -282,10 +292,10 @@ public class PlayerDamageable : Damageable {
         Destroy(newBody);
     }
 
-    public override void Seduce(float duration, GameObject target, SpellCaster owner)
-    {
-        
-    }
+//    public override void Seduce(float duration, GameObject target, SpellCaster owner)
+//    {
+//        
+//    }
 
     public override void knockBack(Vector3 dir, float force)
     {

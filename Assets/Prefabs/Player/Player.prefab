@@ -447,6 +447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4881647181761064}
   - component: {fileID: 95579240223437912}
+  - component: {fileID: 114845624811986462}
   m_Layer: 0
   m_Name: CrystalHealthBar
   m_TagString: Untagged
@@ -3846,6 +3847,19 @@ MonoBehaviour:
   originPosition: {x: 0, y: 0, z: 0}
   affectedYTurn: {fileID: 4100886270380074}
   normalMove: 1
+--- !u!114 &114845624811986462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1360114971537856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54dbbd6e9b50483fb60102987d6f930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 20096163970978046}
+  offset: {x: 0.1, y: 0.5, z: 0.5}
 --- !u!114 &114884878726994160
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public static PlayerMagic instance;
@@ -109,6 +110,30 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         processLooking();
     }
 
+	#region for checkpointing
+
+	public List<SpellBook> GetSpellsInventory() {
+		return spellsInventory;
+	}
+
+	public void ResetSpellsToSerialized(List<string> jsons) {
+		for (int i = 0; i < jsons.Count; i ++) {
+			JsonUtility.FromJsonOverwrite(jsons[i], spellsInventory[i]);
+		}
+	}
+
+	public void UpdateUI() {
+		if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
+		else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
+
+		currentSpellTitle.text = spellsInventory[currentHeld].primaryEffect.title;
+		currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
+		ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();
+		currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
+	}
+
+	#endregion
+
     Interactable processLooking() {
         Ray ray = new Ray(Head.position, Head.forward);
         // RaycastHit hit;
@@ -177,17 +202,17 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
             else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
-            foreach(Transform child in spellSlots) {
-                spellslot data = child.GetComponent<spellslot>();
-                if (child.GetSiblingIndex() == currentHeld) {
-                    SpellBook currSpell = spellsInventory[currentHeld];
-                    data.Select(currSpell.spellTitle, currSpell.spellDescription, currSpell.getAmmo(), currSpell.getMaxAmmo(), currSpell.baseColor);
-                }
-                else {
-                    if(child.GetSiblingIndex() >= spellsInventory.Count) { data.setTitle("None Held"); }
-                    data.Deselect();
-                }
-            }
+			foreach(Transform child in spellSlots) {
+				spellslot data = child.GetComponent<spellslot>();
+				if (child.GetSiblingIndex() == currentHeld) {
+					SpellBook currSpell = spellsInventory[currentHeld];
+					data.Select(currSpell.spellTitle, currSpell.spellDescription, currSpell.getAmmo(), currSpell.getMaxAmmo(), currSpell.baseColor);
+				}
+				else {
+					if(child.GetSiblingIndex() >= spellsInventory.Count) { data.setTitle("None Held"); }
+					data.Deselect();
+				}
+			}
         }
     }
 
@@ -203,13 +228,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
         }
         else { // update the ammo gauge and makesure current held is within inventory count
-            if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
-            else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
-            currentSpellTitle.text = spellsInventory[currentHeld].primaryEffect.title;
-            currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
-            ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();
-            currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
+			UpdateUI();
         }
     }
 
