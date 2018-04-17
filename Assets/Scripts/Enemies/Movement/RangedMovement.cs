@@ -69,4 +69,19 @@ public class RangedMovement : Movement {
         }
         attackRoutine = null;
     }
+    
+    void OnCollisionEnter(Collision coll)
+    {
+        if (coll.transform.tag == "Ground")
+        {
+            Debug.Log("Hi Ground");
+            agent.updatePosition = true;
+            agent.updateRotation = true;
+            if (agent.nextPosition != transform.position)
+            {
+                agent.Warp(transform.position);
+            }
+            agent.isStopped = false;
+        }
+    }
 }

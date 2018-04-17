@@ -23,6 +23,7 @@ public class MeleeMovement : Movement {
     public override void Update()
     {
         destination = agent.destination;
+        /*
         if(Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down), 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
             agent.updatePosition = true;
             agent.updateRotation = true;
@@ -30,7 +31,7 @@ public class MeleeMovement : Movement {
                 agent.Warp(transform.position);
             }
             agent.isStopped = false;
-        }
+        }*/
         base.Update();
     }
 
