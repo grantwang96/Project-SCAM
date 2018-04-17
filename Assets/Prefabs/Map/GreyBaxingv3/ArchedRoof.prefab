@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 65614053538378108}
   m_Layer: 0
   m_Name: WallHorizontalSiding
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 65847920051019220}
   m_Layer: 0
   m_Name: CastleWall (2)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967294
@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 65514805536400160}
   m_Layer: 0
   m_Name: CastleWall (7)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967294
@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 65454790312394956}
   m_Layer: 0
   m_Name: CastleWall (3)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967294
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 4972018734237984}
   m_Layer: 0
   m_Name: ArchedRoof
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 65896219191802802}
   m_Layer: 0
   m_Name: CastleWall (1)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967294
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 65806453335014770}
   m_Layer: 0
   m_Name: CastleWall (6)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967294
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 65139069894103840}
   m_Layer: 0
   m_Name: CastleWall (5)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967294

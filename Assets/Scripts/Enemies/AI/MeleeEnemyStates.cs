@@ -132,10 +132,6 @@ public class MeleeEnemyAggro : NPCState
         anim = myOwner.anim;
         anim.SetInteger("Status", 2);
         duration = myOwner.blueprint.attentionSpan;
-        
-        if (myOwner != null || myOwner.transform != null || myOwner.attackTarget != null) {
-            Debug.Log(myOwner.name + " is aggroed against " + myOwner.attackTarget.name);
-        }
     }
 
     public override void Execute()
@@ -174,10 +170,8 @@ public class MeleeEnemyAggro : NPCState
             lostTargetViewTime = 0f;
         }
 
-
-
-		if (myOwner.agent.enabled && !myOwner.agent.isStopped && myOwner.attackTarget != null) { 
-			myOwner.agent.SetDestination(myOwner.attackTarget.position); 
+		if (myOwner.agent.enabled && !myOwner.agent.isStopped && attackTarget != null) { 
+			myOwner.agent.SetDestination(attackTarget.position); 
 		}
 
         // check for obstructions

@@ -256,7 +256,7 @@ public abstract class Movement : MonoBehaviour
     public Transform obstruction() {
         RaycastHit[] rayHits = Physics.RaycastAll(
             Head.position, agent.desiredVelocity, agent.radius, obstacleLayer, QueryTriggerInteraction.Ignore);
-        Debug.DrawRay(Head.position, agent.desiredVelocity, Color.green, 5f);
+        Debug.DrawRay(Head.position, agent.desiredVelocity, Color.green);
         foreach (RaycastHit rayhit in rayHits) {
             if(rayhit.collider.tag == "Wall" || rayhit.collider.tag == "Ground") {
                 Debug.Log("Obstruction: " + rayhit.transform);

@@ -185,7 +185,7 @@ public class PlayerMovementV2 : Movement {
                 // Debug.Log("I touched book!");
             }
         }
-        if (tag.Contains("Ground") || tag.Contains("Roof") || tag.Contains("Wall")) {
+        if (tag.Contains("Ground") || tag.Contains("Roof") || tag.Contains("Wall") || tag.Contains("Ceiling")) {
             
             if ((charCon.collisionFlags & CollisionFlags.CollidedAbove) != 0 && yMove > 0) // If collided with head
             {
