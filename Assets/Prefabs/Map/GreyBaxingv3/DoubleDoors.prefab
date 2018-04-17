@@ -672,7 +672,7 @@ MonoBehaviour:
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
-  openRotation: {x: 0, y: -100, z: 0}
+  openRotation: {x: 0, y: -90, z: 0}
   closedRotation: {x: 0, y: 0, z: 0}
   myHinge: {fileID: 4873380089110608}
   speed: 2
@@ -704,7 +704,7 @@ MonoBehaviour:
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
-  openRotation: {x: 0, y: 100, z: 0}
+  openRotation: {x: 0, y: 90, z: 0}
   closedRotation: {x: 0, y: 0, z: 0}
   myHinge: {fileID: 4844028898900680}
   speed: 2

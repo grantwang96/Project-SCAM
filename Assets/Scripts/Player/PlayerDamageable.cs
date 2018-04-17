@@ -27,6 +27,7 @@ public class PlayerDamageable : Damageable {
     // public Image healthBar;
     public MeshRenderer healthBar;
 	public MeshRenderer encasing;
+    public Image fadeToBlackImage;
 
 	AudioPlayer sounds;
 
@@ -51,7 +52,7 @@ public class PlayerDamageable : Damageable {
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
     {
-        if (hurt) { return; }
+        if (hurt || dead) { return; }
         
         // Visual hurt effects
         
@@ -87,8 +88,35 @@ public class PlayerDamageable : Damageable {
 
     public override void Die()
     {
-//       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-		CheckpointManager.Instance.ResetToLastCheckpoint();
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // CheckpointManager.Instance.ResetToLastCheckpoint();
+
+        // Play some death sfx
+
+        StartCoroutine(DeathSequence());
+    }
+
+    IEnumerator DeathSequence() {
+        CharacterController charCon = GetComponent<CharacterController>();
+        while(!charCon.isGrounded) { yield return new WaitForFixedUpdate(); }
+
+        Animator anim = Camera.main.GetComponent<Animator>();
+        anim.Play("Death");
+        yield return new WaitForFixedUpdate();
+        while(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) { yield return new WaitForEndOfFrame(); }
+        float time = 0f;
+        fadeToBlackImage.color = Color.clear;
+        while(time < 1f) {
+            time += Time.deltaTime * .33f;
+            fadeToBlackImage.color = Color.Lerp(Color.clear, Color.black, time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Camera.main.transform.localPosition = Vector3.zero;
+        Camera.main.transform.localRotation = Quaternion.identity;
+        anim.Play("Default");
+        CheckpointManager.Instance.ResetToLastCheckpoint();
+        fadeToBlackImage.color = Color.clear;
     }
 
     /*

@@ -120,7 +120,7 @@ public class PlayerMovementV2 : Movement {
 
     public override void processMovement()
     {
-        if(GameManager.Instance.menuMode) { return; }
+        if(GameManager.Instance.menuMode || myDamageable.dead) { return; }
 
         float horizontal = 0f;
         float vertical = 0f;

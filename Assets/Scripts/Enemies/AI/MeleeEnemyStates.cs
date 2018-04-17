@@ -130,7 +130,7 @@ public class MeleeEnemyAggro : NPCState
         anim.SetInteger("Status", 2);
         duration = myOwner.blueprint.attentionSpan;
         
-        if (myOwner == null || myOwner.transform == null || myOwner.attackTarget == null) {
+        if (myOwner != null || myOwner.transform != null || myOwner.attackTarget != null) {
             Debug.Log(myOwner.name + " is aggroed against " + myOwner.attackTarget.name);
         }
     }

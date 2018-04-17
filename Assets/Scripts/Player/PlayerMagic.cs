@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public static PlayerMagic instance;
+    public Damageable myDamageable;
     [SerializeField] List<SpellBook> spellsInventory = new List<SpellBook>();
     public int maxSpells;
     int currentHeld;
@@ -96,7 +97,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameManager.Instance.menuMode) { return; }
+        if (GameManager.Instance.menuMode || myDamageable.dead) { return; }
 
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
