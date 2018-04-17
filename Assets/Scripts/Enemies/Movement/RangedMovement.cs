@@ -69,8 +69,4 @@ public class RangedMovement : Movement {
         }
         attackRoutine = null;
     }
-
-    protected override void ToIdle() {
-        changeState(new RangedEnemyIdle());
-    }
 }

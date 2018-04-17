@@ -120,10 +120,10 @@ public class PlayerMovementV2 : Movement {
 
     public override void processMovement()
     {
-        if(GameManager.Instance.menuMode || myDamageable.dead) { return; }
-
         float horizontal = 0f;
         float vertical = 0f;
+        if (GameManager.Instance.menuMode || myDamageable.dead) { return; }
+
         horizontal = Input.GetAxis("Horizontal"); // Get player inputs
         vertical = Input.GetAxis("Vertical"); // Get player inputs
         // if (hamper > 0) { return; }

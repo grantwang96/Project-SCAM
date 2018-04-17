@@ -59,6 +59,8 @@ public class MeleeEnemyWander : NPCState
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
         target = myOwner.getRandomLocation(myOwner.transform.position, myOwner.maxWanderDistance);
         if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(target); }
+        Debug.Log(target);
+        Debug.Log(myOwner.transform.position);
         // Debug.Log("Begin Wander...");
         // Debug.Log("Status=" + anim.GetInteger("Status"));
   }
@@ -81,7 +83,7 @@ public class MeleeEnemyWander : NPCState
             myOwner.changeState(new MeleeEnemyIdle());
         }
 
-        float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
+        float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.destination);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
             Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));

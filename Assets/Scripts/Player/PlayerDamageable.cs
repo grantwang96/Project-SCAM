@@ -28,6 +28,7 @@ public class PlayerDamageable : Damageable {
     public MeshRenderer healthBar;
 	public MeshRenderer encasing;
     public Image fadeToBlackImage;
+    Coroutine deathSequence;
 
 	AudioPlayer sounds;
 
@@ -52,7 +53,7 @@ public class PlayerDamageable : Damageable {
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
     {
-        if (hurt || dead) { return; }
+        if (hurt || dead) { Debug.Log("I'm already dead!"); return; }
         
         // Visual hurt effects
         
@@ -92,18 +93,23 @@ public class PlayerDamageable : Damageable {
         // CheckpointManager.Instance.ResetToLastCheckpoint();
 
         // Play some death sfx
-
-        StartCoroutine(DeathSequence());
+        if(deathSequence == null) { deathSequence = StartCoroutine(DeathSequence()); }
     }
 
     IEnumerator DeathSequence() {
+        dead = true;
         CharacterController charCon = GetComponent<CharacterController>();
         while(!charCon.isGrounded) { yield return new WaitForFixedUpdate(); }
 
         Animator anim = Camera.main.GetComponent<Animator>();
         anim.Play("Death");
-        yield return new WaitForFixedUpdate();
-        while(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) { yield return new WaitForEndOfFrame(); }
+        Debug.Log("Waiting for death animation change over...");
+        while(!anim.GetCurrentAnimatorStateInfo(0).IsName("Death")) { yield return new WaitForFixedUpdate(); }
+        AnimationClip clip = anim.GetCurrentAnimatorClipInfo(0)[0].clip;
+        Debug.Log("Death animation started!");
+        yield return new WaitForSeconds(clip.length);
+        Debug.Log("Death animation finished!");
+
         float time = 0f;
         fadeToBlackImage.color = Color.clear;
         while(time < 1f) {
@@ -117,6 +123,8 @@ public class PlayerDamageable : Damageable {
         anim.Play("Default");
         CheckpointManager.Instance.ResetToLastCheckpoint();
         fadeToBlackImage.color = Color.clear;
+        dead = false;
+        deathSequence = null;
     }
 
     /*
