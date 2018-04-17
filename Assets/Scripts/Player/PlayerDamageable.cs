@@ -49,6 +49,8 @@ public class PlayerDamageable : Damageable {
 		Color c = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
 		healthBar.material.color = c;
 		encasing.material.SetColor("_RimColor", c);
+
+        if(!dead) { fadeToBlackImage.color = Color.clear; }
     }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)

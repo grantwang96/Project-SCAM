@@ -44,7 +44,6 @@ public class MeleeEnemyIdle : NPCState
 public class MeleeEnemyWander : NPCState
 {
     Vector3 target;
-    float wanderTimeLimit = 10f;
     float time = 0f;
 
     public override void Enter(Movement owner)
@@ -57,10 +56,10 @@ public class MeleeEnemyWander : NPCState
         if(myOwner.agent.enabled) { myOwner.agent.speed = myOwner.baseSpeed; }
 
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
-        target = myOwner.getRandomLocation(myOwner.transform.position, myOwner.maxWanderDistance);
-        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(target); }
-        Debug.Log(target);
-        Debug.Log(myOwner.transform.position);
+        target = myOwner.getRandomLocation(myOwner.agent.nextPosition, myOwner.maxWanderDistance);
+        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { Debug.Log("Target set!"); myOwner.agent.SetDestination(target); }
+        Debug.Log(myOwner.name + "'s new target is: " + target);
+        Debug.Log(myOwner.name + "'s current position is: " + myOwner.transform.position);
         // Debug.Log("Begin Wander...");
         // Debug.Log("Status=" + anim.GetInteger("Status"));
   }
@@ -69,7 +68,8 @@ public class MeleeEnemyWander : NPCState
     {
         if(myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) { myOwner.agent.SetDestination(myOwner.transform.position); }
         else { myOwner.agent.SetDestination(target); }
-        if(time > wanderTimeLimit) { myOwner.changeState(new MeleeEnemyWander()); }
+
+        if(time > duration) { myOwner.changeState(new MeleeEnemyIdle()); }
 
         if (myOwner.checkView()) {
             myOwner.anim.Play("Notice");
@@ -83,8 +83,9 @@ public class MeleeEnemyWander : NPCState
             myOwner.changeState(new MeleeEnemyIdle());
         }
 
-        float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.destination);
+        float distToDest = Vector3.Distance(myOwner.transform.position, target);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
+            Debug.Log("Stopped moving from " + distToDest + " away");
             Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }

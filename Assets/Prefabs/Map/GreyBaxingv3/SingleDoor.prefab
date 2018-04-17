@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 65936212084398424}
   m_Layer: 0
   m_Name: Dungeon_Single_Door
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,8 +397,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 5, z: 1.25}
-  m_Center: {x: -2, y: 0, z: 0}
+  m_Size: {x: 2.25, y: 5, z: 1.25}
+  m_Center: {x: -1.9, y: 0, z: 0}
 --- !u!65 &65491122721730504
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -409,8 +409,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 5, z: 1.25}
-  m_Center: {x: 2, y: 0, z: 0}
+  m_Size: {x: 2.25, y: 5, z: 1.25}
+  m_Center: {x: 1.9, y: 0, z: 0}
 --- !u!65 &65788691412573584
 BoxCollider:
   m_ObjectHideFlags: 1

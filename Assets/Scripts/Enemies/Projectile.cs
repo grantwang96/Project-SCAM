@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider coll) {
-        if(rbody.isKinematic) { return; }
+        if(rbody.isKinematic || coll.transform == owner) { return; }
         Damageable dam = coll.GetComponent<Damageable>();
         if(dam) {
             dam.TakeDamage(owner, damage, transform.forward, rbody.velocity.magnitude / 2 * rbody.mass);

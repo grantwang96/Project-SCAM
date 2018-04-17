@@ -8,6 +8,7 @@ public class MeleeMovement : Movement {
 
     public Vector3 destination;
     public bool isGrounded;
+    public LayerMask groundLayers;
 
     public override void setup() {
         agent = GetComponent<NavMeshAgent>(); // set the agent
@@ -22,7 +23,7 @@ public class MeleeMovement : Movement {
     public override void Update()
     {
         destination = agent.destination;
-        if(isGrounded) {
+        if(Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down), 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
             agent.updatePosition = true;
             agent.updateRotation = true;
             if(agent.nextPosition != transform.position) {
@@ -43,7 +44,20 @@ public class MeleeMovement : Movement {
     {
         base.knockBack(dir, force);
     }
-    
+
+    void OnCollisionEnter(Collision coll)
+    {
+        if(coll.transform.tag == "Ground") {
+            Debug.Log("Hi Ground");
+            agent.updatePosition = true;
+            agent.updateRotation = true;
+            if (agent.nextPosition != transform.position) {
+                agent.Warp(transform.position);
+            }
+            agent.isStopped = false;
+        }
+    }
+    /*
     void OnCollisionStay(Collision coll)
     {
         if (coll.collider.tag == "Ground" || coll.collider.tag == "Wall" || coll.collider.tag == "Roof")
@@ -60,5 +74,5 @@ public class MeleeMovement : Movement {
     void OnCollisionExit(Collision coll)
     {
         if (coll.collider.tag == "Ground") { isGrounded = false; }
-    }
+    }*/
 }

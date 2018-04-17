@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 65561879579640408}
   m_Layer: 0
   m_Name: SM_DungeonDoors_DoubleDoors_RightFrame
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 114777098181214296}
   m_Layer: 0
   m_Name: DungeonDoors_dLeftDoor1
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 65068173788296368}
   m_Layer: 0
   m_Name: SM_DungeonDoors_DoubleDoors_LeftFrame
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 114792854131187010}
   m_Layer: 0
   m_Name: DungeonDoors_dRightDoor1
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
