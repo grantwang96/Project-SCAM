@@ -170,7 +170,11 @@ public class MeleeEnemyAggro : NPCState
             lostTargetViewTime = 0f;
         }
 
-        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
+
+
+		if (myOwner.agent.enabled && !myOwner.agent.isStopped && myOwner.attackTarget != null) { 
+			myOwner.agent.SetDestination(myOwner.attackTarget.position); 
+		}
 
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
@@ -233,7 +237,9 @@ public class MeleeEnemyAttack : NPCState
 
     public override void Exit()
     {
-        if(myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
+		if(myOwner.agent.enabled && myOwner.attackTarget != null) { 
+			myOwner.agent.SetDestination(myOwner.attackTarget.position); 
+		}
     }
 }
 

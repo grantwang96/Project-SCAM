@@ -34,6 +34,10 @@ public class PlayerMovementV2 : Movement {
         processMovement();
 	}
 
+	protected override void ToIdle() {
+		//left empty because player doesn't have AI states (why does it inherit from movement?)
+	}
+
     void FixedUpdate()
     {
         Vector3 move = moveDir * slownessSeverity * drunkMod; // Get the total movement

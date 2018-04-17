@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
 public class MeleeMovement : Movement {
 
     public Vector3 destination;
@@ -12,6 +13,10 @@ public class MeleeMovement : Movement {
         agent = GetComponent<NavMeshAgent>(); // set the agent
         base.setup();
     }
+
+	protected override void ToIdle() {
+		changeState(new MeleeEnemyIdle());
+	}
 
     public override void Update()
     {
