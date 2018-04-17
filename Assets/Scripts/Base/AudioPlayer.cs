@@ -21,11 +21,9 @@ public class AudioPlayer : MonoBehaviour {
 		}
 
 		for (int i = 0; i < labels.Length; i ++) {
-			Debug.Log("loading " + labels[i]);
 			lib.Add(labels[i], clips[i]);
 		}
 
-		Debug.Log(lib.Keys);
 	}
 
 	public void PlayClip(string label) {

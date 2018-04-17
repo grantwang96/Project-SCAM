@@ -39,6 +39,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public MeshRenderer currentSpellCover;
 
     Coroutine enemyDisplayRoutine;
+	Coroutine swapAudioRoutine;
 
     #region UIStuff
 
@@ -154,20 +155,23 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     #region process Inputs
     void processNumKeys()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && currentHeld != 0) {
             currentHeld = 0;
             // updateCurrentHeld();
             UpdateSpellData();
+			PlaySwapSound();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && spellsInventory.Count > 1) {
+        if (Input.GetKeyDown(KeyCode.Alpha2) && spellsInventory.Count > 1 && currentHeld != 1) {
             currentHeld = 1;
             // updateCurrentHeld();
             UpdateSpellData();
+			PlaySwapSound();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && spellsInventory.Count > 2) {
+        if (Input.GetKeyDown(KeyCode.Alpha3) && spellsInventory.Count > 2 && currentHeld != 2) {
             currentHeld = 2;
             // updateCurrentHeld();
             UpdateSpellData();
+			PlaySwapSound();
         }
     }
 
@@ -180,12 +184,30 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             else if (mouse < 0) { currentHeld++; }
             // updateCurrentHeld();
             UpdateSpellData();
-
-			//play audio
-			sounds.PlayClip("swap");
+			if (spellsInventory.Count > 1) {
+				PlaySwapSound();
+			}
         }
     }
+
+	void PlaySwapSound() 
+	{
+		if (swapAudioRoutine != null) {
+			return;
+		}
+
+		swapAudioRoutine = StartCoroutine(SwapSoundRoutine());
+	}
+
+	IEnumerator SwapSoundRoutine() 
+	{
+		sounds.PlayClip("swap");
+		yield return new WaitForSeconds(sounds.GetClip("swap").length);
+		swapAudioRoutine = null;
+	}
     #endregion
+
+
 
     void updateCurrentHeld() // make sure currentheld is within inventory count
     {
@@ -224,7 +246,6 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             currentSpellDescription.text = "";
             ammoCount.text = "";
             currentSpellCover.material.color = new Color(.3f, .3f, .3f);
-			StartCoroutine(PlayDropSound());
 
         }
         else { // update the ammo gauge and makesure current held is within inventory count
@@ -402,7 +423,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
         // visualize dropping book
 
-		sounds.PlayClip("out_of_spell");
+//		sounds.PlayClip("out_of_spell");
+		StartCoroutine(PlayDropSound());
         StartCoroutine(dropSpellProcess(dropSpell, originPos));
     }
 
