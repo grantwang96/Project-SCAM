@@ -134,6 +134,10 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 		if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
 		else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
+		if (spellsInventory.Count == 0) {
+			return;
+		}
+
 		currentSpellTitle.text = spellsInventory[currentHeld].primaryEffect.title;
 		currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
 		ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();

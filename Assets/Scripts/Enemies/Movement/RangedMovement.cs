@@ -25,6 +25,10 @@ public class RangedMovement : Movement {
         changeState(new RangedEnemyIdle());
     }
 
+	protected override void ToIdle() {
+		changeState(new RangedEnemyIdle());
+	}
+
     public override IEnumerator attack(Vector3 target)
     {
         Vector3 targetingDir = target - transform.position;
