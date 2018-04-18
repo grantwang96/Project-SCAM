@@ -7,6 +7,8 @@
 
 	SubShader {
 
+		ZWrite Off
+
 		CGPROGRAM
 		#pragma surface surf Lambert
 
