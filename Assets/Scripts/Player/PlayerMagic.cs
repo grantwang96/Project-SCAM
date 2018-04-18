@@ -129,11 +129,17 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
 	public void ResetSpellsToSerialized(List<string> jsons) {
 		for (int i = 0; i < jsons.Count; i ++) {
-			if (i > spellsInventory.Count - 1) {
-				//place blank spellbook
-				pickUpSpell(Instantiate(SpellBookPrefab).GetComponent<SpellBook>());
-			}
+//			if (i > spellsInventory.Count - 1) {
+//				//place blank spellbook
+//				pickUpSpell(Instantiate(SpellBookPrefab).GetComponent<SpellBook>());
+//			}
+
+//			SpellBook newSpell = Instantiate(SpellBookPrefab).GetComponent<SpellBook>();
 			//overwrite with saved
+//			JsonUtility.FromJsonOverwrite(jsons[i], newSpell);
+
+//			spellsInventory[i] = newSpell;
+
 			JsonUtility.FromJsonOverwrite(jsons[i], spellsInventory[i]);
 		}
 	}

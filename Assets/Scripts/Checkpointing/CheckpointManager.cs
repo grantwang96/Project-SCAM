@@ -35,7 +35,7 @@ public class CheckpointManager : MonoBehaviour {
 	//enemies to respawn on checkpoint
 	List<GameObject> respawnList;
 
-	void Awake () {
+	void Start () {
 		if (instance == null) {
 			instance = this;
 		}
@@ -81,6 +81,8 @@ public class CheckpointManager : MonoBehaviour {
 		JsonUtility.FromJsonOverwrite(savedMagic, playerMagic);
 		playerMagic.ResetSpellsToSerialized(savedSpellInv);
 		playerMagic.UpdateUI();
+
+		Debug.Log(player.transform.position - savedPos);
 
 		player.transform.position = savedPos;
 		player.transform.rotation = savedRot;
