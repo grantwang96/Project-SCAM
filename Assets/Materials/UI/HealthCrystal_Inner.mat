@@ -7,12 +7,12 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: HealthCrystal_Inner
-  m_Shader: {fileID: 4800000, guid: 3ce508974d3fe4547b14e07ba5650900, type: 3}
+  m_Shader: {fileID: 4800000, guid: f4740060ec8b343f4844017a332ef0b4, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 4000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -39,7 +39,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b8bf894ad1be17c4f96855690c987f05, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -60,6 +60,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
+    - _FillAmount: 0.4
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -67,6 +68,8 @@ Material:
     - _Mode: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Rim: 0.003
+    - _RimPower: 3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -77,7 +80,13 @@ Material:
     - _StencilWriteMask: 255
     - _UVSec: 0
     - _UseUIAlphaClip: 0
+    - _WobbleX: 0
+    - _WobbleZ: 0
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 0.20588237, b: 0.20588237, a: 0.78431374}
     - _EmissionColor: {r: 1, g: 0, b: 0, a: 1}
+    - _FoamColor: {r: 0.97794116, g: 0.7046929, b: 0.7046929, a: 1}
+    - _RimColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Tint: {r: 0.013624581, g: 0.61764705, b: 0.06777831, a: 1}
+    - _TopColor: {r: 1, g: 1, b: 1, a: 1}

@@ -38,6 +38,7 @@ public class Wobble : MonoBehaviour
 
 		// send it to the shader
 		rend.material.SetFloat("_WobbleX", wobbleAmountX);
+//		rend.material.SetFloat("_WobbleX", 0);
 		rend.material.SetFloat("_WobbleZ", wobbleAmountZ);
 
 		// velocity

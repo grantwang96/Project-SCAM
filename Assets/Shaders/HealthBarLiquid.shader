@@ -78,10 +78,13 @@
             float3 worldPos = mul (unity_ObjectToWorld, v.vertex.xyz);   
 			// rotate it around XY
 			float3 worldPosX= RotateAroundYInDegrees(float4(worldPos,0),360);
+//			float3 worldPosX = float3(0,0,0);
 			// rotate around XZ
-			float3 worldPosZ = float3 (worldPosX.y, worldPosX.z, worldPosX.x);		
+			float3 worldPosZ = float3 (worldPosX.y, worldPosX.z, worldPosX.x);
+//			float3 worldPosZ = float3(0,0,0);		
 			// combine rotations with worldPos, based on sine wave from script
 			float3 worldPosAdjusted = worldPos + (worldPosX  * _WobbleX)+ (worldPosZ* _WobbleZ); 
+		
 			// how high up the liquid is
 			o.fillEdge =  worldPosAdjusted.y + _FillAmount;
 
