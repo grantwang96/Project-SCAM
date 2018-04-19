@@ -26,6 +26,7 @@ public abstract class Damageable : MonoBehaviour
     public Collider myCollider;
     public MeshRenderer myRend;
 
+    public Vector3 originSpawn;
     public Movement myMovement;
     public Damageable parentHit;
 
@@ -40,6 +41,7 @@ public abstract class Damageable : MonoBehaviour
         myRend = GetComponent<MeshRenderer>();
         myMovement = GetComponent<Movement>();
         health = max_health;
+        originSpawn = transform.position;
     }
 
     public virtual void Update() {
@@ -159,7 +161,7 @@ public abstract class Damageable : MonoBehaviour
         dead = true;
 //        Destroy(gameObject);
 		//keeping disabled for checkpoint restoration
-		CheckpointManager.Instance.AddEnemyToRespawnList(gameObject);
+		CheckpointManager.Instance.AddEnemyToRespawnList(this);
 		gameObject.SetActive(false);
     }
 }
