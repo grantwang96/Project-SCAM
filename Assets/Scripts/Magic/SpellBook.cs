@@ -12,6 +12,7 @@ public class SpellBook : MonoBehaviour, Interactable {
     public int getMaxAmmo() { return maxAmmo; }
     [SerializeField] int ammo;
     public int getAmmo() { return ammo; }
+    public void setAmmo(int newAmmo) { ammo = newAmmo; }
     public void useAmmo() { ammo--; }
     public SpellCaster owner;
     [SerializeField] bool _dead = false;
