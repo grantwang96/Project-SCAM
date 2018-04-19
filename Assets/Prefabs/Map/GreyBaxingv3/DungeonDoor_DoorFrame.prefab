@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4364553068864844}
   m_Layer: 0
-  m_Name: SingleDoorFrame
+  m_Name: DungeonDoor_DoorFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
