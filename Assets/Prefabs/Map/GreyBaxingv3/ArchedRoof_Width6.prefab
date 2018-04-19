@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23935856205867682}
   - component: {fileID: 95541101316392170}
   - component: {fileID: 65671796736342656}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (7)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23620015891351874}
   - component: {fileID: 95532536508137770}
   - component: {fileID: 65679451862223858}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 23740167291009560}
   - component: {fileID: 95760250125924594}
   - component: {fileID: 65433170103002258}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (6)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 23225703910902906}
   - component: {fileID: 95529226725420012}
   - component: {fileID: 65676696956087304}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WallPillarCapstone
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 23486793591678080}
   - component: {fileID: 95090088173554250}
   - component: {fileID: 65518380257184492}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (8)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4168724608899998}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: ArchedRoof_Width6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 23612261263081952}
   - component: {fileID: 95697162507614044}
   - component: {fileID: 65436624352480292}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (5)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 23325300310099164}
   - component: {fileID: 95291680068054828}
   - component: {fileID: 65232468924807322}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (4)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 23072611569853876}
   - component: {fileID: 95935144942900644}
   - component: {fileID: 65045250728103278}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 23129928555286932}
   - component: {fileID: 95227337613292702}
   - component: {fileID: 65374028376244390}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}

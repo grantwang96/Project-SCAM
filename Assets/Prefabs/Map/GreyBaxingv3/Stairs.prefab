@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33632246894222788}
   - component: {fileID: 23075567722600892}
   - component: {fileID: 64972261266715742}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: DungeonStairs_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33801838113655496}
   - component: {fileID: 65238359867653986}
   - component: {fileID: 23508589611073016}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 23642570490767590}
   - component: {fileID: 95719247698446228}
   - component: {fileID: 64872749285186388}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: StairsModel
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 33718650651221142}
   - component: {fileID: 65313594806647670}
   - component: {fileID: 23745486429338572}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4895461367830674}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Stairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}

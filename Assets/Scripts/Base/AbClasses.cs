@@ -211,6 +211,10 @@ public abstract class Movement : MonoBehaviour
     public SpellCaster crush; // if seduced
     #endregion
 
+	public AudioPlayer sounds;
+	float footstepTimer =0f;
+	public float footstepDelta = 100f/60f;
+
     public virtual void Awake()
     {
         setup();
@@ -233,6 +237,20 @@ public abstract class Movement : MonoBehaviour
     public virtual void Update()
     {
         processMovement();
+
+		//footsteps
+//		Debug.Log(anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Base Layer")).normalizedTime % 1 );
+		AnimatorStateInfo animState = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Base Layer"));
+		if (sounds != null && animState.IsName("Walk") ) {
+
+			footstepTimer += Time.deltaTime;
+			if (footstepTimer >= footstepDelta) {
+				Debug.Log(gameObject.name + " clicks!");
+				sounds.PlayClip("footstep");
+				footstepTimer = 0;
+			}
+
+		}
     }
 
     public virtual void setup()
@@ -243,6 +261,11 @@ public abstract class Movement : MonoBehaviour
         currSpeed = baseSpeed;
         friction = 1f;
         // setup currState
+
+		//audio
+		if (sounds == null) {
+			sounds = GetComponent<AudioPlayer>();
+		}
     }
 
     public virtual void processMovement()

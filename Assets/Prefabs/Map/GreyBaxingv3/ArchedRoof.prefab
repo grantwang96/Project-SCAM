@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23633240853642002}
   - component: {fileID: 95928869588554978}
   - component: {fileID: 65614053538378108}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WallHorizontalSiding
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23374798280166290}
   - component: {fileID: 95277810358534072}
   - component: {fileID: 65847920051019220}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 23615626301003830}
   - component: {fileID: 95892036929634778}
   - component: {fileID: 65514805536400160}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (7)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 23760385814262492}
   - component: {fileID: 95494999052090782}
   - component: {fileID: 65454790312394956}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4972018734237984}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: ArchedRoof
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 23056988270288478}
   - component: {fileID: 95202042369961996}
   - component: {fileID: 65896219191802802}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 23867821631150684}
   - component: {fileID: 95817850280285546}
   - component: {fileID: 65806453335014770}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (6)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 23573863856091028}
   - component: {fileID: 95013974512319292}
   - component: {fileID: 65139069894103840}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (5)
   m_TagString: Ground
   m_Icon: {fileID: 0}

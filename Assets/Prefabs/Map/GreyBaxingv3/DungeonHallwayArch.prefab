@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4021245278992228}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Archway2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4567302602291924}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: polySurface115
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 33341933868491682}
   - component: {fileID: 23278767188604972}
   - component: {fileID: 64412114934117862}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: SM_DungeonArch_RightSide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 33190423285834190}
   - component: {fileID: 23981769085083324}
   - component: {fileID: 64421727035521818}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: SM_DungeonArch_RightCurve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4360096770357150}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: polySurface116
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 33873281989019038}
   - component: {fileID: 23327343656324382}
   - component: {fileID: 64496757875989844}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: SM_DungeonArch_LeftArch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 33509038344227346}
   - component: {fileID: 23250967630816172}
   - component: {fileID: 64820011096264954}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: SM_DungeonArch_LeftCurve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4219888779634292}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: DungeonHallwayArch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 33782429137468756}
   - component: {fileID: 23838520612132524}
   - component: {fileID: 64943292734331930}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: SM_DungeonArch_Capstone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23648199816069340}
   - component: {fileID: 95238025544026344}
   - component: {fileID: 65507587758386186}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23517505717786162}
   - component: {fileID: 95597651468504238}
   - component: {fileID: 65425997141485482}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 23736672707965710}
   - component: {fileID: 95798800680761492}
   - component: {fileID: 65286516093787930}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 23705622428026286}
   - component: {fileID: 95407086594799972}
   - component: {fileID: 65284880484889380}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 23365033436326880}
   - component: {fileID: 95691685668122118}
   - component: {fileID: 65159059579737250}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 23673253967626650}
   - component: {fileID: 95691630308668816}
   - component: {fileID: 65394426886903496}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4848771337317158}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: SolidWallx10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 23984258326857726}
   - component: {fileID: 95578801967718120}
   - component: {fileID: 65571880792801064}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 23120338165160818}
   - component: {fileID: 95007549563296678}
   - component: {fileID: 65344411138772502}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 23615872566206442}
   - component: {fileID: 95843050194711640}
   - component: {fileID: 65489817349984992}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 23323627888629144}
   - component: {fileID: 95384128763995512}
   - component: {fileID: 65081155175646100}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 23599976595611036}
   - component: {fileID: 95301383528283650}
   - component: {fileID: 65226160729222556}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 23405984807559508}
   - component: {fileID: 95447178623172220}
   - component: {fileID: 65563734099795252}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CastleWall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

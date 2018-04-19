@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33392225754223784}
   - component: {fileID: 23377793920165228}
   - component: {fileID: 65340665802932830}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: DungeonWall_TallGrated
   m_TagString: Wall
   m_Icon: {fileID: 0}

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23474275260392896}
   - component: {fileID: 95605492652810776}
   - component: {fileID: 65378772826057152}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WallHorizontalSiding
   m_TagString: Untagged
   m_Icon: {fileID: 0}

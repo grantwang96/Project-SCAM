@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23209725271367548}
   - component: {fileID: 95767788228252254}
   - component: {fileID: 65389566064441530}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (5)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23948762835541436}
   - component: {fileID: 95991419175851528}
   - component: {fileID: 65490594991690910}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 23361183663758808}
   - component: {fileID: 95261184750670038}
   - component: {fileID: 65470317358004294}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 23356231670247852}
   - component: {fileID: 95199006080805254}
   - component: {fileID: 65596437207025260}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 23248848131518674}
   - component: {fileID: 95328631416480244}
   - component: {fileID: 65937472296292658}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WallPillarCapstone
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 23985710966316668}
   - component: {fileID: 95436100747202804}
   - component: {fileID: 65365588340222440}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 23784581485174782}
   - component: {fileID: 95674285074224834}
   - component: {fileID: 65455841777345824}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BrickRoof (4)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4269011056150624}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: ArchedRoof_Width4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

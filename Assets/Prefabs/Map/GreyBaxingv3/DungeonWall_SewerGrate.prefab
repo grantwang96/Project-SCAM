@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33544405625000200}
   - component: {fileID: 23679894037598928}
   - component: {fileID: 65984014194516546}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: DungeonWall_SewerGrate
   m_TagString: Untagged
   m_Icon: {fileID: 0}

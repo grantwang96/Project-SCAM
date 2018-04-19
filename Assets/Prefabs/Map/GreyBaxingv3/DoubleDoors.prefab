@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33028601020228610}
   - component: {fileID: 23618592380776374}
   - component: {fileID: 95275441589741006}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Lock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33058049725869058}
   - component: {fileID: 23441602010568954}
   - component: {fileID: 95290589925337068}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Lock (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4796241411311790}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4571090838834912}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: LeftDoubleDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 33690443532165070}
   - component: {fileID: 23448434491495378}
   - component: {fileID: 64769404171047590}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: DoorFrame1
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4433186344407648}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: DoubleDoors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 65186077933549692}
   - component: {fileID: 114482295621787412}
   - component: {fileID: 54258516913288018}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Door
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 33134800604305300}
   - component: {fileID: 23470321689485566}
   - component: {fileID: 64612323017725614}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: DoorFrame2
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 65806939168581992}
   - component: {fileID: 114497106326692688}
   - component: {fileID: 54962881772070860}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Door
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4777508493382730}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 33169695413130894}
   - component: {fileID: 23367471989559832}
   - component: {fileID: 95319707378943054}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Lock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4459004197877932}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: RightDoubleDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 33783828530307478}
   - component: {fileID: 23864680305541898}
   - component: {fileID: 95389796831486104}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Lock (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

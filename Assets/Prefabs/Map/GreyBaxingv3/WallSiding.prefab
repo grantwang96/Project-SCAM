@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23349647951607498}
   - component: {fileID: 95554596166583984}
   - component: {fileID: 65594770807422348}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WallVerticalSiding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4910297007377532}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WallSiding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 23855145171529736}
   - component: {fileID: 95703440330590076}
   - component: {fileID: 65068513176526078}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WallPillarCapstone
   m_TagString: Wall
   m_Icon: {fileID: 0}
