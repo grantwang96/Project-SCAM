@@ -19,6 +19,7 @@ public class CameraMovement : MonoBehaviour {
     public Transform affectedYTurn;
     public int normalMove = 1;
     public static CameraMovement Instance;
+    public PlayerDamageable playerDamageable;
 
     public bool separateControl
     {
@@ -45,6 +46,8 @@ public class CameraMovement : MonoBehaviour {
     void Update()
     {
         // if (Input.GetKeyDown(KeyCode.U)) { StartCoroutine(shakeCamera(0.3f)); }
+
+        if(playerDamageable.dead) { return; }
 
         // 1. get mouse input data
         float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity * normalMove; // horizontal mousespeed

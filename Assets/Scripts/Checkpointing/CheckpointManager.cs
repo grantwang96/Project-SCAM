@@ -12,18 +12,19 @@ public class CheckpointManager : MonoBehaviour {
 			return instance;
 		}
 	}
-
-
+    
 	string savedDmg = null;
 	string savedMagic = null;
 	Vector3 savedPos;
 	Quaternion savedRot;
 
 	public Transform player;
+    public int playerHealth;
 	public PlayerDamageable playerDmg;
 	public PlayerMagic playerMagic;
+    public SpellBook spellBookPrefab;
 
-	List<string> savedSpellInv;
+	List<SpellBookData> savedSpellInv = new List<SpellBookData>();
 
 	//events
 	public delegate void ResetAction();
@@ -33,7 +34,7 @@ public class CheckpointManager : MonoBehaviour {
 	public static event CheckpointAction OnCheckpoint;
 
 	//enemies to respawn on checkpoint
-	List<GameObject> respawnList;
+	List<EnemyRestart> respawnList;
 
 	void Awake () {
 		if (instance == null) {
@@ -43,7 +44,7 @@ public class CheckpointManager : MonoBehaviour {
 			throw new UnityException("Error: trying to initialize a CheckpointManager while one exists already");
 		}
 
-		respawnList = new List<GameObject>();
+		respawnList = new List<EnemyRestart>();
 
 		SaveCheckpoint();
 	}
@@ -51,47 +52,87 @@ public class CheckpointManager : MonoBehaviour {
 	public void SaveCheckpoint() {
 		respawnList.Clear();
 
-		savedDmg = JsonUtility.ToJson(playerDmg);
+        playerHealth = playerDmg.health;
+        savedSpellInv.Clear();
+        for (int i = 0; i < playerMagic.GetSpellsInventory().Count; i++) {
+            SpellBookData bookData = new SpellBookData();
+            bookData.primary = playerMagic.GetSpellsInventory()[i].primaryEffect;
+            bookData.secondary = playerMagic.GetSpellsInventory()[i].secondaryEffect;
+            bookData.ammo = playerMagic.GetSpellsInventory()[i].getAmmo();
+            savedSpellInv.Add(bookData);
+        }
 
-		savedMagic = JsonUtility.ToJson(playerMagic);
-		List<SpellBook> currSpells = playerMagic.GetSpellsInventory();
-		List<string> spellsToSave = new List<string>();
-		foreach(SpellBook spell in currSpells) {
-			spellsToSave.Add(JsonUtility.ToJson(spell));
-		}
-		savedSpellInv = spellsToSave;
+        savedPos = playerDmg.transform.position;
+        savedRot = playerDmg.transform.rotation;
 
-		savedPos = player.position;
-		savedRot = player.rotation;
-
-		if (OnCheckpoint != null) {
+        if (OnCheckpoint != null) {
 			OnCheckpoint();
 		}
 	}
 
 	public void ResetToLastCheckpoint() {
+        Debug.Log("Resetting to last checkpoint...");
 		//reset enemies
-		foreach(GameObject enemy in respawnList) {
-			enemy.SetActive(true);
+		foreach(EnemyRestart enemy in respawnList) {
+            enemy.dam.transform.position = enemy.dam.originSpawn;
+            enemy.dam.transform.rotation = enemy.originalRot;
+            enemy.dam.gameObject.SetActive(true);
+            enemy.dam.dead = false;
+            if(enemy.dam.myMovement != null) {
+                enemy.dam.myMovement.agent.Warp(enemy.dam.originSpawn);
+            }
 		}
 		respawnList.Clear();
 
-		JsonUtility.FromJsonOverwrite(savedDmg, playerDmg);
+        // JsonUtility.FromJsonOverwrite(savedDmg, playerDmg);
 
-		JsonUtility.FromJsonOverwrite(savedMagic, playerMagic);
-		playerMagic.ResetSpellsToSerialized(savedSpellInv);
+        // JsonUtility.FromJsonOverwrite(savedMagic, playerMagic);
+        // playerMagic.ResetSpellsToSerialized(savedSpellInv);
+        
+        for(int i = 0; i < savedSpellInv.Count; i++) {
+            if(i >= playerMagic.GetSpellsInventory().Count) {
+                SpellBook newBook = Instantiate(spellBookPrefab);
+                playerMagic.pickUpSpell(newBook);
+            }
+            SpellBook currBook = playerMagic.GetSpellsInventory()[i];
+            currBook.primaryEffect = savedSpellInv[i].primary;
+            currBook.secondaryEffect = savedSpellInv[i].secondary;
+            currBook.SetupSpell();
+            currBook.setAmmo(savedSpellInv[i].ammo);
+        }
+
 		playerMagic.UpdateUI();
 
 		player.transform.position = savedPos;
 		player.transform.rotation = savedRot;
-		player.gameObject.GetComponent<CharacterController>().Move(Vector3.zero);
+        playerDmg.health = playerHealth;
+        player.gameObject.GetComponent<CharacterController>().Move(Vector3.zero);
 
 		if (OnReset != null) {
 			OnReset();
 		}
 	}
 
-	public void AddEnemyToRespawnList(GameObject enemy) {
-		respawnList.Add(enemy);
+	public void AddEnemyToRespawnList(Damageable enemy) {
+        EnemyRestart newER = new EnemyRestart();
+        newER.dam = enemy;
+        newER.originalPos = enemy.transform.position;
+        newER.originalRot = enemy.transform.rotation;
+		respawnList.Add(newER);
 	}
+
+    public class SpellBookData
+    {
+        public SpellPrimary primary;
+        public SpellSecondary secondary;
+        public int ammo;
+    }
+
+    public class EnemyRestart
+    {
+        public Damageable dam;
+        public int health;
+        public Vector3 originalPos;
+        public Quaternion originalRot;
+    }
 }

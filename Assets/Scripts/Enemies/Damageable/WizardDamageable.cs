@@ -9,11 +9,18 @@ public class WizardDamageable : Damageable {
 
     public override void knockBack(Vector3 dir, float force)
     {
+        myMovement.agent.updatePosition = false;
+        myMovement.agent.updateRotation = false;
+        myMovement.agent.isStopped = true;
+        myMovement.agent.velocity = Vector3.zero;
+        rbody.velocity = Vector3.zero;
+        rbody.AddForce(dir * force, ForceMode.Impulse);
         // rbody.AddForce(dir * force, ForceMode.Impulse);
-        if(knockBackRoutine != null) {
+        /*
+        if (knockBackRoutine != null) {
             StopCoroutine(knockBackRoutine);
         }
-        knockBackRoutine = StartCoroutine(knockingBack(dir, force));
+        knockBackRoutine = StartCoroutine(knockingBack(dir, force));*/
     }
 
     IEnumerator knockingBack(Vector3 dir, float force)

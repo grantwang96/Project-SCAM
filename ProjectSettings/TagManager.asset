@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - Wall
   - Icy
+  - Ceiling
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - Trigger
   - Doom
   - NobodyCares
-  - 
+  - Interact
   - 
   - 
   - 

@@ -26,6 +26,7 @@ public abstract class Damageable : MonoBehaviour
     public Collider myCollider;
     public MeshRenderer myRend;
 
+    public Vector3 originSpawn;
     public Movement myMovement;
     public Damageable parentHit;
 
@@ -40,6 +41,7 @@ public abstract class Damageable : MonoBehaviour
         myRend = GetComponent<MeshRenderer>();
         myMovement = GetComponent<Movement>();
         health = max_health;
+        originSpawn = transform.position;
     }
 
     public virtual void Update() {
@@ -156,9 +158,10 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void Die()
     {
+        dead = true;
 //        Destroy(gameObject);
 		//keeping disabled for checkpoint restoration
-		CheckpointManager.Instance.AddEnemyToRespawnList(gameObject);
+		CheckpointManager.Instance.AddEnemyToRespawnList(this);
 		gameObject.SetActive(false);
     }
 }
@@ -254,10 +257,11 @@ public abstract class Movement : MonoBehaviour
 
     public Transform obstruction() {
         RaycastHit[] rayHits = Physics.RaycastAll(
-            Head.position, agent.desiredVelocity, obstacleCheckRange, obstacleLayer, QueryTriggerInteraction.Ignore);
+            Head.position, agent.desiredVelocity, agent.radius, obstacleLayer, QueryTriggerInteraction.Ignore);
         Debug.DrawRay(Head.position, agent.desiredVelocity, Color.green);
         foreach (RaycastHit rayhit in rayHits) {
             if(rayhit.collider.tag == "Wall" || rayhit.collider.tag == "Ground") {
+                Debug.Log("Obstruction: " + rayhit.transform);
                 return rayhit.transform;
             }
         }
@@ -278,13 +282,18 @@ public abstract class Movement : MonoBehaviour
 
     public Vector3 getRandomLocation(Vector3 origin, float range)
     {
+        Debug.Log("Range is: " + range);
+
         Vector3 randPos = Random.insideUnitSphere * range;
         randPos += origin;
 
         NavMeshHit navHit;
-        NavMesh.SamplePosition(randPos, out navHit, range, pathFindingLayers);
+        if(NavMesh.SamplePosition(randPos, out navHit, range, NavMesh.AllAreas)) {
+            Debug.Log("Found a location!");
+            return navHit.position;
+        }
 
-        return navHit.position;
+        return transform.position;
     }
 
     public virtual void Move(Vector3 movement)

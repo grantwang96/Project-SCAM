@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public static PlayerMagic instance;
+    public Damageable myDamageable;
     [SerializeField] List<SpellBook> spellsInventory = new List<SpellBook>();
     public int maxSpells;
     int currentHeld;
@@ -60,6 +61,14 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public Sprite shootReticuleSprite;
     public Sprite interactReticuleSprite;
+
+    public Transform bookUI;
+    public Vector3 bookNormalPosition;
+    public Vector3 startSwitchPosition;
+    public Vector3 bookNormalRotation;
+    public Vector3 startSwitchRotation;
+    Coroutine bookSwapRoutine;
+    public float swapSpeed;
     #endregion
 
 	#region Audio
@@ -88,7 +97,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameManager.Instance.menuMode) { return; }
+        if (GameManager.Instance.menuMode || myDamageable.dead) { return; }
 
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
@@ -126,11 +135,40 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 		if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
 		else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
+		if (spellsInventory.Count == 0) {
+			return;
+		}
+
 		currentSpellTitle.text = spellsInventory[currentHeld].primaryEffect.title;
 		currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
 		ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();
 		currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
 	}
+
+    IEnumerator switchBooks() {
+        Vector3 startPos = bookUI.localPosition;
+        Vector3 startRot = bookUI.localRotation.eulerAngles;
+        float time = 0f;
+
+        while(time < 1f) {
+            time += Time.deltaTime * swapSpeed;
+            bookUI.localPosition = Vector3.Lerp(startPos, startSwitchPosition, time);
+            bookUI.localRotation = Quaternion.Lerp(Quaternion.Euler(startRot), Quaternion.Euler(startSwitchRotation), time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        UpdateUI();
+        time = 0f;
+
+        while(time < 1f) {
+            time += Time.deltaTime * swapSpeed;
+            bookUI.localPosition = Vector3.Lerp(startPos, bookNormalPosition, time);
+            bookUI.localRotation = Quaternion.Lerp(Quaternion.Euler(startSwitchRotation), Quaternion.Euler(bookNormalRotation), time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        bookSwapRoutine = null;
+    }
 
 	#endregion
 
@@ -216,8 +254,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
     }
 
-    void UpdateSpellData()
-    {
+    void UpdateSpellData() {
         if (spellsInventory.Count == 0) { // shut everything off
             currentHeld = 0;
             currentSpellTitle.text = "";
@@ -226,8 +263,11 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
             currentSpellCover.material.color = new Color(.3f, .3f, .3f);
         }
         else { // update the ammo gauge and makesure current held is within inventory count
-
-			UpdateUI();
+            if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
+            else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
+            if(bookSwapRoutine != null) { StopCoroutine(bookSwapRoutine); }
+            bookSwapRoutine = StartCoroutine(switchBooks());
+			// UpdateUI();
         }
     }
 
@@ -350,9 +390,9 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         else { // otherwise just add the spell
             spellsInventory.Add(newSpell);
             currentHeld = spellsInventory.Count - 1;
+            UpdateSpellData();
         }
         // updateCurrentHeld();
-        UpdateSpellData();
         newSpell.Deactivate();
         newSpell.transform.localPosition = Vector3.zero;
         newSpell.transform.localRotation = Quaternion.identity;
