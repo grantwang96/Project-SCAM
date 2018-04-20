@@ -36,6 +36,11 @@ public class Movable : Damageable
         knockBack(dir, force);
     }
 
+    public override void Die()
+    {
+        // you DON'T die
+    }
+
     public override void InitiateTransmutation(float duration, GameObject replacement)
     {
         if (!transmutable) {
@@ -149,15 +154,6 @@ public class Movable : Damageable
         if (goodTargets.Count > 0) {
             Damageable target = goodTargets[UnityEngine.Random.Range(0, goodTargets.Count)];
             attackTarget = target.transform;
-        }
-    }
-
-    void OnCollisionEnter(Collision coll)
-    {
-        float magnitude = rbody.velocity.magnitude;
-        if(magnitude > 20f) {
-            Damageable dam = coll.collider.GetComponent<Damageable>();
-            if(dam) { dam.TakeDamage(transform, Mathf.CeilToInt(magnitude - 20), rbody.velocity.normalized, magnitude); }
         }
     }
 }

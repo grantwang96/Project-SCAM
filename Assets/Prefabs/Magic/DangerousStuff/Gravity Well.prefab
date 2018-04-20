@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114587544601297498}
   - component: {fileID: 135065444317742362}
   - component: {fileID: 54471697788887762}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Gravity Well
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4851062135545070}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: MeasuringStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1126282413409678}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.6034706, z: -0, w: 0.7973853}
   m_LocalPosition: {x: 0, y: 0, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -188,7 +188,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -650913520
+  randomSeed: -596189722
   InitialModule:
     serializedVersion: 3
     enabled: 1

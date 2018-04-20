@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour {
     public int damage;
 
     public Transform owner;
+    public GameObject explosionPrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -23,12 +24,15 @@ public class Projectile : MonoBehaviour {
         if(rbody.isKinematic || coll.transform == owner) { return; }
         Damageable dam = coll.GetComponent<Damageable>();
         if(dam) {
-            dam.TakeDamage(owner, damage, transform.forward, rbody.velocity.magnitude / 2 * rbody.mass);
+            Vector3 vel = rbody.velocity;
+            vel.y = 1f;
+            dam.TakeDamage(owner, damage, vel, rbody.velocity.magnitude / 10 * rbody.mass);
         }
         Die();
     }
 
     void Die() {
+        Destroy(Instantiate(explosionPrefab, transform.position, transform.rotation), 1f);
         Destroy(this.gameObject);
     }
 }
