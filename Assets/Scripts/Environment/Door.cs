@@ -102,9 +102,10 @@ public class Door : Damageable, Interactable {
         }
     }
 
-    public override void Die() {
+	public override void Die() {
         dead = true;
         StartCoroutine(fadeAway());
+//		return fadeAway();
     }
 
     IEnumerator fadeAway() {

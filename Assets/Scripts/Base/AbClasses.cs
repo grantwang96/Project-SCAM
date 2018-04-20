@@ -24,7 +24,7 @@ public abstract class Damageable : MonoBehaviour
     // public Rigidbody rbody;
     // public CharacterController charCon;
     public Collider myCollider;
-    public MeshRenderer myRend;
+	public SkinnedMeshRenderer myRend;
 
     public Movement myMovement;
     public Damageable parentHit;
@@ -33,19 +33,26 @@ public abstract class Damageable : MonoBehaviour
     
     public Coroutine seduction;
 
+	public AudioPlayer sounds;
+
     public virtual void Start()
     {
         // rbody = GetComponent<Rigidbody>();
         // charCon = GetComponent<CharacterController>();
-        myRend = GetComponent<MeshRenderer>();
+//        myRend = GetComponent<MeshRenderer>();
         myMovement = GetComponent<Movement>();
         health = max_health;
+
+		if (sounds == null) {
+			sounds = GetComponent<AudioPlayer>();
+		}
     }
 
     public virtual void Update() {
         if(dead && damageable) { // if we're dead
             StopAllCoroutines();
-            Die();
+//			StartCoroutine(Die());
+			Die();
             damageable = false;
         }
     }
@@ -60,7 +67,12 @@ public abstract class Damageable : MonoBehaviour
 
         // calculate damage dealt
         health -= hpLost;
-        if(health <= 0 && !dead) { dead = true; } // if this damage kills you
+        if(health <= 0 && !dead) { 
+			dead = true; 
+		} // if this damage kills you
+		else if (sounds != null) {
+			sounds.PlayClip("hit");
+		}
         
         knockBack(dir, force);
     }
@@ -154,13 +166,39 @@ public abstract class Damageable : MonoBehaviour
         // transform.forward = new Vector3(-dir.x, 0, -dir.z);
     }
 
-    public virtual void Die()
+	public virtual void Die()
     {
 //        Destroy(gameObject);
 		//keeping disabled for checkpoint restoration
+		Debug.Log(gameObject.name + " is dying");
 		CheckpointManager.Instance.AddEnemyToRespawnList(gameObject);
-		gameObject.SetActive(false);
+//		Renderer rend = GetComponentInChildren<Renderer>();
+		myRend.enabled = false;
+		if (sounds == null) {
+			StartCoroutine(AfterDeath(0f));
+		}
+		else {
+			sounds.PlayClip("die");
+			Debug.Log(myRend.ToString());
+			StartCoroutine(AfterDeath(sounds.GetClip("die").length));
+		}
+
+//		yield return new WaitForSeconds(sounds.GetClip("die").length);
+
     }
+
+	IEnumerator AfterDeath(float time) {
+		Debug.Log(gameObject.name + " after death cleanup");
+		Movement mov = GetComponentInChildren<Movement>();
+		mov.enabled = false;
+		yield return new WaitForSeconds(time);
+		Debug.Log("wait over for " + gameObject.name);
+		if (myRend != null) {
+			myRend.enabled = true; //in case it respawns
+			mov.enabled = true;
+		}
+		gameObject.SetActive(false);
+	}
 }
 
 [System.Serializable]
@@ -246,7 +284,7 @@ public abstract class Movement : MonoBehaviour
 			footstepTimer += Time.deltaTime;
 			if (footstepTimer >= footstepDelta) {
 				Debug.Log(gameObject.name + " clicks!");
-				sounds.PlayClip("footstep");
+//				sounds.PlayClip("footstep");
 				footstepTimer = 0;
 			}
 

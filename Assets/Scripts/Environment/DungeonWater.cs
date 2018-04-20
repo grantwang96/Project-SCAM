@@ -23,7 +23,7 @@ public class DungeonWater : MonoBehaviour {
     void OnTriggerStay(Collider other) {
 		Damageable dmg = other.GetComponent<Damageable>();
 		if (dmg != null) {
-			AudioSource source = other.GetComponent<AudioSource>();
+//			AudioSource source = other.GetComponent<AudioSource>();
 //			source.
 			dmg.Die();
 		}

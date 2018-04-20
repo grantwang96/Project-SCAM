@@ -8,12 +8,15 @@ public class MeleeEnemyDamageable : Damageable {
     Coroutine knockBackRoutine;
     Coroutine targetSwitchRoutine;
 
+	public GameObject sword;
+
     public GameObject deathFX;
 
-    public override void Die()
+	public override void Die()
     {
-        base.Die();
         Destroy(Instantiate(deathFX, transform.position, transform.rotation), 5f);
+		sword.gameObject.SetActive(false);
+		base.Die();
     }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)

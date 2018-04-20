@@ -208,6 +208,10 @@ public class MeleeEnemyAttack : NPCState
 {
     public override void Enter(Movement owner)
     {
+		if (owner.attackTarget == null) {
+			owner.changeState(new MeleeEnemyIdle());
+			return;
+		}
         base.Enter(owner);
         // anim.Play("Attack");
         myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
@@ -237,7 +241,7 @@ public class MeleeEnemyAttack : NPCState
 
     public override void Exit()
     {
-		if(myOwner.agent.enabled && myOwner.attackTarget != null) { 
+		if(myOwner != null && myOwner.agent.enabled && myOwner.attackTarget != null) { 
 			myOwner.agent.SetDestination(myOwner.attackTarget.position); 
 		}
     }

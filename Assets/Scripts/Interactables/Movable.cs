@@ -16,7 +16,7 @@ public class Movable : Damageable
     {
         rbody = GetComponent<Rigidbody>();
         myCollider = GetComponent<Collider>();
-        myRend = GetComponent<MeshRenderer>();
+//        myRend = GetComponent<MeshRenderer>();
     }
 
     public GameObject getGameObject()
@@ -160,4 +160,8 @@ public class Movable : Damageable
             if(dam) { dam.TakeDamage(transform, Mathf.CeilToInt(magnitude - 20), rbody.velocity.normalized, magnitude); }
         }
     }
+
+	public override void Die() {
+		//do nothing wtf walls don't die
+	}
 }

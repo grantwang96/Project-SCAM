@@ -28,13 +28,14 @@ public class PlayerDamageable : Damageable {
     public MeshRenderer healthBar;
 	public MeshRenderer encasing;
 
-	AudioPlayer sounds;
+//	AudioPlayer sounds;
 
 	// Use this for initialization
 	public override void Start () {
         base.Start();
         Instance = this;
-		sounds = GetComponent<AudioPlayer>();
+		if (sounds==null)
+			sounds = GetComponent<AudioPlayer>();
         // playerCanvas = Instantiate(playerCanvasPrefab);
         // healthBar = playerCanvas.Find("HealthBar").GetComponent<Image>();
 	}
@@ -94,6 +95,7 @@ public class PlayerDamageable : Damageable {
     {
 //       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		CheckpointManager.Instance.ResetToLastCheckpoint();
+//		yield return new WaitForEndOfFrame();
     }
 
     /*

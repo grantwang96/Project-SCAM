@@ -112,6 +112,7 @@ public class NPCDamageable : Damageable {
         // ScoreKeeper.Instance.incrementScore();
         Debug.Log("I died!");
         StartCoroutine(Death());
+//		return Death();
     }
 
     IEnumerator Death()

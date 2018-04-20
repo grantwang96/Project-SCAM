@@ -40,6 +40,8 @@ GameObject:
   - component: {fileID: 114734420963928022}
   - component: {fileID: 114647624528758258}
   - component: {fileID: 114983016835204032}
+  - component: {fileID: 82923169561023592}
+  - component: {fileID: 114902266437168230}
   m_Layer: 12
   m_Name: LeapingSkeletonEnemy
   m_TagString: Untagged
@@ -961,6 +963,87 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.38, y: 2.75, z: 0.35457274}
   m_Center: {x: -0.0073062615, y: -0.061317287, z: -0.000000012347895}
+--- !u!82 &82923169561023592
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1035468567916540}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243059930037211578, guid: de2f7875763464d85ae4fa1c0acffc85,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95635062708484726
 Animator:
   serializedVersion: 3
@@ -1022,6 +1105,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   attackTarget: {fileID: 0}
   crushTarget: {fileID: 0}
+  sounds: {fileID: 0}
+  footstepDelta: 1.6666666
   destination: {x: 0, y: 0, z: 0}
   chargingForce: {x: 0, y: 4, z: 20}
 --- !u!114 &114674623282616590
@@ -1063,8 +1148,28 @@ MonoBehaviour:
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
+  sounds: {fileID: 0}
   rbody: {fileID: 54333894238283588}
   deathFX: {fileID: 1289514646693828, guid: 20145835f4b8b7245a5ca5f29cb68e4d, type: 2}
+--- !u!114 &114902266437168230
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1035468567916540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81aba603d2d514db9bd75ea12fc702bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labels:
+  - footstep
+  - dead
+  - hit
+  clips:
+  - {fileID: 8300000, guid: 0696bbab1ff92474cab64569fd8c86e1, type: 3}
+  - {fileID: 8300000, guid: 05d6ff464d0e64b4bac96e6e33c49a06, type: 3}
+  - {fileID: 8300000, guid: 3d1df3e952d5744809b5f8324b14fa68, type: 3}
 --- !u!114 &114983016835204032
 MonoBehaviour:
   m_ObjectHideFlags: 1
