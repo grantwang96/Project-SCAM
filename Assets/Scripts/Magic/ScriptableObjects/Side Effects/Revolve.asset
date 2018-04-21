@@ -15,6 +15,7 @@ MonoBehaviour:
   coolDown: 0.5
   title: Orbiting
   description: You'll feel like a star!
+  descriptiveImage: {fileID: 21300000, guid: 9b87db09de1a24f4fb491032cbca2362, type: 3}
   decoration: {fileID: 4510937749999608, guid: c887b558e3cd4dd4f9c107f4bf27a499, type: 2}
   sideEffect: {fileID: 0}
   forwardTime: 0.02

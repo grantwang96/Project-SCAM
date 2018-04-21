@@ -15,6 +15,7 @@ MonoBehaviour:
   coolDown: 0
   title: Soaring
   description: Will attempt to fly away
+  descriptiveImage: {fileID: 21300000, guid: 4a4da33af38d78443af8dd4d8aedfd91, type: 3}
   decoration: {fileID: 4013364312867060, guid: 0e890714461fb23469dadcd449f6e968, type: 2}
   sideEffect: {fileID: 0}
   upwardForce: 4

@@ -9,6 +9,7 @@ public class SpellSecondary : ScriptableObject {
 
     public string title;
     public string description;
+    public Sprite descriptiveImage;
 
     public Transform decoration;
     public Transform sideEffect;
