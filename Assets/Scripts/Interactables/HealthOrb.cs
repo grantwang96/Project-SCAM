@@ -36,7 +36,7 @@ public class HealthOrb : MonoBehaviour {
             time += Time.deltaTime * speed;
             yield return new WaitForEndOfFrame();
         }
-        player.health += health;
+        player.Heal(health);
 
         // healing sfx
         // healing fx

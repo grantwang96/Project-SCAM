@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour {
         if(dam) {
             Vector3 vel = rbody.velocity;
             vel.y = 1f;
-            dam.TakeDamage(owner, damage, vel, rbody.velocity.magnitude / 10 * rbody.mass);
+            dam.TakeDamage(owner, damage, vel, rbody.mass);
         }
         Die();
     }

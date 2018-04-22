@@ -77,8 +77,7 @@ public class RangedMovement : Movement {
             Debug.Log("Hi Ground");
             agent.updatePosition = true;
             agent.updateRotation = true;
-            if (agent.nextPosition != transform.position)
-            {
+            if (agent.nextPosition != transform.position) {
                 agent.Warp(transform.position);
             }
             agent.isStopped = false;
