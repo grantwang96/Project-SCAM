@@ -13,8 +13,7 @@ public class RangedEnemyDamageable : Damageable {
 
     public List<GameObject> drops = new List<GameObject>();
 
-    public override void Die()
-    {
+    public override void Die() {
         base.Die();
 
         // play some death animations
@@ -147,6 +146,15 @@ public class RangedEnemyDamageable : Damageable {
         // wait for the spell duration
         yield return new WaitForSeconds(duration);
 
+        myColl.enabled = true;
+        if (allRends.Length > 0) {
+            foreach (Renderer rend in allRends)
+                if (rend != null) { rend.enabled = true; }
+        }
+        if (dead) {
+            yield break;
+        }
+
         // move to transmuted object(in case object was moved)
         myMovement.agent.nextPosition = myReplace.transform.position;
         myMovement.agent.Warp(myReplace.transform.position);
@@ -157,8 +165,7 @@ public class RangedEnemyDamageable : Damageable {
 
         // reaactivate colliders and renderers
         myColl.enabled = true;
-        if (allRends.Length > 0)
-        {
+        if (allRends.Length > 0) {
             foreach (Renderer rend in allRends)
                 if (rend != null) { rend.enabled = true; }
         }

@@ -29,7 +29,7 @@ public class Movable : Damageable
         if(parentHit != null) {
             parentHit.TakeDamage(attacker, damage, dir, force);
             if (parentHit.dead) {
-                dead = true;
+                Die();
             }
         }
         // TODO: handle elemental damage(fire, for example)
