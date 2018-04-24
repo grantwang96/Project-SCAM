@@ -21,6 +21,7 @@ public class SpellBook : MonoBehaviour, Interactable {
 
     public string spellTitle;
     public string spellDescription;
+    public Sprite instructionImage;
     public Color baseColor;
 
     MeshRenderer[] allMeshes;

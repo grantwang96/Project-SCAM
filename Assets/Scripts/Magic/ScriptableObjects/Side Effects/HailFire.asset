@@ -15,7 +15,9 @@ MonoBehaviour:
   coolDown: 1.5
   title: Hailing
   description: Rains spell upon you
+  descriptiveImage: {fileID: 21300000, guid: d9d9a4a30ff435643a3f15616731ee79, type: 3}
   decoration: {fileID: 4028337005684486, guid: 85c2b0ff513d67b4dae94271113fc110, type: 2}
+  sideEffect: {fileID: 0}
   delayTime: 1
   intervalTime: 0.3
   maxRadius: 2

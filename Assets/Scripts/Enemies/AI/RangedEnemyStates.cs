@@ -38,7 +38,7 @@ public class RangedEnemyWander : NPCState
 
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
         Vector3 target = myOwner.getRandomLocation(myOwner.transform.position, myOwner.maxWanderDistance);
-        if (myOwner.agent.enabled) { myOwner.agent.SetDestination(target); }
+        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(target); }
 
         if (target == null) { Debug.Log("No Target!"); }
     }
@@ -118,7 +118,7 @@ public class RangedEnemyAggro : NPCState
         if (!targetInView) {
             hasCoverPosition = false;
             lostTargetViewTime += Time.deltaTime;
-            if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
+            if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
             if (lostTargetViewTime >= duration)
             {
                 Debug.Log("Where'd you go?");
@@ -149,12 +149,13 @@ public class RangedEnemyAggro : NPCState
 
     void FindCover()
     {
-        myOwner.agent.ResetPath();
+        if (!myOwner.agent.isStopped) { myOwner.agent.ResetPath(); }
+        
         NavMeshHit hit;
         if (NavMesh.FindClosestEdge(myOwner.transform.position, out hit, myOwner.agent.areaMask))
         {
             hasCoverPosition = true;
-            if (myOwner.agent.enabled) { myOwner.agent.SetDestination(hit.position); }
+            if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(hit.position); }
         }
     }
 }
@@ -256,7 +257,7 @@ public class RangedEnemySeduced : NPCState
             if (!targetInView)
             {
                 hasCoverPosition = false;
-                if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
+                if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
             }
             else {
                 if (!hasCoverPosition) { FindCover(); }
@@ -273,7 +274,7 @@ public class RangedEnemySeduced : NPCState
             myOwner.transform.rotation = Quaternion.Lerp(myOwner.transform.rotation, forward, 0.8f);
 
             myOwner.agent.stoppingDistance = 5f;
-            if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.crushTarget.position); }
+            if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.crushTarget.position); }
         }
 
         // check for obstructions
@@ -288,7 +289,7 @@ public class RangedEnemySeduced : NPCState
 
     void FindCover()
     {
-        myOwner.agent.ResetPath();
+        if (!myOwner.agent.isStopped) { myOwner.agent.ResetPath(); }
         NavMeshHit hit;
         if (NavMesh.FindClosestEdge(myOwner.transform.position, out hit, myOwner.agent.areaMask))
         {

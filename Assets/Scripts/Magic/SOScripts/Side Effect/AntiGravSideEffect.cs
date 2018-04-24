@@ -16,8 +16,7 @@ public class AntiGravSideEffect : SpellSecondary {
     {
         Rigidbody projRbody = projectile.GetComponent<Rigidbody>();
         projRbody.useGravity = false;
-        while (true)
-        {
+        while (true) {
             if(projRbody == null) { break; }
             projRbody.AddForce(Vector3.down * Physics.gravity.y * upwardForce);
             yield return new WaitForEndOfFrame();

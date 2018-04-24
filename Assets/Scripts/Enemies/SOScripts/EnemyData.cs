@@ -104,13 +104,18 @@ public class EnemyData : ScriptableObject {
             if(chance < drop.chanceDrop) {
                 int count = Random.Range(drop.dropCountLower, drop.dropCountUpper);
                 for(int i = 0; i < count; i++) {
-                    Instantiate(drop.dropPrefab, deathLocation, Quaternion.Euler(Vector3.up * Random.Range(0, 360f)));
+                    GameObject newDrop = Instantiate(drop.dropPrefab, deathLocation, Quaternion.Euler(Vector3.up * Random.Range(0, 360f)));
+                    Rigidbody dropRbody = newDrop.GetComponent<Rigidbody>();
+                    if(dropRbody) {
+                        dropRbody.AddExplosionForce(3f, deathLocation, 2f);
+                    }
                 }
             }
         }
     }
 }
 
+[System.Serializable]
 public class EnemyDrop
 {
     public GameObject dropPrefab;

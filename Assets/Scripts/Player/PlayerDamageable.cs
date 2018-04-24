@@ -17,6 +17,7 @@ public class PlayerDamageable : Damageable {
     public Transform playerCanvas;
     public Transform playerCanvasPrefab;
     public CameraMovement HeadMove;
+    public Transform mainCamerPivot;
     public GameObject DrunkHead;
 
     public Sprite transmutedIcon;
@@ -275,8 +276,8 @@ public class PlayerDamageable : Damageable {
         myMovement.Head.position = transform.position + Vector3.up * charCon.height / 2;
         myMovement.Head.forward = transform.forward;
         // charCon.enabled = false;
-        Camera.main.transform.position -= transform.forward * 3f;
-        Camera.main.transform.LookAt(myMovement.Head);
+        mainCamerPivot.position -= transform.forward * 3f;
+        mainCamerPivot.transform.LookAt(myMovement.Head);
 
         gun.parent = myMovement.Head;
         Vector3 localPos = myMovement.Head.localPosition;
@@ -314,8 +315,8 @@ public class PlayerDamageable : Damageable {
         gun.parent = transform;
         gun.localPosition = gunOrigin;
         gun.forward = transform.forward;
-        Camera.main.transform.localPosition = localOrigin;
-        Camera.main.transform.rotation = myMovement.Head.rotation;
+        mainCamerPivot.transform.localPosition = localOrigin;
+        mainCamerPivot.transform.rotation = myMovement.Head.rotation;
 
         // re-enable spell combat and transmutable
         // myMovement.hamper--;

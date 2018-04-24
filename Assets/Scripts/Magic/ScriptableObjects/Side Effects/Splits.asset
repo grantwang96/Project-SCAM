@@ -15,6 +15,7 @@ MonoBehaviour:
   coolDown: 1
   title: Exploding
   description: 
+  descriptiveImage: {fileID: 21300000, guid: 253e0c6af896180489798fdb783d7a38, type: 3}
   decoration: {fileID: 4100865636128526, guid: 27b550ebe851a1a4abb9d37afce6afd4, type: 2}
   sideEffect: {fileID: 0}
   splitLowerBound: 20
