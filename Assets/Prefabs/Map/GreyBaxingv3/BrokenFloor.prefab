@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33356397809641524}
   - component: {fileID: 23084657084018244}
   - component: {fileID: 65297737175027320}
+  - component: {fileID: 54904465759735322}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -46,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967294
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1106787735722406
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,6 +77,7 @@ GameObject:
   - component: {fileID: 33283877512177484}
   - component: {fileID: 23441373073596072}
   - component: {fileID: 65280823218394132}
+  - component: {fileID: 54714968610619304}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -94,6 +96,7 @@ GameObject:
   - component: {fileID: 33166243543804884}
   - component: {fileID: 23045306402299556}
   - component: {fileID: 65729350898543184}
+  - component: {fileID: 54351259633278430}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -112,6 +115,7 @@ GameObject:
   - component: {fileID: 33506059481807386}
   - component: {fileID: 23119912571000366}
   - component: {fileID: 65523408067628310}
+  - component: {fileID: 54068312980233600}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -130,6 +134,7 @@ GameObject:
   - component: {fileID: 33622950485510542}
   - component: {fileID: 23248191385695220}
   - component: {fileID: 65930744197012126}
+  - component: {fileID: 54941695016634594}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -163,6 +168,7 @@ GameObject:
   - component: {fileID: 33006575131545934}
   - component: {fileID: 23679257285730440}
   - component: {fileID: 65139064945712150}
+  - component: {fileID: 54582969835914116}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -181,6 +187,7 @@ GameObject:
   - component: {fileID: 33238853732104576}
   - component: {fileID: 23698167021017810}
   - component: {fileID: 65679587591427534}
+  - component: {fileID: 54190150174777718}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -217,6 +224,7 @@ GameObject:
   - component: {fileID: 33198269558046332}
   - component: {fileID: 23587373410477012}
   - component: {fileID: 65504338155962822}
+  - component: {fileID: 54324354047574164}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -235,6 +243,7 @@ GameObject:
   - component: {fileID: 33826781499499964}
   - component: {fileID: 23621051192905892}
   - component: {fileID: 65154159883736826}
+  - component: {fileID: 54408182892894264}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -253,6 +262,7 @@ GameObject:
   - component: {fileID: 33461718985276480}
   - component: {fileID: 23048006775751798}
   - component: {fileID: 65936555926943750}
+  - component: {fileID: 54839547580315036}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -289,6 +299,7 @@ GameObject:
   - component: {fileID: 33154009471263804}
   - component: {fileID: 23625704381828614}
   - component: {fileID: 65032173747219612}
+  - component: {fileID: 54866837752849736}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -307,6 +318,7 @@ GameObject:
   - component: {fileID: 33955350235961890}
   - component: {fileID: 23206298556282258}
   - component: {fileID: 65017018176342532}
+  - component: {fileID: 54410667506254378}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -325,6 +337,7 @@ GameObject:
   - component: {fileID: 33920048464969766}
   - component: {fileID: 23004704740466250}
   - component: {fileID: 65387219670779308}
+  - component: {fileID: 54599738460220028}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -361,6 +374,7 @@ GameObject:
   - component: {fileID: 33596422762598102}
   - component: {fileID: 23384533709798710}
   - component: {fileID: 65714950350876078}
+  - component: {fileID: 54482438078585950}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -379,6 +393,7 @@ GameObject:
   - component: {fileID: 33998546351231516}
   - component: {fileID: 23885588188563680}
   - component: {fileID: 65491584803566812}
+  - component: {fileID: 54387853083132964}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -403,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967294
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1903591195677126
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +430,7 @@ GameObject:
   - component: {fileID: 33148102268880076}
   - component: {fileID: 23097275683829818}
   - component: {fileID: 65061159335354532}
+  - component: {fileID: 54009250508840502}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -451,6 +467,7 @@ GameObject:
   - component: {fileID: 33863375934134348}
   - component: {fileID: 23364157806898478}
   - component: {fileID: 65008507110013332}
+  - component: {fileID: 54571652498896886}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -469,6 +486,7 @@ GameObject:
   - component: {fileID: 33177650921891940}
   - component: {fileID: 23433007582469890}
   - component: {fileID: 65364685115791454}
+  - component: {fileID: 54656956310277834}
   m_Layer: 0
   m_Name: DungeonFloor_Tile
   m_TagString: Untagged
@@ -743,7 +761,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1355858477861764}
   m_LocalRotation: {x: -0, y: -0.0000005215406, z: -0, w: 1}
-  m_LocalPosition: {x: -7.5, y: 0, z: -2.5}
+  m_LocalPosition: {x: 2.5, y: 10, z: 62.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4870850754060900}
@@ -1864,6 +1882,276 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1823322437445442}
   m_Mesh: {fileID: 4300020, guid: bd004ccc84d5999459a0b90893b38ea9, type: 3}
+--- !u!54 &54009250508840502
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903591195677126}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54068312980233600
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1246732553547990}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54190150174777718
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1431209631299310}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54324354047574164
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1559570046084808}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54351259633278430
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1200012697987402}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54387853083132964
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1823322437445442}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54408182892894264
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1575362917210174}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54410667506254378
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1642439226783840}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54482438078585950
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1798494348424472}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54571652498896886
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988472380212534}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54582969835914116
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1389212209705796}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54599738460220028
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1778314611034274}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54656956310277834
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991267021458222}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54714968610619304
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1161795195299266}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54839547580315036
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601806567280258}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54866837752849736
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1611983439542556}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54904465759735322
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029676553027460}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54941695016634594
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1287282118681588}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!64 &64032379431285186
 MeshCollider:
   m_ObjectHideFlags: 1
