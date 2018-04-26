@@ -7,6 +7,7 @@ public class Water : MonoBehaviour {
 
 	public float rho = 1f;
 	public float dmgTickTime = 3f;
+	public float waterSlowScalar = 0.5f;
 
 	class inWaterType {
 		public GameObject obj;
@@ -71,12 +72,21 @@ public class Water : MonoBehaviour {
 				}
 			}
 
-			//physics
-
+			//slow movement
+			PlayerMovementV2 pmov = obj.obj.GetComponent<PlayerMovementV2>();
+			if (pmov != null) {
+				pmov.slownessSeverity = waterSlowScalar;
+			}
 		}
 	}
 
 	void OnTriggerExit(Collider other) {
+		//reset movement
+		PlayerMovementV2 pmov = other.GetComponent<PlayerMovementV2>();
+		if (pmov != null) {
+			pmov.slownessSeverity = 1f;
+		}
+
 		inWater.Remove(FindStruct(other.gameObject));
 	}
 
