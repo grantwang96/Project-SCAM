@@ -49,6 +49,11 @@ public class RangedMovement : Movement {
         yield return new WaitForEndOfFrame();
 
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
+            if(hamper > 0) { // we can't attack
+                Destroy(newProjectile.gameObject);
+                changeState(new RangedEnemyAggro());
+                yield break;
+            }
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f && !fired) {
 
                 float targetDistance = Vector3.Distance(transform.position, attackTarget.position);
