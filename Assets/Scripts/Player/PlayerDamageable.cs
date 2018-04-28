@@ -9,9 +9,6 @@ public class PlayerDamageable : Damageable {
 
     public static PlayerDamageable Instance;
 
-    Coroutine flight;
-    Coroutine drunkness;
-    Coroutine slowness;
     Coroutine seduced;
 
     public Transform playerCanvas;

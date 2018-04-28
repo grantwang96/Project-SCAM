@@ -17,6 +17,7 @@ MonoBehaviour:
   powerLevelModifier: 1
   powerLevel: 1
   baseColor: {r: 0, g: 0.13103437, b: 1, a: 0.7058824}
+  coreColor: {r: 0, g: 0.08965492, b: 1, a: 1}
   ammo: 4
   coolDown: 0.4
   title: Frost Ray

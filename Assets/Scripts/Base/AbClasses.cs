@@ -131,10 +131,10 @@ public abstract class Damageable : MonoBehaviour
         myMovement.attackTarget = null;
         myMovement.crushTarget = owner.returnTransform();
         myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
-        // Debug.Log("Owner is: " + myMovement.crushTarget);
-        // Debug.Log("Owner SpellCaster is: " + myMovement.crush);
         myMovement.crush.addToSeductionList(this);
-        seduction = StartCoroutine(processSeduction(duration, target, owner));
+        if(seduction != null) {
+            seduction = StartCoroutine(processSeduction(duration, target, owner));
+        }
     }
 
     public virtual IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
@@ -282,14 +282,12 @@ public abstract class Movement : MonoBehaviour
 
     public Vector3 getRandomLocation(Vector3 origin, float range)
     {
-        Debug.Log("Range is: " + range);
 
         Vector3 randPos = Random.insideUnitSphere * range;
         randPos += origin;
 
         NavMeshHit navHit;
         if(NavMesh.SamplePosition(randPos, out navHit, range, NavMesh.AllAreas)) {
-            Debug.Log("Found a location!");
             return navHit.position;
         }
 

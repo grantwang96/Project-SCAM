@@ -17,6 +17,7 @@ MonoBehaviour:
   powerLevelModifier: 1
   powerLevel: 1
   baseColor: {r: 0, g: 0.8758622, b: 1, a: 0.7058824}
+  coreColor: {r: 0, g: 0.91724133, b: 1, a: 1}
   ammo: 4
   coolDown: 0.5
   title: Whirling Vortex

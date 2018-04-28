@@ -27,6 +27,7 @@ public class Movable : Damageable
     public override void TakeDamage(Transform attacker, int damage, Vector3 dir, float force)
     {
         if(parentHit != null) {
+            Debug.Log(parentHit.name + " got hurt!");
             parentHit.TakeDamage(attacker, damage, dir, force);
             if (parentHit.dead) {
                 Die();

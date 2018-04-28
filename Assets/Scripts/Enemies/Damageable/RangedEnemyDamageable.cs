@@ -183,9 +183,9 @@ public class RangedEnemyDamageable : Damageable {
     public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         myMovement.anim.Play("FrontHurt");
-        myMovement.changeState(new MeleeEnemySeduced(), duration);
+        myMovement.changeState(new RangedEnemySeduced(), duration);
         yield return new WaitForSeconds(duration);
-        myMovement.changeState(new MeleeEnemyIdle());
+        myMovement.changeState(new RangedEnemyIdle());
         seduction = null;
     }
 
