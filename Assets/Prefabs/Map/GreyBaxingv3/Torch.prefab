@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 198950988408561110}
   - component: {fileID: 199280589361335210}
   - component: {fileID: 108212327845303656}
+  - component: {fileID: 114917811799582948}
   m_Layer: 0
   m_Name: Flame
   m_TagString: Untagged
@@ -200,6 +201,19 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114917811799582948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1830324727959232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ecc1a636882d22499e6da520670d6f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ps: {fileID: 0}
+  l: {fileID: 0}
 --- !u!198 &198950988408561110
 ParticleSystem:
   m_ObjectHideFlags: 1

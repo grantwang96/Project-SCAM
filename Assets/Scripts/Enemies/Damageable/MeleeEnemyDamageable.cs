@@ -141,10 +141,16 @@ public class MeleeEnemyDamageable : Damageable {
         replacedBody.setTransmutable(false);
 
         // wait for the spell duration
-        yield return new WaitForSeconds(duration);
+        float time = 0f;
+        while(time < duration)
+        {
+            yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
+            transform.position = replacedBody.transform.position;
+        }
 
         // move to transmuted object(in case object was moved)
-        myMovement.agent.nextPosition = myReplace.transform.position;
+        myMovement.agent.nextPosition = replacedBody.transform.position;
         myMovement.agent.Warp(myReplace.transform.position);
         myMovement.agent.isStopped = false;
         transform.position = myMovement.agent.nextPosition;

@@ -82,11 +82,11 @@ public class RangedMovement : Movement {
     {
         if (coll.transform.tag == "Ground") {
             // Debug.Log("Hi Ground");
-            agent.updatePosition = true;
-            agent.updateRotation = true;
             if (agent.nextPosition != transform.position) {
                 agent.Warp(transform.position);
             }
+            agent.updatePosition = true;
+            agent.updateRotation = true;
             agent.isStopped = false;
         }
     }

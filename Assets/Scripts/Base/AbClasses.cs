@@ -106,7 +106,14 @@ public abstract class Damageable : MonoBehaviour
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
         replacedBody.setTransmutable(false);
-        yield return new WaitForSeconds(duration);
+
+        float time = 0f;
+        while(time < duration) {
+            yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
+            transform.position = replacedBody.transform.position;
+        }
+
         transform.position = myReplace.transform.position;
         Destroy(myReplace); // Destroy my replacement
         myColl.enabled = true;
@@ -124,6 +131,7 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void Seduce(float duration, GameObject target, SpellCaster owner)
     {
+        Debug.Log("Seduced!");
         if(myMovement.crushTarget != null) { // if already seduced
             myMovement.crush.removeFromSeductionList(this); // remove from the seduction list
         }
@@ -132,9 +140,8 @@ public abstract class Damageable : MonoBehaviour
         myMovement.crushTarget = owner.returnTransform();
         myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
         myMovement.crush.addToSeductionList(this);
-        if(seduction != null) {
-            seduction = StartCoroutine(processSeduction(duration, target, owner));
-        }
+
+        seduction = StartCoroutine(processSeduction(duration, target, owner));
     }
 
     public virtual IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)

@@ -144,7 +144,12 @@ public class RangedEnemyDamageable : Damageable {
         replacedBody.setTransmutable(false);
 
         // wait for the spell duration
-        yield return new WaitForSeconds(duration);
+        float time = 0f;
+        while (time < duration) {
+            yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
+            transform.position = replacedBody.transform.position;
+        }
 
         myColl.enabled = true;
         if (allRends.Length > 0) {
