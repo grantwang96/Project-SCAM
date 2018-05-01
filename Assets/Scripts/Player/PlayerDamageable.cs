@@ -278,7 +278,7 @@ public class PlayerDamageable : Damageable {
 
         gun.parent = myMovement.Head;
         Vector3 localPos = myMovement.Head.localPosition;
-        myMovement.Head.parent = newrbody.transform;
+        // myMovement.Head.parent = newrbody.transform;
         myMovement.Head.position = newrbody.transform.TransformPoint(localPos);
         myMovement.Head.forward = newrbody.transform.forward;
 
@@ -290,6 +290,7 @@ public class PlayerDamageable : Damageable {
         Image newTransmuteStatus = Instantiate(statusEffectPrefab, statusEffectBar);
         newTransmuteStatus.rectTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180));
         newTransmuteStatus.name = "transmutedStatus";
+
         float time = 0f;
         while(time < duration) {
             newTransmuteStatus.fillAmount = 1f - (time / duration);
@@ -306,8 +307,9 @@ public class PlayerDamageable : Damageable {
         charCon.detectCollisions = true;
         charCon.height = originHeight;
         charCon.radius = originRadius;
-        myMovement.Head.position = transform.position + Vector3.up * charCon.height / 2;
-        myMovement.Head.parent = transform;
+
+        // myMovement.Head.parent = transform;
+        myMovement.Head.localPosition = Vector3.up * charCon.height / 2;
         myMovement.Head.forward = transform.forward;
         gun.parent = transform;
         gun.localPosition = gunOrigin;

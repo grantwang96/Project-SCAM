@@ -134,6 +134,8 @@ public class RangedEnemyDamageable : Damageable {
 
         // stop the navmesh agent
         myMovement.agent.isStopped = true;
+        myMovement.agent.updatePosition = false;
+        myMovement.agent.updateRotation = false;
 
         // Create the replacement object
         GameObject myReplace = Instantiate(replacement, transform.position, transform.rotation);
@@ -161,10 +163,11 @@ public class RangedEnemyDamageable : Damageable {
         }
 
         // move to transmuted object(in case object was moved)
+        transform.position = myReplace.transform.position;
         myMovement.agent.nextPosition = myReplace.transform.position;
-        myMovement.agent.Warp(myReplace.transform.position);
-        myMovement.agent.isStopped = false;
-        transform.position = myMovement.agent.nextPosition;
+        // myMovement.agent.Warp(myReplace.transform.position);
+        // myMovement.agent.isStopped = false;
+        // transform.position = myMovement.agent.nextPosition;
 
         Destroy(myReplace); // Destroy my replacement
 

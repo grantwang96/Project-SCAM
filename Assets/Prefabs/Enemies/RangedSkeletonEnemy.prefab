@@ -1019,7 +1019,7 @@ MonoBehaviour:
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
   rbody: {fileID: 54803630769118312}
-  deathFX: {fileID: 1289514646693828, guid: 20145835f4b8b7245a5ca5f29cb68e4d, type: 2}
+  deathFX: {fileID: 1239637320502732, guid: d381ed786368f764c886499b03b15e18, type: 2}
   specialDrop: {fileID: 0}
   drops: []
 --- !u!114 &114981063399074870

@@ -131,6 +131,8 @@ public class MeleeEnemyDamageable : Damageable {
 
         // stop the navmesh agent
         myMovement.agent.isStopped = true;
+        myMovement.agent.updatePosition = false;
+        myMovement.agent.updateRotation = false;
 
         // Create the replacement object
         GameObject myReplace = Instantiate(replacement, transform.position, transform.rotation);
@@ -142,18 +144,20 @@ public class MeleeEnemyDamageable : Damageable {
 
         // wait for the spell duration
         float time = 0f;
-        while(time < duration)
-        {
+        while(time < duration) {
             yield return new WaitForEndOfFrame();
             time += Time.deltaTime;
             transform.position = replacedBody.transform.position;
         }
 
         // move to transmuted object(in case object was moved)
-        myMovement.agent.nextPosition = replacedBody.transform.position;
-        myMovement.agent.Warp(myReplace.transform.position);
-        myMovement.agent.isStopped = false;
-        transform.position = myMovement.agent.nextPosition;
+        transform.position = myReplace.transform.position;
+        myMovement.agent.nextPosition = myReplace.transform.position;
+        // myMovement.agent.updatePosition = true;
+        // myMovement.agent.updateRotation = true;
+        // myMovement.agent.Warp(myReplace.transform.position);
+        // myMovement.agent.isStopped = false;
+        // transform.position = myMovement.agent.nextPosition;
 
         Destroy(myReplace); // Destroy my replacement
 

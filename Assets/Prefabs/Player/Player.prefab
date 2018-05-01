@@ -4267,7 +4267,7 @@ MonoBehaviour:
   HeadMove: {fileID: 114737038588732820}
   mainCamerPivot: {fileID: 4557526404194418}
   DrunkHead: {fileID: 0}
-  transmutedIcon: {fileID: 21300000, guid: 240720e8aa1e17a43a4340b90f94181d, type: 3}
+  transmutedIcon: {fileID: 21300000, guid: 1c32b240c68bc1f46aa528e77d51d93d, type: 3}
   statusEffectPrefab: {fileID: 114401240955907876, guid: 5e026d9d627d6714cb2033210aeb3f32,
     type: 2}
   statusEffectBar: {fileID: 224135293766988742}

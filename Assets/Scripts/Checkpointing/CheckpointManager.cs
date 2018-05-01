@@ -100,6 +100,9 @@ public class CheckpointManager : MonoBehaviour {
             currBook.SetupSpell();
             currBook.setAmmo(savedSpellInv[i].ammo);
         }
+        for(int i = 0; i < playerMagic.GetSpellsInventory().Count; i++) {
+            playerMagic.GetSpellsInventory()[i].Deactivate();
+        }
 
 		playerMagic.UpdateUI();
 

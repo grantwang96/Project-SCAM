@@ -75,14 +75,11 @@ public class MeleeEnemyWander : NPCState
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
         if (obstruction != null) {
-            Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle());
         }
 
         float distToDest = Vector3.Distance(myOwner.transform.position, target);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
-            Debug.Log("Stopped moving from " + distToDest + " away");
-            Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }
         if(myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }

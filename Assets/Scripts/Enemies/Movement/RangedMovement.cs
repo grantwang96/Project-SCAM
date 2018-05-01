@@ -80,14 +80,21 @@ public class RangedMovement : Movement {
     
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.transform.tag == "Ground") {
+        if (coll.transform.tag == "Ground" && hamper <= 0) {
             // Debug.Log("Hi Ground");
+            if (agent.nextPosition != transform.position && agent.Warp(transform.position))
+            {
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
+            }
+            /*
             if (agent.nextPosition != transform.position) {
                 agent.Warp(transform.position);
             }
             agent.updatePosition = true;
             agent.updateRotation = true;
-            agent.isStopped = false;
+            agent.isStopped = false;*/
         }
     }
 }
