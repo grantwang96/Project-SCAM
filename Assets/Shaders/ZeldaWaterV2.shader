@@ -151,8 +151,8 @@ Shader "Transparent/ZeldaWater_V2" {
 				c1.x += dx;
 				c1.y = -(c1.y+dy);
 
-				float2 offset = i.uvbump * _BumpAmt * _GrabTexture_TexelSize.xy;
-				i.uvgrab.xy = offset * i.uvgrab.z + i .uvgrab.xy;
+				float2 offset = i.uvgrab * _BumpAmt * _GrabTexture_TexelSize.xy;
+				i.uvgrab.xy = offset  + i .uvgrab.xy;
 
 				c1*=tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(i.uvgrab));
 				c1*= tex2D(_MainTex, i.uvmain);

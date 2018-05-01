@@ -57,7 +57,7 @@ public class Water : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other) {
 		inWater.Add(new inWaterType(other.gameObject));
-		Debug.Log("In Water: " + other.name);
+//		Debug.Log("In Water: " + other.name);
 	}
 
 	void Update() {
@@ -77,6 +77,9 @@ public class Water : MonoBehaviour {
 			if (pmov != null) {
 				pmov.slownessSeverity = waterSlowScalar;
 			}
+
+			//TODO: slow enemies
+
 		}
 	}
 
