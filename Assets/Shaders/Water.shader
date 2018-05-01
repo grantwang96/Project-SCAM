@@ -15,7 +15,7 @@
 		}
 
 		ZWrite Off
-		Blend OneMinusDstColor One
+		Blend OneMinusDstColor OneMinusSrcAlpha
 
 		CGPROGRAM
 
@@ -39,16 +39,17 @@
 		void vert(inout appdata_full v, out Input o) {
 			UNITY_INITIALIZE_OUTPUT(Input, o);
 //			o.initPos = v.vertex;
-			v.vertex.y += (_WaveHeight * sin(v.vertex.x * _Time.z) + _WaveHeight * cos(v.vertex.z * _Time.z))/2;
+			v.vertex.y += (_WaveHeight * sin(v.vertex.x * _Time.z * 5) + _WaveHeight * cos(v.vertex.z * _Time.z * 5))/2;
 
 			o.pos = v.vertex.xyz;
 		}
 
 		void surf(Input IN, inout SurfaceOutput o) {
-			o.Normal = UnpackNormal(tex2D(_Bump, IN.uv_Bump));
+			fixed2 scroll = fixed2(_Time.x, cos(_Time.x)) * 5;
+			o.Normal = UnpackNormal(tex2D(_Bump, IN.uv_Bump + scroll));
 //			float perturb = IN.pos.y +.25;
-			float3 tex = tex2D(_MainTex, IN.uv_MainTex).rgb ;
-			o.Albedo = tex;
+			float3 tex = tex2D(_MainTex, IN.uv_MainTex + scroll).rgb ;
+			o.Albedo = tex * _Color;
 //			o.Albedo = dot( tex, float3(1,1,1)) > 0.75 ? (1,1,1) : tex;
 //			* _Color.rgb + lerp(_Color,_Color2, perturb*perturb);
 //			o.Albedo += (IN.pos - IN.initPos) * _Color.rgb;

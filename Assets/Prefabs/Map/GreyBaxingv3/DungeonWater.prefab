@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23862138548263928}
   m_Layer: 4
   m_Name: Backface
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,10 +37,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4357079629677000}
   - component: {fileID: 33099381449813492}
-  - component: {fileID: 23118444718475178}
-  - component: {fileID: 114151750993838550}
   - component: {fileID: 65358008720446488}
   - component: {fileID: 114138964896059488}
+  - component: {fileID: 54616564195886154}
+  - component: {fileID: 23965677242130650}
+  - component: {fileID: 114281623434850406}
   m_Layer: 4
   m_Name: DungeonWater
   m_TagString: Water
@@ -54,13 +55,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1105426408485940}
-  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0.512, z: 0}
   m_LocalScale: {x: 0.09961015, y: 0.11110817, z: 0.10127628}
   m_Children: []
   m_Father: {fileID: 4357079629677000}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!4 &4357079629677000
 Transform:
   m_ObjectHideFlags: 1
@@ -69,27 +70,27 @@ Transform:
   m_GameObject: {fileID: 1817910301985158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.2, y: -4.2, z: 3.913083}
-  m_LocalScale: {x: 48.613285, y: 7.6137967, z: 19}
+  m_LocalScale: {x: 48.613285, y: 7.575618, z: 19}
   m_Children:
   - {fileID: 4162848456065136}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23118444718475178
+--- !u!23 &23862138548263928
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1817910301985158}
+  m_GameObject: {fileID: 1105426408485940}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: cf6186b47c5f6104fbac504345961a66, type: 2}
+  - {fileID: 2100000, guid: 680ce6cb72bb9854584c1c9e4eb3a455, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,7 +98,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
+  m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
@@ -109,12 +110,12 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!23 &23862138548263928
+--- !u!23 &23965677242130650
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1105426408485940}
+  m_GameObject: {fileID: 1817910301985158}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -157,6 +158,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1105426408485940}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54616564195886154
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1817910301985158}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65358008720446488
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -181,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rho: 1
---- !u!114 &114151750993838550
+--- !u!114 &114281623434850406
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -189,16 +205,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1817910301985158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3d3ef1a5bbfb4e0a910fbbe5830b1f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a37a46d3a6874ec88b3b02d81dfe6d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterMode: 2
-  disablePixelLights: 1
-  textureSize: 256
-  clipPlaneOffset: 0.07
-  reflectLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  refractLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  rho: 1
+  dmgTickTime: 3
+  waterSlowScalar: 0.5

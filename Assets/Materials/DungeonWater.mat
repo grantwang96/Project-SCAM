@@ -86,7 +86,7 @@ Material:
     - _Speed: 0.077
     - _SpeedX: 0.14
     - _SpeedY: 0.17
-    - _WaveHeight: 0.05
+    - _WaveHeight: 0.02
     - _WaveScale: 0.118
     - _WaveSpeed: 4.48
     m_Colors:
@@ -97,7 +97,7 @@ Material:
     - _BumpDirection: {r: 1, g: 1, b: -1, a: 1}
     - _BumpMap_ST: {r: 1, g: 1, b: 0, a: 0}
     - _BumpTiling: {r: 1, g: 1, b: -2, a: 3}
-    - _Color: {r: 0.49264705, g: 0.32158035, b: 0.014489633, a: 1}
+    - _Color: {r: 0.3455882, g: 0.2983147, b: 0.21345153, a: 1}
     - _Color2: {r: 1, g: 1, b: 1, a: 1}
     - _DistortParams: {r: 1, g: 1, b: 2, a: 1.15}
     - _Foam: {r: 0.1, g: 0.375, b: 0, a: 0}
