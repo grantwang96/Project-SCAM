@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class SpellBook : MonoBehaviour, Interactable {
 
     public SpellPrimary primaryEffect;
@@ -11,6 +12,7 @@ public class SpellBook : MonoBehaviour, Interactable {
     public int getMaxAmmo() { return maxAmmo; }
     [SerializeField] int ammo;
     public int getAmmo() { return ammo; }
+    public void setAmmo(int newAmmo) { ammo = newAmmo; }
     public void useAmmo() { ammo--; }
     public SpellCaster owner;
     [SerializeField] bool _dead = false;
@@ -19,6 +21,7 @@ public class SpellBook : MonoBehaviour, Interactable {
 
     public string spellTitle;
     public string spellDescription;
+    public Sprite instructionImage;
     public Color baseColor;
 
     MeshRenderer[] allMeshes;
@@ -92,6 +95,7 @@ public class SpellBook : MonoBehaviour, Interactable {
     {
         if (_dead || owner != null) { return false; }
         owner = spellCaster;
+
         spellCaster.pickUpSpell(this);
         return true;
     }

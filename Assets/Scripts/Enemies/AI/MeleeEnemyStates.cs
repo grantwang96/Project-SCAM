@@ -44,6 +44,8 @@ public class MeleeEnemyIdle : NPCState
 public class MeleeEnemyWander : NPCState
 {
     Vector3 target;
+    float time = 0f;
+
     public override void Enter(Movement owner)
     {
         myOwner = owner;
@@ -54,20 +56,20 @@ public class MeleeEnemyWander : NPCState
         if(myOwner.agent.enabled) { myOwner.agent.speed = myOwner.baseSpeed; }
 
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
-        target = myOwner.getRandomLocation(myOwner.transform.position, myOwner.maxWanderDistance);
-        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(target); }
+        target = myOwner.getRandomLocation(myOwner.agent.nextPosition, myOwner.maxWanderDistance);
+        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { Debug.Log("Target set!"); myOwner.agent.SetDestination(target); }
+        Debug.Log(myOwner.name + "'s new target is: " + target);
+        Debug.Log(myOwner.name + "'s current position is: " + myOwner.transform.position);
         // Debug.Log("Begin Wander...");
         // Debug.Log("Status=" + anim.GetInteger("Status"));
   }
 
     public override void Execute()
     {
-        /*
         if(myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) { myOwner.agent.SetDestination(myOwner.transform.position); }
         else { myOwner.agent.SetDestination(target); }
-        */
 
-        // Debug.Log("Status=" + anim.GetInteger("Status"));
+        if(time > duration) { myOwner.changeState(new MeleeEnemyIdle()); }
 
         if (myOwner.checkView()) {
             myOwner.anim.Play("Notice");
@@ -81,12 +83,14 @@ public class MeleeEnemyWander : NPCState
             myOwner.changeState(new MeleeEnemyIdle());
         }
 
-        float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
+        float distToDest = Vector3.Distance(myOwner.transform.position, target);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
+            Debug.Log("Stopped moving from " + distToDest + " away");
             Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }
         if(myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
+        time += Time.deltaTime;
     }
 
     public override void Exit() {
@@ -128,10 +132,6 @@ public class MeleeEnemyAggro : NPCState
         anim = myOwner.anim;
         anim.SetInteger("Status", 2);
         duration = myOwner.blueprint.attentionSpan;
-        
-        if (myOwner == null || myOwner.transform == null || myOwner.attackTarget == null) {
-            Debug.Log(myOwner.name + " is aggroed against " + myOwner.attackTarget.name);
-        }
     }
 
     public override void Execute()
@@ -170,7 +170,9 @@ public class MeleeEnemyAggro : NPCState
             lostTargetViewTime = 0f;
         }
 
-        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
+		if (myOwner.agent.enabled && !myOwner.agent.isStopped && attackTarget != null) { 
+			myOwner.agent.SetDestination(attackTarget.position); 
+		}
 
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
@@ -233,7 +235,9 @@ public class MeleeEnemyAttack : NPCState
 
     public override void Exit()
     {
-        if(myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
+		if(myOwner.agent.enabled && myOwner.attackTarget != null) { 
+			myOwner.agent.SetDestination(myOwner.attackTarget.position); 
+		}
     }
 }
 

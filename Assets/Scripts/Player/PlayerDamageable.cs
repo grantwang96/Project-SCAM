@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
 public class PlayerDamageable : Damageable {
 
     public static PlayerDamageable Instance;
@@ -16,6 +17,7 @@ public class PlayerDamageable : Damageable {
     public Transform playerCanvas;
     public Transform playerCanvasPrefab;
     public CameraMovement HeadMove;
+    public Transform mainCamerPivot;
     public GameObject DrunkHead;
 
     public Sprite transmutedIcon;
@@ -25,26 +27,36 @@ public class PlayerDamageable : Damageable {
 
     // public Image healthBar;
     public MeshRenderer healthBar;
+	public MeshRenderer encasing;
+    public Image fadeToBlackImage;
+    Coroutine deathSequence;
+
+	AudioPlayer sounds;
 
 	// Use this for initialization
 	public override void Start () {
         base.Start();
         Instance = this;
-        // playerCanvas = Instantiate(playerCanvasPrefab);
-        // healthBar = playerCanvas.Find("HealthBar").GetComponent<Image>();
+		sounds = GetComponent<AudioPlayer>();
 	}
 	
 	// Update is called once per frame
 	public override void Update () {
-        // update healthbar
-        // healthBar.fillAmount = (float)health / max_health;
-        healthBar.transform.localScale = new Vector3(.7f, (float)health / max_health, .7f);
-        healthBar.material.color = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+        float fillAmount = (float)health / max_health;
+        if(fillAmount > 1f) { fillAmount = 1f; }
+        else if(fillAmount < 0) { fillAmount = 0f; }
+
+        healthBar.transform.localScale = new Vector3(.7f, fillAmount, .7f);
+		Color c = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+		healthBar.material.color = c;
+		encasing.material.SetColor("_RimColor", c);
+
+        if(!dead) { fadeToBlackImage.color = Color.clear; }
     }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
     {
-        if (hurt) { return; }
+        if (hurt || dead) { Debug.Log("I'm already dead!"); return; }
         
         // Visual hurt effects
         
@@ -52,6 +64,8 @@ public class PlayerDamageable : Damageable {
         if(health <= 0) { Die(); return; }
         if(attacker == null) { return; }
         PlayerMagic.instance.invokeChangeFollowers(attacker.GetComponent<Damageable>());
+
+		sounds.PlayClip("hurt");
         StartCoroutine(hurtFrames(hpLost));
     }
 
@@ -78,7 +92,42 @@ public class PlayerDamageable : Damageable {
 
     public override void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // CheckpointManager.Instance.ResetToLastCheckpoint();
+
+        // Play some death sfx
+        if(deathSequence == null) { deathSequence = StartCoroutine(DeathSequence()); }
+    }
+
+    IEnumerator DeathSequence() {
+        dead = true;
+        CharacterController charCon = GetComponent<CharacterController>();
+        while(!charCon.isGrounded) { yield return new WaitForFixedUpdate(); }
+
+        Animator anim = Camera.main.GetComponent<Animator>();
+        anim.Play("Death");
+        Debug.Log("Waiting for death animation change over...");
+        while(!anim.GetCurrentAnimatorStateInfo(0).IsName("Death")) { yield return new WaitForFixedUpdate(); }
+        AnimationClip clip = anim.GetCurrentAnimatorClipInfo(0)[0].clip;
+        Debug.Log("Death animation started!");
+        yield return new WaitForSeconds(clip.length);
+        Debug.Log("Death animation finished!");
+
+        float time = 0f;
+        fadeToBlackImage.color = Color.clear;
+        while(time < 1f) {
+            time += Time.deltaTime * .33f;
+            fadeToBlackImage.color = Color.Lerp(Color.clear, Color.black, time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Camera.main.transform.localPosition = Vector3.zero;
+        Camera.main.transform.localRotation = Quaternion.identity;
+        anim.Play("Default");
+        CheckpointManager.Instance.ResetToLastCheckpoint();
+        fadeToBlackImage.color = Color.clear;
+        dead = false;
+        deathSequence = null;
     }
 
     /*
@@ -227,8 +276,8 @@ public class PlayerDamageable : Damageable {
         myMovement.Head.position = transform.position + Vector3.up * charCon.height / 2;
         myMovement.Head.forward = transform.forward;
         // charCon.enabled = false;
-        Camera.main.transform.position -= transform.forward * 3f;
-        Camera.main.transform.LookAt(myMovement.Head);
+        mainCamerPivot.position -= transform.forward * 3f;
+        mainCamerPivot.transform.LookAt(myMovement.Head);
 
         gun.parent = myMovement.Head;
         Vector3 localPos = myMovement.Head.localPosition;
@@ -266,8 +315,8 @@ public class PlayerDamageable : Damageable {
         gun.parent = transform;
         gun.localPosition = gunOrigin;
         gun.forward = transform.forward;
-        Camera.main.transform.localPosition = localOrigin;
-        Camera.main.transform.rotation = myMovement.Head.rotation;
+        mainCamerPivot.transform.localPosition = localOrigin;
+        mainCamerPivot.transform.rotation = myMovement.Head.rotation;
 
         // re-enable spell combat and transmutable
         // myMovement.hamper--;
@@ -277,10 +326,10 @@ public class PlayerDamageable : Damageable {
         Destroy(newBody);
     }
 
-    public override void Seduce(float duration, GameObject target, SpellCaster owner)
-    {
-        
-    }
+//    public override void Seduce(float duration, GameObject target, SpellCaster owner)
+//    {
+//        
+//    }
 
     public override void knockBack(Vector3 dir, float force)
     {

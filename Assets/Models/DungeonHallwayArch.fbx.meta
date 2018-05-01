@@ -14,6 +14,15 @@ ModelImporter:
     100012: SM_DungeonArch_LeftCurve
     100014: SM_DungeonArch_RightCurve
     100016: SM_DungeonArch_RightSide
+    100018: SM_DungeonHallwayArch_LowerLeft
+    100020: SM_DungeonHallwayArch_LowerRight
+    100022: SM_DungeonHallwayArch_TopLeft
+    100024: SM_DungeonHallwayArch_TopRight
+    100026: SM_Dungeon_SidePillar1
+    100028: SM_DungeonHallwayArch_BottomLeft
+    100030: SM_DungeonHallwayArch_BottomRight
+    100032: SM_DungeonHallwayArch_TopLeft1
+    100034: SM_DungeonHallwayArch_TopRight1
     400000: Archway2
     400002: //RootNode
     400004: polySurface115
@@ -23,25 +32,64 @@ ModelImporter:
     400012: SM_DungeonArch_LeftCurve
     400014: SM_DungeonArch_RightCurve
     400016: SM_DungeonArch_RightSide
+    400018: SM_DungeonHallwayArch_LowerLeft
+    400020: SM_DungeonHallwayArch_LowerRight
+    400022: SM_DungeonHallwayArch_TopLeft
+    400024: SM_DungeonHallwayArch_TopRight
+    400026: SM_Dungeon_SidePillar1
+    400028: SM_DungeonHallwayArch_BottomLeft
+    400030: SM_DungeonHallwayArch_BottomRight
+    400032: SM_DungeonHallwayArch_TopLeft1
+    400034: SM_DungeonHallwayArch_TopRight1
     2100000: lambert1
     2100002: DungeonWall_Archway
     2100004: DungeonWall_Trimming
     2100006: stone
+    2100008: lambert9
+    2100010: lambert14
     2300000: SM_DungeonArch_Capstone
     2300002: SM_DungeonArch_LeftArch
     2300004: SM_DungeonArch_LeftCurve
     2300006: SM_DungeonArch_RightCurve
     2300008: SM_DungeonArch_RightSide
+    2300010: SM_DungeonHallwayArch_LowerLeft
+    2300012: SM_DungeonHallwayArch_LowerRight
+    2300014: SM_DungeonHallwayArch_TopLeft
+    2300016: SM_DungeonHallwayArch_TopRight
+    2300018: SM_Dungeon_SidePillar1
+    2300020: SM_DungeonHallwayArch_BottomLeft
+    2300022: SM_DungeonHallwayArch_BottomRight
+    2300024: SM_DungeonHallwayArch_TopLeft1
+    2300026: SM_DungeonHallwayArch_TopRight1
     3300000: SM_DungeonArch_Capstone
     3300002: SM_DungeonArch_LeftArch
     3300004: SM_DungeonArch_LeftCurve
     3300006: SM_DungeonArch_RightCurve
     3300008: SM_DungeonArch_RightSide
+    3300010: SM_DungeonHallwayArch_LowerLeft
+    3300012: SM_DungeonHallwayArch_LowerRight
+    3300014: SM_DungeonHallwayArch_TopLeft
+    3300016: SM_DungeonHallwayArch_TopRight
+    3300018: SM_Dungeon_SidePillar1
+    3300020: SM_DungeonHallwayArch_BottomLeft
+    3300022: SM_DungeonHallwayArch_BottomRight
+    3300024: SM_DungeonHallwayArch_TopLeft1
+    3300026: SM_DungeonHallwayArch_TopRight1
     4300000: SM_DungeonArch_RightSide
     4300002: SM_DungeonArch_RightCurve
     4300004: SM_DungeonArch_LeftArch
     4300006: SM_DungeonArch_LeftCurve
     4300008: SM_DungeonArch_Capstone
+    4300010: SM_DungeonHallwayArch_TopRight
+    4300012: SM_DungeonHallwayArch_LowerRight
+    4300014: SM_DungeonHallwayArch_TopLeft
+    4300016: SM_DungeonHallwayArch_LowerLeft
+    4300018: SM_Dungeon_SidePillar1
+    4300020: SM_DungeonHallwayArch_BottomRight
+    4300022: SM_DungeonHallwayArch_TopRight1
+    4300024: SM_DungeonHallwayArch_TopLeft1
+    4300026: SM_DungeonHallwayArch_BottomLeft
+    7400000: Take 001
     9500000: //RootNode
   externalObjects: {}
   materials:

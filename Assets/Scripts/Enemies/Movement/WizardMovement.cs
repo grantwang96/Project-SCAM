@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
+[System.Serializable]
 public class WizardMovement : Movement, SpellCaster {
 
     [SerializeField] List<SpellBook> heldSpells = new List<SpellBook>(); // the current spell held by this character
@@ -18,10 +19,15 @@ public class WizardMovement : Movement, SpellCaster {
         currSpell = heldSpells[0];
     }
 
+	protected override void ToIdle() {
+		changeState(new WizardEnemyIdle());
+	}
+
     public override void Start()
     {
         canShootSpells = true;
         base.Start();
+        changeState(new WizardEnemyIdle());
     }
 
     public override IEnumerator attack(Vector3 target)

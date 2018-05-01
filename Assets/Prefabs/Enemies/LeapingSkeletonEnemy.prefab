@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 195758302445359732}
   - component: {fileID: 114734420963928022}
   - component: {fileID: 114647624528758258}
+  - component: {fileID: 114983016835204032}
   m_Layer: 12
   m_Name: LeapingSkeletonEnemy
   m_TagString: Untagged
@@ -1064,6 +1065,17 @@ MonoBehaviour:
   replacedBody: {fileID: 0}
   rbody: {fileID: 54333894238283588}
   deathFX: {fileID: 1289514646693828, guid: 20145835f4b8b7245a5ca5f29cb68e4d, type: 2}
+--- !u!114 &114983016835204032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1035468567916540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c109d68c90383460684fb56a4c953f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136702122945417942
 CapsuleCollider:
   m_ObjectHideFlags: 1

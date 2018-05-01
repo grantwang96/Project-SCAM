@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f14079ed71594240809cd31b07d8b79, type: 3}
+  m_Name: RangedSkeleton_Regular
+  m_EditorClassIdentifier: 
+  health: 20
+  baseSpeed: 3
+  maxSpeed: 6
+  sightRange: 40
+  sightAngle: 90
+  attackRange: 50
+  attentionSpan: 15
+  firstName: []
+  lastNameP1: []
+  lastNameP2: []
+  verbings: []
+  nouns: []
+  preferredName: OneRangedBoi
+  attackTargetTag: Player
+  damage: 15
+  myType: 1
