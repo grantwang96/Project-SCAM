@@ -106,7 +106,14 @@ public abstract class Damageable : MonoBehaviour
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
         replacedBody.setTransmutable(false);
-        yield return new WaitForSeconds(duration);
+
+        float time = 0f;
+        while(time < duration) {
+            yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
+            transform.position = replacedBody.transform.position;
+        }
+
         transform.position = myReplace.transform.position;
         Destroy(myReplace); // Destroy my replacement
         myColl.enabled = true;
@@ -124,6 +131,7 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void Seduce(float duration, GameObject target, SpellCaster owner)
     {
+        Debug.Log("Seduced!");
         if(myMovement.crushTarget != null) { // if already seduced
             myMovement.crush.removeFromSeductionList(this); // remove from the seduction list
         }
@@ -131,9 +139,8 @@ public abstract class Damageable : MonoBehaviour
         myMovement.attackTarget = null;
         myMovement.crushTarget = owner.returnTransform();
         myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
-        // Debug.Log("Owner is: " + myMovement.crushTarget);
-        // Debug.Log("Owner SpellCaster is: " + myMovement.crush);
         myMovement.crush.addToSeductionList(this);
+
         seduction = StartCoroutine(processSeduction(duration, target, owner));
     }
 
@@ -282,14 +289,12 @@ public abstract class Movement : MonoBehaviour
 
     public Vector3 getRandomLocation(Vector3 origin, float range)
     {
-        Debug.Log("Range is: " + range);
 
         Vector3 randPos = Random.insideUnitSphere * range;
         randPos += origin;
 
         NavMeshHit navHit;
         if(NavMesh.SamplePosition(randPos, out navHit, range, NavMesh.AllAreas)) {
-            Debug.Log("Found a location!");
             return navHit.position;
         }
 

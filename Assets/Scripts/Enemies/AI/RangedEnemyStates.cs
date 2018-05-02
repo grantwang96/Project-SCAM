@@ -191,11 +191,11 @@ public class RangedEnemyAttack : NPCState
 
     public override void Execute()
     {
-        if (myOwner.attackTarget == null)
-        {
+        if (myOwner.attackTarget == null) {
             if (previousState != null) { myOwner.changeState(previousState); }
             else { myOwner.changeState(new RangedEnemyIdle()); }
         }
+        if(myOwner.transform == null) { return; }
         Vector3 targetDir = myOwner.attackTarget.position - myOwner.transform.position;
         targetDir.y = 0;
         Quaternion forward = Quaternion.LookRotation(targetDir);
@@ -242,20 +242,19 @@ public class RangedEnemySeduced : NPCState
         anim = myOwner.anim;
         anim.SetInteger("Status", 2);
 
+        Debug.Log("Seduced");
         hasCoverPosition = false;
         // FindCover();
     }
 
     public override void Execute()
     {
-        if (myOwner.attackTarget != null)
-        {
+        if (myOwner.attackTarget != null) {
             // Check to see if the target is still in view
             targetInView = myOwner.checkView();
 
             // Enter idle if target has been out of view too long
-            if (!targetInView)
-            {
+            if (!targetInView) {
                 hasCoverPosition = false;
                 if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
             }
@@ -265,7 +264,7 @@ public class RangedEnemySeduced : NPCState
                 if (distance < myOwner.blueprint.attackRange) { myOwner.changeState(new RangedEnemyAttack(), this); }
             }
 
-            if (myOwner.agent.desiredVelocity.magnitude < 0.5f) { myOwner.changeState(new RangedEnemyAttack()); }
+            // if (myOwner.agent.desiredVelocity.magnitude < 0.5f) { myOwner.changeState(new RangedEnemyAttack()); }
         }
         else {
             Vector3 targetDir = myOwner.crushTarget.position - myOwner.transform.position;

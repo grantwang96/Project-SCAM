@@ -123,6 +123,8 @@ public class SpellBook : MonoBehaviour, Interactable {
         }
         sparklyEffect.gameObject.SetActive(false);
         GetComponent<SphereCollider>().enabled = false;
+        FloatyRotaty fr = GetComponent<FloatyRotaty>();
+        fr.active = false;
     }
 
     public void Activate()

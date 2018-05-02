@@ -57,11 +57,7 @@ public class MeleeEnemyWander : NPCState
 
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
         target = myOwner.getRandomLocation(myOwner.agent.nextPosition, myOwner.maxWanderDistance);
-        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { Debug.Log("Target set!"); myOwner.agent.SetDestination(target); }
-        Debug.Log(myOwner.name + "'s new target is: " + target);
-        Debug.Log(myOwner.name + "'s current position is: " + myOwner.transform.position);
-        // Debug.Log("Begin Wander...");
-        // Debug.Log("Status=" + anim.GetInteger("Status"));
+        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(target); }
   }
 
     public override void Execute()
@@ -79,14 +75,11 @@ public class MeleeEnemyWander : NPCState
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
         if (obstruction != null) {
-            Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle());
         }
 
         float distToDest = Vector3.Distance(myOwner.transform.position, target);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
-            Debug.Log("Stopped moving from " + distToDest + " away");
-            Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }
         if(myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
@@ -275,17 +268,11 @@ public class MeleeEnemySeduced : NPCState
 
     public override void Execute()
     {
-        // if(time > duration) { stateChange(); return; }
         // make sure the target and/or crush isn't dead/gone already
         if(myOwner.crush == null || myOwner.crushTarget == null) { Debug.Log("No Crush"); stateChange(); return; }
 
         if (myOwner.anim.GetCurrentAnimatorStateInfo(0).IsTag("Hurt")) {
-            // myOwner.agent.isStopped = true;
-            // myOwner.agent.updatePosition = true;
             myOwner.agent.Warp(myOwner.transform.position);
-        }
-        else {
-            // myOwner.agent.isStopped = false;
         }
 
         if (myOwner.agent.velocity.magnitude > myOwner.agent.speed / 2) {

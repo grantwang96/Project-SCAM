@@ -393,6 +393,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
         // updateCurrentHeld();
         newSpell.Deactivate();
+        newSpell.transform.parent = transform.parent;
         newSpell.transform.localPosition = Vector3.zero;
         newSpell.transform.localRotation = Quaternion.identity;
 
@@ -441,15 +442,23 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     IEnumerator dropSpellProcess(SpellBook dropSpell, Vector3 originPos) // visualize dropping the book
     {
         // dropSpell.dead = true;
+        FloatyRotaty fr = dropSpell.GetComponent<FloatyRotaty>();
+        fr.active = false;
         UpdateSpellData();
         dropSpell.Activate(); // turn on the book
         dropSpell.transform.parent = null;
+
+        float time = 0f;
+
         Vector3 startPos = dropSpell.transform.position;
-        while (!dropSpell.dead && Vector3.Distance(dropSpell.transform.position, originPos) > 0.2f)
-        {
-            dropSpell.transform.position = Vector3.Lerp(dropSpell.transform.position, originPos, Time.deltaTime / spellPickUpSpeed); // shift book to position
+        while (!dropSpell.dead && Vector3.Distance(dropSpell.transform.position, originPos) > 0.2f) {
+            time += Time.deltaTime;
+            dropSpell.transform.position = Vector3.Lerp(startPos, originPos, time / spellPickUpSpeed); // shift book to position
             yield return new WaitForEndOfFrame();
         }
+        if (fr != null) { fr.enabled = true; }
+        fr.SetPosition();
+        fr.active = true;
         // updateCurrentHeld();
     }
 

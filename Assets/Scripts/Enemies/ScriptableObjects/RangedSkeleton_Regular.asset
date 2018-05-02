@@ -18,12 +18,42 @@ MonoBehaviour:
   sightAngle: 90
   attackRange: 50
   attentionSpan: 15
-  firstName: []
-  lastNameP1: []
-  lastNameP2: []
-  verbings: []
-  nouns: []
-  preferredName: OneRangedBoi
+  possibleDrops: []
+  firstName:
+  - Todd
+  - Bull
+  - Krageth
+  - Vortigar
+  - Lulu
+  lastNameP1:
+  - Pants
+  - Art
+  - Handle
+  - Stand
+  - Bronze
+  - Air
+  lastNameP2:
+  - Puncher
+  - King
+  - User
+  - House
+  - Breaker
+  - Stomper
+  verbings:
+  - Flying
+  - Rainy
+  - Windy
+  - Flaming
+  - Exploding
+  - Forsaken
+  nouns:
+  - City
+  - Castle
+  - Tundra
+  - Desert
+  - Village
+  - Seas
+  preferredName: 
   attackTargetTag: Player
   damage: 15
   myType: 1

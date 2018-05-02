@@ -17,6 +17,7 @@ MonoBehaviour:
   powerLevelModifier: 1
   powerLevel: 1
   baseColor: {r: 1, g: 0.6413793, b: 0, a: 1}
+  coreColor: {r: 1, g: 0.64137936, b: 0, a: 1}
   ammo: 2
   coolDown: 0.4
   title: Teleport

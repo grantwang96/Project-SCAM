@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FalloutOfWorld : MonoBehaviour {
 
-	void OnTriggerEnter(Collider coll)
+	void OnTriggerExit(Collider coll)
     {
         Damageable collDam = coll.GetComponent<Damageable>();
         if(collDam != null) {

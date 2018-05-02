@@ -661,8 +661,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1154758488249954}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -2, y: 0, z: 5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 0, z: 63}
   m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
   - {fileID: 4596149973378768}
@@ -948,7 +948,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!65 &65117977236116944
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1074,6 +1074,7 @@ MonoBehaviour:
   damageable: 1
   myCollider: {fileID: 136855091534851680}
   myRend: {fileID: 0}
+  originSpawn: {x: 0, y: 0, z: 0}
   myMovement: {fileID: 114628699432480118}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}

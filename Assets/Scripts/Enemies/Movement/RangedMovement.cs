@@ -49,6 +49,14 @@ public class RangedMovement : Movement {
         yield return new WaitForEndOfFrame();
 
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
+            if(hamper > 0) { // we can't attack
+                Destroy(newProjectile.gameObject);
+                changeState(new RangedEnemyAggro());
+                yield break;
+            }
+
+            if(attackTarget == null) { Destroy(newProjectile.gameObject); yield break; }
+
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f && !fired) {
 
                 float targetDistance = Vector3.Distance(transform.position, attackTarget.position);
@@ -72,15 +80,21 @@ public class RangedMovement : Movement {
     
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.transform.tag == "Ground")
-        {
-            Debug.Log("Hi Ground");
-            agent.updatePosition = true;
-            agent.updateRotation = true;
+        if (coll.transform.tag == "Ground" && hamper <= 0) {
+            // Debug.Log("Hi Ground");
+            if (agent.nextPosition != transform.position && agent.Warp(transform.position))
+            {
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
+            }
+            /*
             if (agent.nextPosition != transform.position) {
                 agent.Warp(transform.position);
             }
-            agent.isStopped = false;
+            agent.updatePosition = true;
+            agent.updateRotation = true;
+            agent.isStopped = false;*/
         }
     }
 }

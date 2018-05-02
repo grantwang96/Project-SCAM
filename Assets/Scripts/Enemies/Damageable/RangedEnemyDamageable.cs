@@ -134,6 +134,8 @@ public class RangedEnemyDamageable : Damageable {
 
         // stop the navmesh agent
         myMovement.agent.isStopped = true;
+        myMovement.agent.updatePosition = false;
+        myMovement.agent.updateRotation = false;
 
         // Create the replacement object
         GameObject myReplace = Instantiate(replacement, transform.position, transform.rotation);
@@ -144,7 +146,12 @@ public class RangedEnemyDamageable : Damageable {
         replacedBody.setTransmutable(false);
 
         // wait for the spell duration
-        yield return new WaitForSeconds(duration);
+        float time = 0f;
+        while (time < duration) {
+            yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
+            transform.position = replacedBody.transform.position;
+        }
 
         myColl.enabled = true;
         if (allRends.Length > 0) {
@@ -156,10 +163,11 @@ public class RangedEnemyDamageable : Damageable {
         }
 
         // move to transmuted object(in case object was moved)
+        transform.position = myReplace.transform.position;
         myMovement.agent.nextPosition = myReplace.transform.position;
-        myMovement.agent.Warp(myReplace.transform.position);
-        myMovement.agent.isStopped = false;
-        transform.position = myMovement.agent.nextPosition;
+        // myMovement.agent.Warp(myReplace.transform.position);
+        // myMovement.agent.isStopped = false;
+        // transform.position = myMovement.agent.nextPosition;
 
         Destroy(myReplace); // Destroy my replacement
 
@@ -183,9 +191,9 @@ public class RangedEnemyDamageable : Damageable {
     public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         myMovement.anim.Play("FrontHurt");
-        myMovement.changeState(new MeleeEnemySeduced(), duration);
+        myMovement.changeState(new RangedEnemySeduced(), duration);
         yield return new WaitForSeconds(duration);
-        myMovement.changeState(new MeleeEnemyIdle());
+        myMovement.changeState(new RangedEnemyIdle());
         seduction = null;
     }
 

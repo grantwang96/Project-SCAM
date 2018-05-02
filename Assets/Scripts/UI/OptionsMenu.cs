@@ -21,4 +21,9 @@ public class OptionsMenu : MonoBehaviour {
             Screen.SetResolution(width, height, fullScreen.isOn);
         }
     }
+
+    public void SetFullScreen(bool yes)
+    {
+        Screen.fullScreen = yes;
+    }
 }
