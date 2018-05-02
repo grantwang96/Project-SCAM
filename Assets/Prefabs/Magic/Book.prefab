@@ -241,6 +241,7 @@ MonoBehaviour:
   floatySpeed: 5
   originPos: {x: 0, y: 0, z: 0}
   magnitude: 0.3
+  active: 1
 --- !u!135 &135488008751031114
 SphereCollider:
   m_ObjectHideFlags: 1

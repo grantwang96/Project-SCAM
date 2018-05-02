@@ -12,6 +12,10 @@ public class MainMenu : MonoBehaviour
     public float moveSpeed;
     public bool moving = false;
 
+    public GameObject loadScreenSkele;
+    public Text loadScreenMessage;
+    public Image loadScreenBar;
+
     public GameObject QuitMenu;
     
     void Awake() {
@@ -63,7 +67,20 @@ public class MainMenu : MonoBehaviour
             fadeOut.color = Color.Lerp(Color.clear, Color.black, time);
             yield return new WaitForEndOfFrame();
         }
+        loadScreenSkele.SetActive(true);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneNum);
-        while(!asyncLoad.isDone) { yield return new WaitForEndOfFrame(); }
+        loadScreenMessage.gameObject.SetActive(true);
+        while(!asyncLoad.isDone) {
+            if(asyncLoad.progress >= .75f) {
+                loadScreenMessage.text = "Murdering Tim...";
+            } else if(asyncLoad.progress >= .5f) {
+                loadScreenMessage.text = "Ordering spellbooks from eBay...";
+            } else if(asyncLoad.progress >= .25f) {
+                loadScreenMessage.text = "Removing the bodies...";
+            } else {
+                loadScreenMessage.text = "Dusting castle...";
+            }
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

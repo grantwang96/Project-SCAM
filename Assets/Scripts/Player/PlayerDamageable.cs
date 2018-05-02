@@ -10,6 +10,7 @@ public class PlayerDamageable : Damageable {
     public static PlayerDamageable Instance;
 
     Coroutine seduced;
+    Coroutine hurtVisuals;
 
     public Transform playerCanvas;
     public Transform playerCanvasPrefab;
@@ -26,6 +27,7 @@ public class PlayerDamageable : Damageable {
     public MeshRenderer healthBar;
 	public MeshRenderer encasing;
     public Image fadeToBlackImage;
+    public Image ouchImage;
     Coroutine deathSequence;
 
 	AudioPlayer sounds;
@@ -35,6 +37,9 @@ public class PlayerDamageable : Damageable {
         base.Start();
         Instance = this;
 		sounds = GetComponent<AudioPlayer>();
+
+        myMovement.hamper = 1;
+        StartCoroutine(fadeInScene());
 	}
 	
 	// Update is called once per frame
@@ -48,14 +53,12 @@ public class PlayerDamageable : Damageable {
 		healthBar.material.color = c;
 		encasing.material.SetColor("_RimColor", c);
 
-        if(!dead) { fadeToBlackImage.color = Color.clear; }
+        // if(!dead) { fadeToBlackImage.color = Color.clear; }
     }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
     {
-        if (hurt || dead) { Debug.Log("I'm already dead!"); return; }
-        
-        // Visual hurt effects
+        if (hurt || dead) { Debug.Log("Omae wa mo...shindeiru!"); return; }
         
         base.TakeDamage(attacker, hpLost, dir, force);
         if(health <= 0) { Die(); return; }
@@ -63,11 +66,12 @@ public class PlayerDamageable : Damageable {
         PlayerMagic.instance.invokeChangeFollowers(attacker.GetComponent<Damageable>());
 
 		sounds.PlayClip("hurt");
+        if(hurtVisuals != null) { StopCoroutine(hurtVisuals); }
+        hurtVisuals = StartCoroutine(visualizeHurt(hpLost));
         StartCoroutine(hurtFrames(hpLost));
     }
 
-    IEnumerator hurtFrames(int hpLost)
-    {
+    IEnumerator hurtFrames(int hpLost) {
         hurt = true;
         float time = 0f;
 
@@ -78,6 +82,7 @@ public class PlayerDamageable : Damageable {
         Vector3 startRot = new Vector3(xRot, yRot, zRot);
         Camera.main.transform.localEulerAngles = startRot;
 
+
         while(time < hurtTime) {
             Camera.main.transform.localEulerAngles = Vector3.Lerp(startRot, Vector3.zero, time / hurtTime);
             yield return new WaitForEndOfFrame();
@@ -85,6 +90,23 @@ public class PlayerDamageable : Damageable {
         }
         Camera.main.transform.localEulerAngles = Vector3.zero;
         hurt = false;
+    }
+
+    IEnumerator visualizeHurt(int hpLost)
+    {
+        // add opacity to hurt image
+        float hurtVal = ouchImage.color.a + (float)hpLost / max_health;
+        Color hurtColor = new Color(ouchImage.color.r, ouchImage.color.g, ouchImage.color.b, hurtVal);
+        ouchImage.color = hurtColor;
+
+        if(ouchImage.color.a > 0.8f) { ouchImage.color = new Color(ouchImage.color.r, ouchImage.color.g, ouchImage.color.b, 0.8f); }
+
+        while(ouchImage.color.a > 0f) {
+            ouchImage.color =
+                new Color(ouchImage.color.r, ouchImage.color.g, ouchImage.color.b, ouchImage.color.a - (Time.deltaTime * .25f));
+            yield return new WaitForEndOfFrame();
+        }
+        hurtVisuals = null;
     }
 
     public override void Die()
@@ -341,5 +363,16 @@ public class PlayerDamageable : Damageable {
         float dist = Vector3.Distance(center.position, transform.position);
         Vector3 dir = (center.position - transform.position).normalized;
         myMovement.knockBack(dir, force);
+    }
+
+    IEnumerator fadeInScene()
+    {
+        float time = 0f;
+        while(time < 1f) {
+            time += Time.deltaTime / 3f;
+            fadeToBlackImage.color = Color.Lerp(Color.black, Color.clear, time);
+            yield return new WaitForEndOfFrame();
+        }
+        myMovement.hamper = 0;
     }
 }
