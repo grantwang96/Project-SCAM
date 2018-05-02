@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeEnemyDamageable : Damageable {
-
+    
     public Rigidbody rbody;
     Coroutine knockBackRoutine;
     Coroutine targetSwitchRoutine;
@@ -180,9 +180,11 @@ public class MeleeEnemyDamageable : Damageable {
     {
         myMovement.anim.Play("FrontHurt");
         myMovement.changeState(new MeleeEnemySeduced(), duration);
+        blush.enabled = true;
         yield return new WaitForSeconds(duration);
         myMovement.changeState(new MeleeEnemyIdle());
         seduction = null;
+        blush.enabled = false;
     }
 
     public void PlayHurtAnimation(float dirDotProd, Vector3 dir)

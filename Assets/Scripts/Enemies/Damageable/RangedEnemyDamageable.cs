@@ -192,9 +192,12 @@ public class RangedEnemyDamageable : Damageable {
     {
         myMovement.anim.Play("FrontHurt");
         myMovement.changeState(new RangedEnemySeduced(), duration);
+        blush.enabled = true;
         yield return new WaitForSeconds(duration);
         myMovement.changeState(new RangedEnemyIdle());
+        myMovement.attackTarget = myMovement.blueprint.getOriginTarget();
         seduction = null;
+        blush.enabled = false;
     }
 
     public void PlayHurtAnimation(float dirDotProd, Vector3 dir)

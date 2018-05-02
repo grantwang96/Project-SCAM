@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca3025abac1c9b4a8e9856edf8274c1, type: 3}
   m_Name: Seduce
   m_EditorClassIdentifier: 
-  force: 100
+  force: 6
   power: 10
   duration: 10
   powerLevelModifier: 1

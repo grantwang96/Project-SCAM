@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f740be3212544846b7b603cbe344716, type: 3}
   m_Name: Teleport
   m_EditorClassIdentifier: 
-  force: 100
+  force: 6
   power: 1
   duration: 0
   powerLevelModifier: 1

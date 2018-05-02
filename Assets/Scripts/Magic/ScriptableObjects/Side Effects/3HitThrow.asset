@@ -20,5 +20,5 @@ MonoBehaviour:
   sideEffect: {fileID: 0}
   bounceMat: {fileID: 13400000, guid: e39cc1574c0b79241bd85782ba1d958e, type: 2}
   bounceCount: 3
-  modMass: 1
-  modForce: 30
+  modMass: 0.2
+  modForce: 12

@@ -118,7 +118,8 @@ public class RangedEnemyAggro : NPCState
         if (!targetInView) {
             hasCoverPosition = false;
             lostTargetViewTime += Time.deltaTime;
-            if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
+            if (myOwner.agent.enabled && !myOwner.agent.isStopped
+                && myOwner.attackTarget != null) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
             if (lostTargetViewTime >= duration)
             {
                 Debug.Log("Where'd you go?");
@@ -207,9 +208,9 @@ public class RangedEnemyAttack : NPCState
         int fireCount = Random.Range(2, 5);
         for (int i = 0; i < fireCount; i++) {
             if (myOwner.attackTarget == null) { break; }
-            myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
+            myOwner.attackRoutine = myOwner.StartCoroutine(myOwner.attack(myOwner.attackTarget.position));
             yield return new WaitForEndOfFrame();
-            while (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) {
+            while (myOwner.attackRoutine != null) {
                 yield return new WaitForEndOfFrame();
             }
             yield return new WaitForSeconds(0.25f);
@@ -249,9 +250,20 @@ public class RangedEnemySeduced : NPCState
 
     public override void Execute()
     {
+        if (myOwner.agent.velocity.magnitude > myOwner.agent.speed / 2) {
+            myOwner.anim.SetInteger("Status", 2);
+        }
+        else {
+            myOwner.anim.SetInteger("Status", 0);
+        }
+
         if (myOwner.attackTarget != null) {
+            myOwner.changeState(new RangedEnemyAggro(), this);
+            /*
+
             // Check to see if the target is still in view
             targetInView = myOwner.checkView();
+
 
             // Enter idle if target has been out of view too long
             if (!targetInView) {
@@ -259,12 +271,13 @@ public class RangedEnemySeduced : NPCState
                 if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.attackTarget.position); }
             }
             else {
-                if (!hasCoverPosition) { FindCover(); }
+                // if (!hasCoverPosition) { FindCover(); }
                 float distance = Vector3.Distance(myOwner.transform.position, myOwner.agent.destination);
                 if (distance < myOwner.blueprint.attackRange) { myOwner.changeState(new RangedEnemyAttack(), this); }
             }
 
             // if (myOwner.agent.desiredVelocity.magnitude < 0.5f) { myOwner.changeState(new RangedEnemyAttack()); }
+            */
         }
         else {
             Vector3 targetDir = myOwner.crushTarget.position - myOwner.transform.position;
@@ -378,3 +391,4 @@ public class RangedEnemyInjured : NPCState
         }
     }
 }
+
