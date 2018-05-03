@@ -7,14 +7,19 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Water
+<<<<<<< HEAD
+  m_Shader: {fileID: 4800000, guid: 14e325437029240e0ac6abb1683be114, type: 3}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+  m_LightmapFlags: 4
+=======
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 1
+>>>>>>> master
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -40,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b79d7e286b98d4fa28ea48054ead6f58, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -55,6 +60,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _mainTex:
+        m_Texture: {fileID: 2800000, guid: b79d7e286b98d4fa28ea48054ead6f58, type: 3}
+        m_Scale: {x: 4, y: 4}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -67,11 +76,19 @@ Material:
     - _Mode: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Shininess: 0.7
     - _SmoothnessTextureChannel: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 0
+    - _scrollFactor: -5
     m_Colors:
+<<<<<<< HEAD
+    - _Color: {r: 1, g: 1, b: 1, a: 0.71}
+    - _Emission: {r: 0.9705882, g: 0.8920847, b: 0.8920847, a: 0}
+=======
     - _Color: {r: 0.071694896, g: 0.33823532, b: 0.06217561, a: 0.29411766}
+>>>>>>> master
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 0.622}
