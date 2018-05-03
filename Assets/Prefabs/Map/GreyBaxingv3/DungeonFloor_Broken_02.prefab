@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 23221167739327592}
   - component: {fileID: 65639117594182890}
   - component: {fileID: 54826961206838266}
-  - component: {fileID: 114380508385375546}
   m_Layer: 0
   m_Name: DungeonFloor_Tile(Loose)
   m_TagString: Furniture
@@ -276,7 +275,6 @@ GameObject:
   - component: {fileID: 23341071709534016}
   - component: {fileID: 65744200687679434}
   - component: {fileID: 54657146541943178}
-  - component: {fileID: 114055595326627042}
   m_Layer: 0
   m_Name: DungeonFloor_Tile(Loose)
   m_TagString: Furniture
@@ -350,7 +348,6 @@ GameObject:
   - component: {fileID: 23647465760735420}
   - component: {fileID: 65977153246424614}
   - component: {fileID: 54515012793037774}
-  - component: {fileID: 114934316969626782}
   m_Layer: 0
   m_Name: DungeonFloor_Tile(Loose)
   m_TagString: Furniture
@@ -370,7 +367,6 @@ GameObject:
   - component: {fileID: 23748844835851052}
   - component: {fileID: 65849516667402556}
   - component: {fileID: 54419933497650348}
-  - component: {fileID: 114760042044725806}
   m_Layer: 0
   m_Name: DungeonFloor_Tile(Loose)
   m_TagString: Furniture
@@ -390,7 +386,6 @@ GameObject:
   - component: {fileID: 23260900386951598}
   - component: {fileID: 65325650493521582}
   - component: {fileID: 54138581587252450}
-  - component: {fileID: 114895780503444030}
   m_Layer: 0
   m_Name: DungeonFloor_Tile(Loose)
   m_TagString: Furniture
@@ -728,8 +723,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1158005214583574}
-  m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
-  m_LocalPosition: {x: 2.5, y: 0.352, z: -7.687}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -17.5, y: 0, z: 2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4958366975073522}
@@ -2280,56 +2275,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1411039, y: 0.59900576, z: 1.9530182}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114055595326627042
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1655213983305414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45800498049beb34ab30ba59738290ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_health: 10
-  _health: 10
-  transmutable: 1
-  hurt: 0
-  hurtTime: 0
-  dead: 0
-  damageable: 1
-  myCollider: {fileID: 0}
-  myRend: {fileID: 0}
-  myMovement: {fileID: 0}
-  parentHit: {fileID: 0}
-  replacedBody: {fileID: 0}
-  transmuted: 0
-  rbody: {fileID: 0}
---- !u!114 &114380508385375546
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1356610035241960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45800498049beb34ab30ba59738290ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_health: 10
-  _health: 10
-  transmutable: 1
-  hurt: 0
-  hurtTime: 0
-  dead: 0
-  damageable: 1
-  myCollider: {fileID: 0}
-  myRend: {fileID: 0}
-  myMovement: {fileID: 0}
-  parentHit: {fileID: 0}
-  replacedBody: {fileID: 0}
-  transmuted: 0
-  rbody: {fileID: 0}
 --- !u!114 &114395666936497284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2350,81 +2295,7 @@ MonoBehaviour:
   damageable: 1
   myCollider: {fileID: 0}
   myRend: {fileID: 0}
-  myMovement: {fileID: 0}
-  parentHit: {fileID: 0}
-  replacedBody: {fileID: 0}
-  transmuted: 0
-  rbody: {fileID: 0}
---- !u!114 &114760042044725806
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1756713056367314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45800498049beb34ab30ba59738290ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_health: 10
-  _health: 10
-  transmutable: 1
-  hurt: 0
-  hurtTime: 0
-  dead: 0
-  damageable: 1
-  myCollider: {fileID: 0}
-  myRend: {fileID: 0}
-  myMovement: {fileID: 0}
-  parentHit: {fileID: 0}
-  replacedBody: {fileID: 0}
-  transmuted: 0
-  rbody: {fileID: 0}
---- !u!114 &114895780503444030
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1758873394180918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45800498049beb34ab30ba59738290ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_health: 10
-  _health: 10
-  transmutable: 1
-  hurt: 0
-  hurtTime: 0
-  dead: 0
-  damageable: 1
-  myCollider: {fileID: 0}
-  myRend: {fileID: 0}
-  myMovement: {fileID: 0}
-  parentHit: {fileID: 0}
-  replacedBody: {fileID: 0}
-  transmuted: 0
-  rbody: {fileID: 0}
---- !u!114 &114934316969626782
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1738872434563894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45800498049beb34ab30ba59738290ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_health: 10
-  _health: 10
-  transmutable: 1
-  hurt: 0
-  hurtTime: 0
-  dead: 0
-  damageable: 1
-  myCollider: {fileID: 0}
-  myRend: {fileID: 0}
+  originSpawn: {x: 0, y: 0, z: 0}
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}

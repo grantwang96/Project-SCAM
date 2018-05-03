@@ -49,6 +49,11 @@ public class Door : Damageable, Interactable {
         return true;
     }
 
+    public void Open()
+    {
+        movement = StartCoroutine(doorRotation());
+    }
+
     public void Unlock()
     {
         locked = false;
