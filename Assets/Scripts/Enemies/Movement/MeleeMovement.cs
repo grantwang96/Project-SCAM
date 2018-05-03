@@ -51,19 +51,18 @@ public class MeleeMovement : Movement {
         if (coll.transform.tag == "Ground" && hamper <= 0)
         {
             // Debug.Log("Hi Ground");
-            if (agent.nextPosition != transform.position && agent.Warp(transform.position))
+            /*
+            if (agent.Warp(transform.position)
+                && !agent.isStopped)
             {
                 agent.updatePosition = true;
                 agent.updateRotation = true;
                 agent.isStopped = false;
-            }
-            /*
-            if (agent.nextPosition != transform.position) {
-                agent.Warp(transform.position);
-            }
+            }*/
+            agent.nextPosition = transform.position;
             agent.updatePosition = true;
             agent.updateRotation = true;
-            agent.isStopped = false;*/
+            agent.isStopped = false;
         }
     }
     /*

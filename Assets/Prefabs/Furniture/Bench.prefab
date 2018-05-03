@@ -168,7 +168,7 @@ MonoBehaviour:
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
-  blush: {fileID: 0}
+  blush: {fileID: 212498533008645098}
   transmuted: 0
   rbody: {fileID: 0}
 --- !u!212 &212498533008645098

@@ -1049,7 +1049,6 @@ MonoBehaviour:
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
   blush: {fileID: 212915122457083246}
-  blushScale: {x: 0.15, y: 0.1, z: 0.1}
   rbody: {fileID: 54803630769118312}
   deathFX: {fileID: 1239637320502732, guid: d381ed786368f764c886499b03b15e18, type: 2}
   specialDrop: {fileID: 0}
@@ -1196,7 +1195,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1065622571024560}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.75
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 40
   avoidancePriority: 50
@@ -1208,7 +1207,7 @@ NavMeshAgent:
   m_Height: 2.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 3
 --- !u!212 &212915122457083246
 SpriteRenderer:
   m_ObjectHideFlags: 1
