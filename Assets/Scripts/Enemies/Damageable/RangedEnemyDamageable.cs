@@ -130,7 +130,8 @@ public class RangedEnemyDamageable : Damageable {
         Collider myColl = GetComponent<Collider>();
         myColl.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
-        if (allRends.Length > 0) { foreach (Renderer rend in allRends) { rend.enabled = false; } }
+        if (allRends.Length > 0) { foreach (Renderer rend in allRends)
+            { if(rend != blush) { rend.enabled = false; } } }
 
         // stop the navmesh agent
         myMovement.agent.isStopped = true;
@@ -152,11 +153,13 @@ public class RangedEnemyDamageable : Damageable {
             time += Time.deltaTime;
             transform.position = replacedBody.transform.position;
         }
-
+        
+        // reaactivate colliders and renderers
         myColl.enabled = true;
-        if (allRends.Length > 0) {
+        if (allRends.Length > 0)
+        {
             foreach (Renderer rend in allRends)
-                if (rend != null) { rend.enabled = true; }
+                if (rend != null && rend != blush) { rend.enabled = true; }
         }
         if (dead) {
             yield break;
@@ -170,13 +173,6 @@ public class RangedEnemyDamageable : Damageable {
         // transform.position = myMovement.agent.nextPosition;
 
         Destroy(myReplace); // Destroy my replacement
-
-        // reaactivate colliders and renderers
-        myColl.enabled = true;
-        if (allRends.Length > 0) {
-            foreach (Renderer rend in allRends)
-                if (rend != null) { rend.enabled = true; }
-        }
         replacedBody = null;
         myMovement.hamper--;
     }

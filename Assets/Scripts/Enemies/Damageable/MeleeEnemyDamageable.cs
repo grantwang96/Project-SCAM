@@ -127,7 +127,11 @@ public class MeleeEnemyDamageable : Damageable {
         Collider myColl = GetComponent<Collider>();
         myColl.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
-        if (allRends.Length > 0) { foreach (Renderer rend in allRends) { rend.enabled = false; } }
+        if (allRends.Length > 0)
+        {
+            foreach (Renderer rend in allRends)
+            { if (rend != blush) { rend.enabled = false; } }
+        }
 
         // stop the navmesh agent
         myMovement.agent.isStopped = true;
@@ -163,8 +167,10 @@ public class MeleeEnemyDamageable : Damageable {
 
         // reaactivate colliders and renderers
         myColl.enabled = true;
-        if (allRends.Length > 0) { foreach (Renderer rend in allRends)
-                if(rend != null) { rend.enabled = true; } }
+        if (allRends.Length > 0) {
+            foreach (Renderer rend in allRends)
+                if (rend != null && rend != blush) { rend.enabled = true; }
+        }
         replacedBody = null;
         myMovement.hamper--;
     }
