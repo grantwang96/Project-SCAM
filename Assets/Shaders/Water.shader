@@ -50,6 +50,7 @@
 //			float perturb = IN.pos.y +.25;
 			float3 tex = tex2D(_MainTex, IN.uv_MainTex + scroll).rgb ;
 			o.Albedo = tex * _Color;
+			o.Emission = o.Albedo;
 //			o.Albedo = dot( tex, float3(1,1,1)) > 0.75 ? (1,1,1) : tex;
 //			* _Color.rgb + lerp(_Color,_Color2, perturb*perturb);
 //			o.Albedo += (IN.pos - IN.initPos) * _Color.rgb;
