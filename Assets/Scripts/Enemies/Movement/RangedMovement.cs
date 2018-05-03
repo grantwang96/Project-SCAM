@@ -43,8 +43,6 @@ public class RangedMovement : Movement {
         newProjectile.owner = transform;
         newProjectile.damage = damage;
 
-        Debug.Log("Pew");
-
         bool fired = false;
         yield return new WaitForEndOfFrame();
 

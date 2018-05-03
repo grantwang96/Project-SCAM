@@ -34,7 +34,7 @@ public class CheckpointManager : MonoBehaviour {
 	public static event CheckpointAction OnCheckpoint;
 
 	//enemies to respawn on checkpoint
-	List<EnemyRestart> respawnList;
+	List<EnemyRestart> respawnList = new List<EnemyRestart>();
 
 	void Awake () {
 		if (instance == null) {
@@ -77,7 +77,9 @@ public class CheckpointManager : MonoBehaviour {
             enemy.dam.transform.position = enemy.dam.originSpawn;
             enemy.dam.transform.rotation = enemy.originalRot;
             enemy.dam.gameObject.SetActive(true);
+            enemy.dam.health = enemy.dam.max_health;
             enemy.dam.dead = false;
+            enemy.dam.damageable = true;
             if(enemy.dam.myMovement != null) {
                 enemy.dam.myMovement.agent.Warp(enemy.dam.originSpawn);
             }
@@ -119,6 +121,7 @@ public class CheckpointManager : MonoBehaviour {
 	public void AddEnemyToRespawnList(Damageable enemy) {
         EnemyRestart newER = new EnemyRestart();
         newER.dam = enemy;
+        newER.health = enemy.health;
         newER.originalPos = enemy.transform.position;
         newER.originalRot = enemy.transform.rotation;
 		respawnList.Add(newER);
