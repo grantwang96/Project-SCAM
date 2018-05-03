@@ -11,6 +11,9 @@ TagManager:
   - Wall
   - Icy
   - Ceiling
+  - Water
+  - Magic
+  - WaterInteracting
   layers:
   - Default
   - TransparentFX

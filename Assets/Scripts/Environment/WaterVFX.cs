@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEngine.PostProcessing;
 
-[RequireComponent(typeof(PostProcessingBehaviour), typeof(Collider))]
+[RequireComponent(typeof(PostProcessingBehaviour))]
 public class WaterVFX : MonoBehaviour {
 
 	public PostProcessingProfile profile;
@@ -24,23 +24,20 @@ public class WaterVFX : MonoBehaviour {
 //		surface = GetComponentInChildren<Transform>();
 	}
 
-	void OnTriggerEnter(Collider other) {
+	public void Enter() {
 		Debug.Log("Hit");
-		if (other.CompareTag("Water")) {
-			SwitchToProfile(profile);
-			StartCoroutine(BlurIn());
-//			surface.rotation.eulerAngles= new Vector3(180,0,0);
-			//other.GetComponentInChildren<Transform>().Rotate(180,0,0);
-		}
+		SwitchToProfile(profile);
+		StartCoroutine(BlurIn());
+//		surface.rotation.eulerAngles= new Vector3(180,0,0);
+		//other.GetComponentInChildren<Transform>().Rotate(180,0,0);
+
 	}
 
-	void OnTriggerExit(Collider other) {
-		if (other.CompareTag("Water")) {
-			SwitchToProfile(null);
-//			surface.rotation.eulerAngles = Vector3.zero;
-//			surface.rotation.Set(Quaternion.Euler(Vector3.zero));
-			//other.GetComponentInChildren<Transform>().Rotate(180,0,0);
-		}
+	public void Exit() {
+		SwitchToProfile(null);
+//		surface.rotation.eulerAngles = Vector3.zero;
+//		surface.rotation.Set(Quaternion.Euler(Vector3.zero));
+		//other.GetComponentInChildren<Transform>().Rotate(180,0,0);
 	}
 
 	void SwitchToProfile(PostProcessingProfile prof) {

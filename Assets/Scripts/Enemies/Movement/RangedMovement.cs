@@ -43,7 +43,7 @@ public class RangedMovement : Movement {
         newProjectile.owner = transform;
         newProjectile.damage = damage;
 
-        Debug.Log("Pew");
+//        Debug.Log("Pew");
 
         bool fired = false;
         yield return new WaitForEndOfFrame();
@@ -52,7 +52,7 @@ public class RangedMovement : Movement {
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f && !fired) {
 
                 float targetDistance = Vector3.Distance(transform.position, attackTarget.position);
-                Debug.Log(targetDistance);
+//                Debug.Log(targetDistance);
 
                 Vector3 vel = attackTarget.position - gun.position;
                 vel.y += (4f * targetDistance / throwForce);
@@ -74,7 +74,7 @@ public class RangedMovement : Movement {
     {
         if (coll.transform.tag == "Ground")
         {
-            Debug.Log("Hi Ground");
+//            Debug.Log("Hi Ground");
             agent.updatePosition = true;
             agent.updateRotation = true;
             if (agent.nextPosition != transform.position) {

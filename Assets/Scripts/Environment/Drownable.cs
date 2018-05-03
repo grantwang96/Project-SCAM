@@ -11,7 +11,13 @@ public class Drownable : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		dmg = GetComponentInParent<Damageable>();
+		dmg = GetComponent<Damageable>();
+		if (dmg == null) {
+			throw new UnityException("no damageable attached!");
+		}
+		else {
+			Debug.Log("we have a damageable");
+		}
 	}
 	
 	public void DealDrownDamage() {

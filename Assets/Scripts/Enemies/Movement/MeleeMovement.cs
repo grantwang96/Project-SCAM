@@ -49,7 +49,7 @@ public class MeleeMovement : Movement {
     void OnCollisionEnter(Collision coll)
     {
         if(coll.transform.tag == "Ground") {
-            Debug.Log("Hi Ground");
+//            Debug.Log("Hi Ground");
             agent.updatePosition = true;
             agent.updateRotation = true;
             if (agent.nextPosition != transform.position) {

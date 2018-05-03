@@ -282,14 +282,14 @@ public abstract class Movement : MonoBehaviour
 
     public Vector3 getRandomLocation(Vector3 origin, float range)
     {
-        Debug.Log("Range is: " + range);
+//        Debug.Log("Range is: " + range);
 
         Vector3 randPos = Random.insideUnitSphere * range;
         randPos += origin;
 
         NavMeshHit navHit;
         if(NavMesh.SamplePosition(randPos, out navHit, range, NavMesh.AllAreas)) {
-            Debug.Log("Found a location!");
+//            Debug.Log("Found a location!");
             return navHit.position;
         }
 

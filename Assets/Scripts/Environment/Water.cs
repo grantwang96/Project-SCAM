@@ -56,30 +56,44 @@ public class Water : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other) {
+//		if (other.CompareTag("Wall") || other.CompareTag("Water") || 
+//			other.CompareTag("Ground") || other.CompareTag("Magic")) {
+//			return;
+//		}
+		if (!(other.CompareTag("WaterInteracting") || other.CompareTag("Player") || other.CompareTag("MainCamera"))) {
+			return;
+		}
+
 		inWater.Add(new inWaterType(other.gameObject));
-//		Debug.Log("In Water: " + other.name);
+		//slow movement
+		PlayerMovementV2 pmov = other.GetComponent<PlayerMovementV2>();
+		if (pmov != null) {
+			pmov.slownessSeverity = waterSlowScalar;
+		}
+		Debug.Log("In Water: " + other.name);
 	}
 
 	void Update() {
-		foreach (inWaterType obj in inWater) {
-			//damage tick
-			obj.timeInWater += Time.deltaTime;
-			if (obj.timeInWater >= dmgTickTime) {
-				obj.timeInWater = 0;
-				Drownable drown = obj.obj.GetComponent<Drownable>();
-				if (drown != null) {
-					drown.DealDrownDamage();
+//		foreach (inWaterType obj in inWater) {
+		for (int i = 0; i < inWater.Count; i ++) {
+			Debug.Log("Checking: " + inWater[i].obj.name);
+			inWaterType obj = inWater[i];
+			if (obj.obj == null) {
+				inWater.Remove(obj);
+				i --;
+			}
+			else {
+				//damage tick
+				obj.timeInWater += Time.deltaTime;
+				if (obj.timeInWater >= dmgTickTime) {
+					obj.timeInWater = 0;
+					Drownable drown = obj.obj.GetComponent<Drownable>();
+					if (drown != null) {
+						Debug.Log("Drowning");
+						drown.DealDrownDamage();
+					}
 				}
 			}
-
-			//slow movement
-			PlayerMovementV2 pmov = obj.obj.GetComponent<PlayerMovementV2>();
-			if (pmov != null) {
-				pmov.slownessSeverity = waterSlowScalar;
-			}
-
-			//TODO: slow enemies
-
 		}
 	}
 
@@ -89,7 +103,7 @@ public class Water : MonoBehaviour {
 		if (pmov != null) {
 			pmov.slownessSeverity = 1f;
 		}
-
+		Debug.Log("Leaving Water: " + other.name);
 		inWater.Remove(FindStruct(other.gameObject));
 	}
 

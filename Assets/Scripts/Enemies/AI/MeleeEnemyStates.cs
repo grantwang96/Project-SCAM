@@ -57,9 +57,12 @@ public class MeleeEnemyWander : NPCState
 
         // Set myowner agent's destination(ONLY HAPPENS ONCE)
         target = myOwner.getRandomLocation(myOwner.agent.nextPosition, myOwner.maxWanderDistance);
-        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { Debug.Log("Target set!"); myOwner.agent.SetDestination(target); }
-        Debug.Log(myOwner.name + "'s new target is: " + target);
-        Debug.Log(myOwner.name + "'s current position is: " + myOwner.transform.position);
+        if (myOwner.agent.enabled && !myOwner.agent.isStopped) { 
+//			Debug.Log("Target set!"); 
+			myOwner.agent.SetDestination(target); 
+		}
+//        Debug.Log(myOwner.name + "'s new target is: " + target);
+//        Debug.Log(myOwner.name + "'s current position is: " + myOwner.transform.position);
         // Debug.Log("Begin Wander...");
         // Debug.Log("Status=" + anim.GetInteger("Status"));
   }
@@ -79,14 +82,14 @@ public class MeleeEnemyWander : NPCState
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
         if (obstruction != null) {
-            Debug.Log("Switching to idling...");
+//            Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle());
         }
 
         float distToDest = Vector3.Distance(myOwner.transform.position, target);
         if(distToDest < 0.2f + myOwner.agent.stoppingDistance) {
-            Debug.Log("Stopped moving from " + distToDest + " away");
-            Debug.Log("Switching to idling...");
+//            Debug.Log("Stopped moving from " + distToDest + " away");
+//            Debug.Log("Switching to idling...");
             myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f));
         }
         if(myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
@@ -249,7 +252,7 @@ public class MeleeEnemySeduced : NPCState
     public override void Enter(Movement owner, NPCState prevState, float newDuration)
     {
         base.Enter(owner, prevState, newDuration);
-        Debug.Log("Seduced for: " + duration);
+//        Debug.Log("Seduced for: " + duration);
         
         // set animator to seduced animations
         anim = myOwner.anim;
