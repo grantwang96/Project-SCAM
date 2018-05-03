@@ -5,13 +5,13 @@ using UnityEngine;
 public class Drownable : MonoBehaviour {
 	//put this class on the "head" of a drownable enemy
 
-	Damageable dmg;
+	public Damageable dmg;
 
 	public int dmgTickAmt = 10;
 
 	// Use this for initialization
 	void Start () {
-		dmg = GetComponent<Damageable>();
+//		dmg = GetComponent<Damageable>();
 		if (dmg == null) {
 			throw new UnityException("no damageable attached!");
 		}
