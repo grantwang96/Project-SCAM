@@ -55,7 +55,7 @@ public class RangedMovement : Movement {
                 yield break;
             }
 
-            if(attackTarget == null) { Destroy(newProjectile.gameObject); yield break; }
+            if(attackTarget == null && newProjectile != null) { Destroy(newProjectile.gameObject); yield break; }
 
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f && !fired) {
 

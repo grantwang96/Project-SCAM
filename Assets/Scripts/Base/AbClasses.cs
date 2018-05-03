@@ -34,6 +34,7 @@ public abstract class Damageable : MonoBehaviour
     
     public Coroutine seduction;
     public SpriteRenderer blush;
+    // public Vector3 blushScale;
 
     public virtual void Start()
     {
@@ -96,8 +97,7 @@ public abstract class Damageable : MonoBehaviour
     public virtual IEnumerator processTransmutation(float duration, GameObject replacement)
     {
         myMovement.hamper++;
-        Collider myColl = GetComponent<Collider>();
-        myColl.enabled = false;
+        myCollider.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
         if (allRends.Length > 0) {
             foreach(Renderer rend in allRends) { rend.enabled = false; }
@@ -117,7 +117,7 @@ public abstract class Damageable : MonoBehaviour
 
         transform.position = myReplace.transform.position;
         Destroy(myReplace); // Destroy my replacement
-        myColl.enabled = true;
+        myCollider.enabled = true;
         if (allRends.Length > 0) {
             foreach (Renderer rend in allRends) { rend.enabled = true; }
         }

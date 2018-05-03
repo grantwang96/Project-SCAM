@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d865f22706ee2142b99990066aebcb9, type: 3}
   m_Name: Magic Missile
   m_EditorClassIdentifier: 
-  force: 6
+  force: 12
   power: 10
   duration: 0
   powerLevelModifier: 1

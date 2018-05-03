@@ -6,6 +6,7 @@ using UnityEngine;
 public class KnockBackSideEffect : SpellSecondary {
 
     public float force;
+    public float knockbackmod;
     public float upwardForce;
     public float chargeTime;
 
@@ -24,9 +25,7 @@ public class KnockBackSideEffect : SpellSecondary {
         projectile.duration *= valueModifier;
         projectile.friendlyOff = true;
 
-        Debug.DrawRay(user.position, dir, Color.blue, 10f);
-
-        if (dam) { dam.knockBack(dir, force); }
+        if (dam) { dam.knockBack(dir, force * knockbackmod); }
         else { Debug.Log("No damageable!"); }
     }
 

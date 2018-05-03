@@ -197,6 +197,7 @@ public class RangedEnemyAttack : NPCState
             else { myOwner.changeState(new RangedEnemyIdle()); }
         }
         if(myOwner.transform == null) { return; }
+        if(myOwner == null || myOwner.attackTarget == null) {  }
         Vector3 targetDir = myOwner.attackTarget.position - myOwner.transform.position;
         targetDir.y = 0;
         Quaternion forward = Quaternion.LookRotation(targetDir);

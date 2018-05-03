@@ -21,4 +21,4 @@ MonoBehaviour:
   bounceMat: {fileID: 13400000, guid: e39cc1574c0b79241bd85782ba1d958e, type: 2}
   bounceCount: 3
   modMass: 0.2
-  modForce: 12
+  modForce: 6
