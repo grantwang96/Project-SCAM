@@ -10,9 +10,11 @@ ModelImporter:
     2100000: Metal2
     2100002: lambert3
     2100004: lambert1
+    2100006: lambert4
     2300000: //RootNode
     3300000: //RootNode
     4300000: polySurface5
+    4300002: TorchNoSconce
     9500000: //RootNode
   externalObjects: {}
   materials:

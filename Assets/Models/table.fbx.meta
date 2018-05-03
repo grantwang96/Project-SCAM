@@ -13,8 +13,11 @@ ModelImporter:
     400004: //RootNode
     2100000: blinn1
     2300000: pCube8
+    2300002: //RootNode
     3300000: pCube8
+    3300002: //RootNode
     4300000: pCube8
+    4300002: Long_Table
     9500000: //RootNode
   externalObjects: {}
   materials:

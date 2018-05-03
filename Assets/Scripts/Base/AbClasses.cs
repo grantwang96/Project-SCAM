@@ -33,6 +33,8 @@ public abstract class Damageable : MonoBehaviour
     public Damageable replacedBody; // for transmutations
     
     public Coroutine seduction;
+    public SpriteRenderer blush;
+    // public Vector3 blushScale;
 
     public virtual void Start()
     {
@@ -95,8 +97,7 @@ public abstract class Damageable : MonoBehaviour
     public virtual IEnumerator processTransmutation(float duration, GameObject replacement)
     {
         myMovement.hamper++;
-        Collider myColl = GetComponent<Collider>();
-        myColl.enabled = false;
+        myCollider.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
         if (allRends.Length > 0) {
             foreach(Renderer rend in allRends) { rend.enabled = false; }
@@ -116,7 +117,7 @@ public abstract class Damageable : MonoBehaviour
 
         transform.position = myReplace.transform.position;
         Destroy(myReplace); // Destroy my replacement
-        myColl.enabled = true;
+        myCollider.enabled = true;
         if (allRends.Length > 0) {
             foreach (Renderer rend in allRends) { rend.enabled = true; }
         }
@@ -132,14 +133,16 @@ public abstract class Damageable : MonoBehaviour
     public virtual void Seduce(float duration, GameObject target, SpellCaster owner)
     {
         Debug.Log("Seduced!");
-        if(myMovement.crushTarget != null) { // if already seduced
+        if(myMovement.crushTarget != null && myMovement.crush != null) { // if already seduced
             myMovement.crush.removeFromSeductionList(this); // remove from the seduction list
         }
         if(seduction != null) { StopCoroutine(seduction); }
         myMovement.attackTarget = null;
+        Debug.Log(owner);
         myMovement.crushTarget = owner.returnTransform();
         myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
-        myMovement.crush.addToSeductionList(this);
+        if(myMovement.crush != null) { myMovement.crush.addToSeductionList(this); }
+        else { Debug.Log("No spellcaster component!"); }
 
         seduction = StartCoroutine(processSeduction(duration, target, owner));
     }
@@ -268,7 +271,7 @@ public abstract class Movement : MonoBehaviour
         Debug.DrawRay(Head.position, agent.desiredVelocity, Color.green);
         foreach (RaycastHit rayhit in rayHits) {
             if(rayhit.collider.tag == "Wall" || rayhit.collider.tag == "Ground") {
-                Debug.Log("Obstruction: " + rayhit.transform);
+                // Debug.Log("Obstruction: " + rayhit.transform);
                 return rayhit.transform;
             }
         }

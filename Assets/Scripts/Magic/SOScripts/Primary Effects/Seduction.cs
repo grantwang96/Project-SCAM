@@ -25,8 +25,6 @@ public class Seduction : SpellPrimary {
 
         if (dam) {
             dam.Seduce(duration, coll.gameObject, proj.myCaster); // BECOME SEDUCED!
-            proj.Die(); // don't need this anymore
-            return;
         }
 
         if(proj.bounceCount <= 0) {

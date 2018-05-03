@@ -43,8 +43,6 @@ public class RangedMovement : Movement {
         newProjectile.owner = transform;
         newProjectile.damage = damage;
 
-        Debug.Log("Pew");
-
         bool fired = false;
         yield return new WaitForEndOfFrame();
 
@@ -55,12 +53,11 @@ public class RangedMovement : Movement {
                 yield break;
             }
 
-            if(attackTarget == null) { Destroy(newProjectile.gameObject); yield break; }
+            if(attackTarget == null && newProjectile != null) { Destroy(newProjectile.gameObject); yield break; }
 
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f && !fired) {
 
                 float targetDistance = Vector3.Distance(transform.position, attackTarget.position);
-                Debug.Log(targetDistance);
 
                 Vector3 vel = attackTarget.position - gun.position;
                 vel.y += (4f * targetDistance / throwForce);
@@ -82,19 +79,23 @@ public class RangedMovement : Movement {
     {
         if (coll.transform.tag == "Ground" && hamper <= 0) {
             // Debug.Log("Hi Ground");
-            if (agent.nextPosition != transform.position && agent.Warp(transform.position))
+
+            if (coll.transform.tag == "Ground" && hamper <= 0)
             {
+                // Debug.Log("Hi Ground");
+                /*
+                if (agent.Warp(transform.position)
+                    && !agent.isStopped)
+                {
+                    agent.updatePosition = true;
+                    agent.updateRotation = true;
+                    agent.isStopped = false;
+                }*/
+                agent.nextPosition = transform.position;
                 agent.updatePosition = true;
                 agent.updateRotation = true;
                 agent.isStopped = false;
             }
-            /*
-            if (agent.nextPosition != transform.position) {
-                agent.Warp(transform.position);
-            }
-            agent.updatePosition = true;
-            agent.updateRotation = true;
-            agent.isStopped = false;*/
         }
     }
 }
