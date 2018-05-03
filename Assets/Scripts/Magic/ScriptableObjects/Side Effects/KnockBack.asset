@@ -19,7 +19,7 @@ MonoBehaviour:
   decoration: {fileID: 4984204316487484, guid: 521344c0cdcdabf44b262c5d5505ff4e, type: 2}
   sideEffect: {fileID: 0}
   force: 16
-  knockbackmod: 3
+  knockbackmod: 2.5
   upwardForce: 0.3
   chargeTime: 0
   valueModifier: 2

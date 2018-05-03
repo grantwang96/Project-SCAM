@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RangedMovement : Movement {
     
@@ -25,7 +26,12 @@ public class RangedMovement : Movement {
         changeState(new RangedEnemyIdle());
     }
 
-	protected override void ToIdle() {
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    protected override void ToIdle() {
 		changeState(new RangedEnemyIdle());
 	}
 
@@ -75,27 +81,30 @@ public class RangedMovement : Movement {
         attackRoutine = null;
     }
     
+    /*
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.transform.tag == "Ground" && hamper <= 0) {
+        if (coll.transform.tag == "Ground" && hamper <= 0)
+        {
             // Debug.Log("Hi Ground");
-
-            if (coll.transform.tag == "Ground" && hamper <= 0)
+            /*
+            if (agent.Warp(transform.position)
+                && !agent.isStopped)
             {
-                // Debug.Log("Hi Ground");
-                /*
-                if (agent.Warp(transform.position)
-                    && !agent.isStopped)
-                {
-                    agent.updatePosition = true;
-                    agent.updateRotation = true;
-                    agent.isStopped = false;
-                }*/
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
+            }
+            
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(transform.position, out hit, agent.radius * 2, NavMesh.AllAreas))
+            {
+                transform.position = hit.position;
                 agent.nextPosition = transform.position;
                 agent.updatePosition = true;
                 agent.updateRotation = true;
                 agent.isStopped = false;
             }
         }
-    }
+    }*/
 }

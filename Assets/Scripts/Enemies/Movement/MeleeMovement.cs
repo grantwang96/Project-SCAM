@@ -23,7 +23,14 @@ public class MeleeMovement : Movement {
     public override void Update()
     {
         destination = agent.destination;
-        /*
+
+        RaycastHit rayHit;
+        if (Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
+            out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
+
+        }
+
+
         if(Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down), 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
             agent.updatePosition = true;
             agent.updateRotation = true;
@@ -31,7 +38,8 @@ public class MeleeMovement : Movement {
                 agent.Warp(transform.position);
             }
             agent.isStopped = false;
-        }*/
+        }
+
         base.Update();
     }
 
@@ -45,7 +53,7 @@ public class MeleeMovement : Movement {
     {
         base.knockBack(dir, force);
     }
-
+    /*
     void OnCollisionEnter(Collision coll)
     {
         if (coll.transform.tag == "Ground" && hamper <= 0)
@@ -58,11 +66,16 @@ public class MeleeMovement : Movement {
                 agent.updatePosition = true;
                 agent.updateRotation = true;
                 agent.isStopped = false;
-            }*/
-            agent.nextPosition = transform.position;
-            agent.updatePosition = true;
-            agent.updateRotation = true;
-            agent.isStopped = false;
+            }
+
+            NavMeshHit hit;
+            if(NavMesh.SamplePosition(transform.position, out hit, agent.radius * 2, NavMesh.AllAreas)) {
+                transform.position = hit.position;
+                agent.nextPosition = transform.position;
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
+            }
         }
     }
     /*
