@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5cc55aa419bee647a5ecbb95b1a704e, type: 3}
   m_Name: Ice
   m_EditorClassIdentifier: 
-  force: 100
+  force: 12
   power: 10
   duration: 0
   powerLevelModifier: 1

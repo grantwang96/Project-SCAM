@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4916791881007598}
   - component: {fileID: 33991831009087016}
   - component: {fileID: 23134007042354606}
-  - component: {fileID: 95505733693132448}
   - component: {fileID: 65153420762565324}
   m_Layer: 0
   m_Name: SewageGrate
@@ -98,20 +97,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 11.467073, y: 5.091506, z: 1.536171}
   m_Center: {x: 0, y: 0.0060607195, z: 0}
---- !u!95 &95505733693132448
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1271892890368322}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 843ef83133271854185e56329e696aae, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1

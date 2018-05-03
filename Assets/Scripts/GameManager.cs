@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
     [SerializeField] GameObject PausePanel;
     public GameObject currentMenuPanel;
 
+    public GameObject blushPrefab;
+    public GameObject heartPS;
+
     #region Prefabs N Stuff
     public GameHint messagePrefab;
     #endregion

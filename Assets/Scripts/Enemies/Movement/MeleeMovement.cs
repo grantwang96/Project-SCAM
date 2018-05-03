@@ -48,13 +48,21 @@ public class MeleeMovement : Movement {
 
     void OnCollisionEnter(Collision coll)
     {
-        if(coll.transform.tag == "Ground" && hamper <= 0) {
+        if (coll.transform.tag == "Ground" && hamper <= 0)
+        {
             // Debug.Log("Hi Ground");
-            if (agent.nextPosition != transform.position && agent.Warp(transform.position)) {
+            /*
+            if (agent.Warp(transform.position)
+                && !agent.isStopped)
+            {
                 agent.updatePosition = true;
                 agent.updateRotation = true;
                 agent.isStopped = false;
-            }
+            }*/
+            agent.nextPosition = transform.position;
+            agent.updatePosition = true;
+            agent.updateRotation = true;
+            agent.isStopped = false;
         }
     }
     /*
