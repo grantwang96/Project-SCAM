@@ -28,6 +28,15 @@ public class RangedMovement : Movement {
 
     public override void Update()
     {
+        RaycastHit rayHit;
+        if (hamper <= 0 && Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
+            out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
+            if (agent.nextPosition != transform.position && agent.Warp(transform.position)) {
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
+            }
+        }
         base.Update();
     }
 

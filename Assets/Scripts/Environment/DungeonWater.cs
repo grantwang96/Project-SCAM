@@ -8,6 +8,7 @@ public class DungeonWater : MonoBehaviour {
 //    public int damage;
 
 	BoxCollider col;
+    public bool isKillZone;
 
 	// Use this for initialization
 	void Start () {
@@ -21,11 +22,13 @@ public class DungeonWater : MonoBehaviour {
 	}
 
     void OnTriggerStay(Collider other) {
-		Damageable dmg = other.GetComponent<Damageable>();
-		if (dmg != null && dmg != PlayerDamageable.Instance) {
-			// AudioSource source = other.GetComponent<AudioSource>();
-//			source.
-			dmg.Die();
-		}
+        if(isKillZone) {
+            Damageable dmg = other.GetComponent<Damageable>();
+            if (dmg != null && dmg != PlayerDamageable.Instance) {
+                // AudioSource source = other.GetComponent<AudioSource>();
+                //		
+                dmg.TakeDamage(null, 9999, Vector3.zero, 0f);
+            }
+        }
     }
 }

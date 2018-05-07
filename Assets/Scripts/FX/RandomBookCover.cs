@@ -11,6 +11,7 @@ public class RandomBookCover : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        rend.materials[changeIdx] = mats[Random.Range(0, mats.Length)];
+        // rend.materials[changeIdx] = mats[Random.Range(0, mats.Length)];
+        rend.materials[changeIdx].color = Random.ColorHSV();
 	}
 }

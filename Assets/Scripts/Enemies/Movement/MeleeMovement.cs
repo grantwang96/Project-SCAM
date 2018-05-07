@@ -8,7 +8,6 @@ public class MeleeMovement : Movement {
 
     public Vector3 destination;
     public bool isGrounded;
-    public LayerMask groundLayers;
 
     public override void setup() {
         agent = GetComponent<NavMeshAgent>(); // set the agent
@@ -25,19 +24,13 @@ public class MeleeMovement : Movement {
         destination = agent.destination;
 
         RaycastHit rayHit;
-        if (Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
+        if (hamper <= 0 && Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
             out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
-
-        }
-
-
-        if(Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down), 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
-            agent.updatePosition = true;
-            agent.updateRotation = true;
-            if(agent.nextPosition != transform.position) {
-                agent.Warp(transform.position);
+            if (agent.nextPosition != transform.position && agent.Warp(transform.position)) {
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
             }
-            agent.isStopped = false;
         }
 
         base.Update();

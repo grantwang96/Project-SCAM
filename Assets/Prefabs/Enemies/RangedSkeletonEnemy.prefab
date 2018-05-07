@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 114290829768129428}
   m_Layer: 12
   m_Name: RangedSkeletonEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -451,9 +451,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4973728258155586}
+  - component: {fileID: 114555559702884914}
+  - component: {fileID: 135975704590930106}
   m_Layer: 12
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: WaterInteracting
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -791,7 +793,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1065622571024560}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -8.5, y: 0, z: -21}
+  m_LocalPosition: {x: -15.5, y: 0, z: 60.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4945791368857752}
@@ -1053,6 +1055,19 @@ MonoBehaviour:
   deathFX: {fileID: 1239637320502732, guid: d381ed786368f764c886499b03b15e18, type: 2}
   specialDrop: {fileID: 0}
   drops: []
+--- !u!114 &114555559702884914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1884117306491132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4bd91b3c0ef408c8c3419200e9b8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: {fileID: 114290829768129428}
+  dmgTickAmt: 10
 --- !u!114 &114981063399074870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1086,6 +1101,9 @@ MonoBehaviour:
   numRaycasts: 12
   raySpread: 1
   obstacleCheckRange: 3
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
   scanLayer:
     serializedVersion: 2
     m_Bits: 6401
@@ -1102,6 +1120,18 @@ MonoBehaviour:
   projectilePrefab: {fileID: 114629974066780304, guid: 020ef4f42ac3d0043a3db516b5f39360,
     type: 2}
   throwForce: 40
+--- !u!135 &135975704590930106
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1884117306491132}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136490020608394900
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -48,8 +48,7 @@ public class SpellBook : MonoBehaviour, Interactable {
     {
         // offChance = Random.Range(0.5f, .9f);
         offChance = 1f;
-        if (primaryEffect)
-        {
+        if (primaryEffect) {
             ammo += primaryEffect.ammo;
             baseColor = primaryEffect.baseColor;
             baseColor.a = 1f;
@@ -57,8 +56,7 @@ public class SpellBook : MonoBehaviour, Interactable {
             spellTitle = primaryEffect.title;
             spellDescription = "-" + primaryEffect.description;
         }
-        if (secondaryEffect)
-        {
+        if (secondaryEffect) {
             ammo += secondaryEffect.ammo;
             // spellTitle = secondaryEffect.title + " " + spellTitle;
             spellDescription += "\n-" + secondaryEffect.description;
@@ -71,8 +69,7 @@ public class SpellBook : MonoBehaviour, Interactable {
             sparklyEffect.localPosition = Vector3.zero;
             sparklyEffect.localRotation = transform.rotation;
             ParticleSystem sparklyParticles = sparklyEffect.GetComponent<ParticleSystem>();
-            if (sparklyParticles)
-            {
+            if (sparklyParticles) {
                 ParticleSystem.MainModule main = sparklyParticles.main;
                 main.startColor = baseColor;
             }
@@ -82,11 +79,7 @@ public class SpellBook : MonoBehaviour, Interactable {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!_dead && owner == null) // If not dead
-        {
-            // fun rotations and floats!
-        }
-        if (ammo <= 0 && !_dead) {
+        if (ammo <= 0) {
             Die();
         }
     }

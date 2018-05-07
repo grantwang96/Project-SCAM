@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 114415805733737798}
   m_Layer: 12
   m_Name: MeleeSkeletonEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,9 +256,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4090685137195264}
+  - component: {fileID: 114584214062735722}
+  - component: {fileID: 135732091317010426}
   m_Layer: 12
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: WaterInteracting
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -691,8 +693,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1154758488249954}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 5, y: 0, z: 17.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 0, z: 63}
   m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
   - {fileID: 4596149973378768}
@@ -1035,6 +1037,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c109d68c90383460684fb56a4c953f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114584214062735722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1609692176602714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4bd91b3c0ef408c8c3419200e9b8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: {fileID: 114844655462752790}
+  dmgTickAmt: 10
 --- !u!114 &114628699432480118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1068,6 +1083,9 @@ MonoBehaviour:
   numRaycasts: 12
   raySpread: 1
   obstacleCheckRange: 3
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
   scanLayer:
     serializedVersion: 2
     m_Bits: 6401
@@ -1081,9 +1099,6 @@ MonoBehaviour:
   crushTarget: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   isGrounded: 0
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 1
 --- !u!114 &114844655462752790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1112,6 +1127,18 @@ MonoBehaviour:
   rbody: {fileID: 54453374431649074}
   deathFX: {fileID: 1289514646693828, guid: 20145835f4b8b7245a5ca5f29cb68e4d, type: 2}
   specialDrop: {fileID: 0}
+--- !u!135 &135732091317010426
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1609692176602714}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136855091534851680
 CapsuleCollider:
   m_ObjectHideFlags: 1

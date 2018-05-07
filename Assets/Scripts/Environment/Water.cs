@@ -60,7 +60,7 @@ public class Water : MonoBehaviour {
 //			other.CompareTag("Ground") || other.CompareTag("Magic")) {
 //			return;
 //		}
-		if (!(other.CompareTag("WaterInteracting") || other.CompareTag("Player") || other.CompareTag("MainCamera"))) {
+		if (!(other.CompareTag("WaterInteracting") || other.CompareTag("Player") || other.CompareTag("MainCamera") || other.CompareTag("Enemy"))) {
 			return;
 		}
 
