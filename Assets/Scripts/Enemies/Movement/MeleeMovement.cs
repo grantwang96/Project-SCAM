@@ -8,7 +8,6 @@ public class MeleeMovement : Movement {
 
     public Vector3 destination;
     public bool isGrounded;
-    public LayerMask groundLayers;
 
     public override void setup() {
         agent = GetComponent<NavMeshAgent>(); // set the agent
@@ -23,15 +22,17 @@ public class MeleeMovement : Movement {
     public override void Update()
     {
         destination = agent.destination;
-        /*
-        if(Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down), 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
-            agent.updatePosition = true;
-            agent.updateRotation = true;
-            if(agent.nextPosition != transform.position) {
-                agent.Warp(transform.position);
+
+        RaycastHit rayHit;
+        if (hamper <= 0 && Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
+            out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
+            if (agent.nextPosition != transform.position && agent.Warp(transform.position)) {
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
             }
-            agent.isStopped = false;
-        }*/
+        }
+
         base.Update();
     }
 
@@ -45,7 +46,7 @@ public class MeleeMovement : Movement {
     {
         base.knockBack(dir, force);
     }
-
+    /*
     void OnCollisionEnter(Collision coll)
     {
         if (coll.transform.tag == "Ground" && hamper <= 0)
@@ -58,11 +59,16 @@ public class MeleeMovement : Movement {
                 agent.updatePosition = true;
                 agent.updateRotation = true;
                 agent.isStopped = false;
-            }*/
-            agent.nextPosition = transform.position;
-            agent.updatePosition = true;
-            agent.updateRotation = true;
-            agent.isStopped = false;
+            }
+
+            NavMeshHit hit;
+            if(NavMesh.SamplePosition(transform.position, out hit, agent.radius * 2, NavMesh.AllAreas)) {
+                transform.position = hit.position;
+                agent.nextPosition = transform.position;
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
+            }
         }
     }
     /*

@@ -14,6 +14,7 @@ TagManager:
   - Water
   - Magic
   - WaterInteracting
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   baseSpeed: 3
-  maxSpeed: 8
+  maxSpeed: 10
   sightRange: 30
   sightAngle: 80
   attackRange: 3

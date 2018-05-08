@@ -212,6 +212,7 @@ public abstract class Movement : MonoBehaviour
     [SerializeField] int numRaycasts;
     [SerializeField] float raySpread;
     [SerializeField] float obstacleCheckRange;
+    public LayerMask groundLayers;
     public LayerMask scanLayer;
     public LayerMask obstacleLayer;
     public LayerMask pathFindingLayers;

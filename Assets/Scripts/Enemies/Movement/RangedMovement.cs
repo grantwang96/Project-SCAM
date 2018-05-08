@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RangedMovement : Movement {
     
@@ -25,7 +26,21 @@ public class RangedMovement : Movement {
         changeState(new RangedEnemyIdle());
     }
 
-	protected override void ToIdle() {
+    public override void Update()
+    {
+        RaycastHit rayHit;
+        if (hamper <= 0 && Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
+            out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
+            if (agent.nextPosition != transform.position && agent.Warp(transform.position)) {
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
+            }
+        }
+        base.Update();
+    }
+
+    protected override void ToIdle() {
 		changeState(new RangedEnemyIdle());
 	}
 
@@ -75,27 +90,30 @@ public class RangedMovement : Movement {
         attackRoutine = null;
     }
     
+    /*
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.transform.tag == "Ground" && hamper <= 0) {
+        if (coll.transform.tag == "Ground" && hamper <= 0)
+        {
             // Debug.Log("Hi Ground");
-
-            if (coll.transform.tag == "Ground" && hamper <= 0)
+            /*
+            if (agent.Warp(transform.position)
+                && !agent.isStopped)
             {
-                // Debug.Log("Hi Ground");
-                /*
-                if (agent.Warp(transform.position)
-                    && !agent.isStopped)
-                {
-                    agent.updatePosition = true;
-                    agent.updateRotation = true;
-                    agent.isStopped = false;
-                }*/
+                agent.updatePosition = true;
+                agent.updateRotation = true;
+                agent.isStopped = false;
+            }
+            
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(transform.position, out hit, agent.radius * 2, NavMesh.AllAreas))
+            {
+                transform.position = hit.position;
                 agent.nextPosition = transform.position;
                 agent.updatePosition = true;
                 agent.updateRotation = true;
                 agent.isStopped = false;
             }
         }
-    }
+    }*/
 }

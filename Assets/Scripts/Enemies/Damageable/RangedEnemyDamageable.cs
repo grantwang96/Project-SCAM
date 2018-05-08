@@ -22,6 +22,9 @@ public class RangedEnemyDamageable : Damageable {
         myMovement.blueprint.DropLoot(transform.position + Vector3.up);
         // activate special drop if you have one
         if (specialDrop != null) {
+            FloatyRotaty fr = specialDrop.GetComponent<FloatyRotaty>();
+            fr.active = true;
+            fr.SetPosition();
             specialDrop.SetActive(true);
         }
         Destroy(Instantiate(deathFX, transform.position, transform.rotation), 5f);
@@ -42,7 +45,7 @@ public class RangedEnemyDamageable : Damageable {
 
         PlayHurtAnimation(dirDotProd, dir);
 
-        if (attacker != myMovement.attackTarget &&
+        if (attacker != null && attacker != myMovement.attackTarget &&
            myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced))
         {
             if (targetSwitchRoutine != null) { StopCoroutine(targetSwitchRoutine); }

@@ -21,6 +21,7 @@ public class Drownable : MonoBehaviour {
 	}
 	
 	public void DealDrownDamage() {
-		dmg.health -= dmgTickAmt;
+        // dmg.health -= dmgTickAmt;
+        dmg.TakeDamage(null, dmgTickAmt, Vector3.zero, 0f);
 	}
 }

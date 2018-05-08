@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 114573002085010578}
   m_Layer: 8
   m_Name: SpellCasterEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -367,6 +367,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -382,6 +383,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -399,6 +401,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -414,6 +417,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -431,6 +435,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -446,6 +451,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -463,6 +469,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -478,6 +485,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -495,6 +503,7 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -510,6 +519,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -527,6 +537,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -542,6 +553,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -559,6 +571,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -574,6 +587,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -591,6 +605,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -606,6 +621,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -714,15 +730,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_health: 10
+  _health: 0
   transmutable: 1
   hurt: 0
   hurtTime: 0.3
   dead: 0
-  rbody: {fileID: 0}
-  charCon: {fileID: 143969769069965834}
+  damageable: 1
+  myCollider: {fileID: 0}
   myRend: {fileID: 23554513121543278}
+  originSpawn: {x: 0, y: 0, z: 0}
   myMovement: {fileID: 114573002085010578}
   parentHit: {fileID: 0}
+  replacedBody: {fileID: 0}
+  blush: {fileID: 0}
+  charCon: {fileID: 143969769069965834}
   renderers:
   - {fileID: 23520727362764572}
   - {fileID: 23297159469638308}
@@ -744,7 +765,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   force: 10
+  upwardForce: 0
   myBody: {fileID: 4314134365974478}
+  myMovement: {fileID: 0}
 --- !u!114 &114573002085010578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -759,24 +782,39 @@ MonoBehaviour:
   baseSpeed: 0
   maxSpeed: 0
   currSpeed: 0
+  maxWanderDistance: 0
+  friction: 1
+  currVel: {x: 0, y: 0, z: 0}
   sightRange: 0
   sightAngle: 0
   Head: {fileID: 4185139986431552}
+  myDamageable: {fileID: 0}
   rbody: {fileID: 0}
   anim: {fileID: 95451731344521042}
+  agent: {fileID: 0}
   blueprint: {fileID: 11400000, guid: 7c36db8e6abec5148b279f53b0b6b02f, type: 2}
   myType: 3
+  sophisticated: 0
   damage: 0
   hamper: 0
+  attackDotProd: 0
   numRaycasts: 10
   raySpread: 1
+  obstacleCheckRange: 0
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 0
   scanLayer:
     serializedVersion: 2
     m_Bits: 4353
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
+  pathFindingLayers:
+    serializedVersion: 2
+    m_Bits: 0
   attackTarget: {fileID: 0}
+  crushTarget: {fileID: 0}
   pickupSpeed: 0
   gun: {fileID: 4140670540529692}
   body: {fileID: 4314134365974478}

@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 114848195985472458}
   m_Layer: 12
   m_Name: ExperimentalWizard
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -750,9 +750,13 @@ MonoBehaviour:
   sophisticated: 0
   damage: 0
   hamper: 0
+  attackDotProd: 0
   numRaycasts: 12
   raySpread: 1
   obstacleCheckRange: 0
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 0
   scanLayer:
     serializedVersion: 2
     m_Bits: 2305
@@ -787,9 +791,11 @@ MonoBehaviour:
   damageable: 1
   myCollider: {fileID: 136987016931986708}
   myRend: {fileID: 0}
+  originSpawn: {x: 0, y: 0, z: 0}
   myMovement: {fileID: 114525517222117530}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
+  blush: {fileID: 0}
   rbody: {fileID: 54752881064667998}
 --- !u!114 &114861056478261278
 MonoBehaviour:
@@ -804,6 +810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   force: 10
+  upwardForce: 0
   myBody: {fileID: 4033513038355134}
   myMovement: {fileID: 0}
 --- !u!135 &135089130993540850

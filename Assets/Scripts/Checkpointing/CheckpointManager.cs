@@ -111,6 +111,7 @@ public class CheckpointManager : MonoBehaviour {
 		player.transform.position = savedPos;
 		player.transform.rotation = savedRot;
         playerDmg.health = playerHealth;
+        player.Find("PlayerHead").localEulerAngles = Vector3.zero;
         player.gameObject.GetComponent<CharacterController>().Move(Vector3.zero);
 
 		if (OnReset != null) {
