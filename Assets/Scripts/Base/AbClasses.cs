@@ -19,6 +19,7 @@ public abstract class Damageable : MonoBehaviour
     public float hurtTime;
     public bool dead;
     public bool damageable = true;
+    public float velocityDamageThreshold;
 
     // rbody or character controller
     // public Rigidbody rbody;
@@ -31,6 +32,7 @@ public abstract class Damageable : MonoBehaviour
     public Damageable parentHit;
 
     public Damageable replacedBody; // for transmutations
+    public Coroutine transmutationProcess;
     
     public Coroutine seduction;
     public SpriteRenderer blush;
@@ -91,12 +93,18 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void InitiateTransmutation(float duration, GameObject replacement)
     {
-        StartCoroutine(processTransmutation(duration, replacement));
+        if(parentHit != null) { parentHit.InitiateTransmutation(duration, replacement); return; } // if you ARE the transmutation, pass it along to parent
+        if(transmutationProcess != null) { StopCoroutine(transmutationProcess); } // stop the previous transmutation process
+        if(replacedBody != null) {
+            transform.position = replacedBody.transform.position;
+            Destroy(replacedBody.gameObject);
+        } // destroy the replaced body that's already there
+        transmutationProcess = StartCoroutine(processTransmutation(duration, replacement));
     }
 
     public virtual IEnumerator processTransmutation(float duration, GameObject replacement)
     {
-        myMovement.hamper++;
+        if(myMovement != null) { myMovement.hamper++; }
         myCollider.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
         if (allRends.Length > 0) {
@@ -106,7 +114,7 @@ public abstract class Damageable : MonoBehaviour
         Rigidbody replaceRigidBody = myReplace.GetComponent<Rigidbody>();
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
-        replacedBody.setTransmutable(false);
+        replacedBody.setTransmutable(true);
 
         float time = 0f;
         while(time < duration) {
@@ -122,7 +130,8 @@ public abstract class Damageable : MonoBehaviour
             foreach (Renderer rend in allRends) { rend.enabled = true; }
         }
         replacedBody = null;
-        myMovement.hamper--;
+        if (myMovement != null) { myMovement.hamper--; }
+        transmutationProcess = null;
     }
 
     public virtual void setTransmutable(bool newBool)

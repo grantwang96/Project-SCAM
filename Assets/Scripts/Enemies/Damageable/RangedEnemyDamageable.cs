@@ -122,6 +122,7 @@ public class RangedEnemyDamageable : Damageable {
 
     public override void InitiateTransmutation(float duration, GameObject replacement)
     {
+        if(transmutationProcess != null) { myMovement.hamper--; }
         base.InitiateTransmutation(duration, replacement);
     }
 
@@ -147,7 +148,7 @@ public class RangedEnemyDamageable : Damageable {
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
         replacedBody.parentHit = this;
-        replacedBody.setTransmutable(false);
+        // replacedBody.setTransmutable(false);
 
         // wait for the spell duration
         float time = 0f;

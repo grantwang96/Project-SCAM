@@ -47,33 +47,42 @@ public class Movable : Damageable
             Debug.Log("Cannot transmute!");
             return;
         }
-        StartCoroutine(transmute(duration, replacement));
+        if(parentHit != null) { parentHit.InitiateTransmutation(duration, replacement); return; }
+        if(transmutationProcess != null) { StopCoroutine(transmutationProcess); }
+        if(replacedBody != null) {
+            transform.position = replacedBody.transform.position;
+            transform.rotation = replacedBody.transform.rotation;
+            Destroy(replacedBody.gameObject);
+        }
+        transmutationProcess = StartCoroutine(transmute(duration, replacement));
     }
 
     public IEnumerator transmute(float duration, GameObject replacement)
     {
-        transmutable = false;
+        // transmutable = false;
         GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<MeshRenderer>().enabled = false;
         GameObject myReplacement = Instantiate(replacement, transform.position, transform.rotation);
-        if (myReplacement.GetComponent<Rigidbody>() != null)
-        {
+        replacedBody = myReplacement.GetComponent<Damageable>();
+        replacedBody.parentHit = this;
+        if (myReplacement.GetComponent<Rigidbody>() != null) {
             Debug.Log("Boosh!");
             myReplacement.GetComponent<Rigidbody>().AddForce(Vector3.up * 10f, ForceMode.Impulse);
             myReplacement.GetComponent<Rigidbody>().angularVelocity = UnityEngine.Random.insideUnitSphere * 5f;
         }
-        myReplacement.GetComponent<Damageable>().setTransmutable(false);
+        // myReplacement.GetComponent<Damageable>().setTransmutable(false);
         yield return new WaitForSeconds(duration);
-        Destroy(myReplacement);
         transform.position = myReplacement.transform.position;
         transform.rotation = myReplacement.transform.rotation;
+        Destroy(replacedBody.gameObject);
         GetComponent<Collider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<MeshRenderer>().enabled = true;
         transmutable = true;
         GetComponent<Rigidbody>().AddForce(Vector3.up * 10f, ForceMode.Impulse);
         GetComponent<Rigidbody>().angularVelocity = UnityEngine.Random.insideUnitSphere * 5f;
+        transmutationProcess = null;
     }
 
     public override void setTransmutable(bool newBool)

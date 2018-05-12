@@ -119,19 +119,19 @@ public class MeleeEnemyDamageable : Damageable {
 
     public override void InitiateTransmutation(float duration, GameObject replacement)
     {
+        if(transmutationProcess != null) { myMovement.hamper--; }
         base.InitiateTransmutation(duration, replacement);
     }
 
     public override IEnumerator processTransmutation(float duration, GameObject replacement)
     {
-        myMovement.hamper++;
+        if(myMovement != null) { myMovement.hamper++; }
 
         // shut off the renderers
         Collider myColl = GetComponent<Collider>();
         myColl.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
-        if (allRends.Length > 0)
-        {
+        if (allRends.Length > 0) {
             foreach (Renderer rend in allRends)
             { if (rend != blush) { rend.enabled = false; } }
         }
@@ -147,7 +147,7 @@ public class MeleeEnemyDamageable : Damageable {
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
         replacedBody.parentHit = this;
-        replacedBody.setTransmutable(false);
+        // replacedBody.setTransmutable(false);
 
         // wait for the spell duration
         float time = 0f;
@@ -175,7 +175,7 @@ public class MeleeEnemyDamageable : Damageable {
                 if (rend != null && rend != blush) { rend.enabled = true; }
         }
         replacedBody = null;
-        myMovement.hamper--;
+        if (myMovement != null) { myMovement.hamper--; }
     }
 
     public override void Seduce(float duration, GameObject target, SpellCaster owner)
@@ -204,5 +204,10 @@ public class MeleeEnemyDamageable : Damageable {
             if (-dir.x > 0) { myMovement.anim.Play("RightHurt"); } // it came from the right
             else { myMovement.anim.Play("LeftHurt"); } // it came from the left
         }
+    }
+
+    void OnCollisionEnter(Collision coll) {
+        float magnitude = coll.relativeVelocity.magnitude;
+        // Debug.Log("Hit Magnitude = " + magnitude);
     }
 }

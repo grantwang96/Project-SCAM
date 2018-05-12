@@ -98,6 +98,12 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 	void Update () {
         if (GameManager.Instance.menuMode || myDamageable.dead) { return; }
 
+        foreach(SpellBook book in spellsInventory) {
+            if(book.sparklyEffect != null && book.sparklyEffect.gameObject.activeInHierarchy) {
+                book.sparklyEffect.gameObject.SetActive(false);
+            }
+        }
+
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
 

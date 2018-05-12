@@ -31,6 +31,7 @@ public class HealthPotion : MonoBehaviour {
         if(dead) { return; }
         if(coll.tag == "Player") {
             Damageable dam = coll.GetComponent<Damageable>();
+            if(dam.health == dam.max_health) { return; }
             dam.Heal(strength);
             Die();
         }
