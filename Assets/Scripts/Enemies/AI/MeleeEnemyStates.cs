@@ -286,11 +286,13 @@ public class MeleeEnemySeduced : NPCState
         // if you don't have an attack target, go follow crush around
         if (myOwner.attackTarget == null) {
             myOwner.agent.stoppingDistance = 5f;
-            if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.crushTarget.position); }
+            if(myOwner.crushTarget.tag == "Player") {  }
+            else {  }
+            // if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.crushTarget.position); }
 
             // check for obstructions
-            Transform obstruction = myOwner.obstruction();
-            if (obstruction != null) { teleportToLover(); }
+            // Transform obstruction = myOwner.obstruction();
+            // if (obstruction != null) { teleportToLover(); }
         }
         else { // otherwise, go be mean
             myOwner.agent.stoppingDistance = originStopDistance;

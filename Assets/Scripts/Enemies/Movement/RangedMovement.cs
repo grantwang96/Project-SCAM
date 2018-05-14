@@ -90,30 +90,8 @@ public class RangedMovement : Movement {
         attackRoutine = null;
     }
     
-    /*
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.transform.tag == "Ground" && hamper <= 0)
-        {
-            // Debug.Log("Hi Ground");
-            /*
-            if (agent.Warp(transform.position)
-                && !agent.isStopped)
-            {
-                agent.updatePosition = true;
-                agent.updateRotation = true;
-                agent.isStopped = false;
-            }
-            
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(transform.position, out hit, agent.radius * 2, NavMesh.AllAreas))
-            {
-                transform.position = hit.position;
-                agent.nextPosition = transform.position;
-                agent.updatePosition = true;
-                agent.updateRotation = true;
-                agent.isStopped = false;
-            }
-        }
-    }*/
+        if(coll.transform == attackTarget) { changeState(new RangedEnemyAggro()); }
+    }
 }
