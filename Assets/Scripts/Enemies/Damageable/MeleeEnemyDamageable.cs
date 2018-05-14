@@ -15,7 +15,6 @@ public class MeleeEnemyDamageable : Damageable {
         base.Die();
         // play some death animations
         // play some death sfxs
-
         myMovement.blueprint.DropLoot(transform.position + Vector3.up);
         // activate special drop if you have one
         if(specialDrop != null) {
