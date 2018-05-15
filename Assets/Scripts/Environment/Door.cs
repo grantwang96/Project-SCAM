@@ -127,7 +127,7 @@ public class Door : Damageable, Interactable {
 
     public override void knockBack(Vector3 dir, float force)
     {
-        if(!rbody.isKinematic) { rbody.AddForce(dir * force, ForceMode.Impulse); }
+        if(rbody && !rbody.isKinematic) { rbody.AddForce(dir * force, ForceMode.Impulse); }
     }
 
     public override void Seduce(float duration, GameObject target, SpellCaster owner)
