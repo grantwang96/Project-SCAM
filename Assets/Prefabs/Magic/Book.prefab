@@ -218,6 +218,7 @@ MonoBehaviour:
   maxAmmo: 0
   ammo: 0
   _dead: 0
+  active: 1
   spellTitle: 
   spellDescription: 
   instructionImage: {fileID: 0}

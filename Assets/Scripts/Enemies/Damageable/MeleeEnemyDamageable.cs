@@ -39,8 +39,7 @@ public class MeleeEnemyDamageable : Damageable {
 
         PlayHurtAnimation(dirDotProd, dir);
 
-        if(attacker != null && attacker != myMovement.attackTarget &&
-           myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced)) {
+        if(attacker != null && myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced)) {
             if(targetSwitchRoutine != null) { StopCoroutine(targetSwitchRoutine); }
             targetSwitchRoutine = StartCoroutine(SwitchTargets(attacker));
             myMovement.changeState(new MeleeEnemyAggro());

@@ -23,7 +23,7 @@ MonoBehaviour:
       type: 2}
     dropCountLower: 1
     dropCountUpper: 1
-    chanceDrop: 0.33
+    chanceDrop: 0.1
   firstName:
   - Bob
   - Krong

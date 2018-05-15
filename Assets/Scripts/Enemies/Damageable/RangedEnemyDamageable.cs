@@ -45,14 +45,12 @@ public class RangedEnemyDamageable : Damageable {
 
         PlayHurtAnimation(dirDotProd, dir);
 
-        if (attacker != null && attacker != myMovement.attackTarget &&
-           myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced))
-        {
+        if (attacker != null && myMovement.getCurrentState().GetType() != typeof(RangedEnemySeduced)) {
             if (targetSwitchRoutine != null) { StopCoroutine(targetSwitchRoutine); }
             targetSwitchRoutine = StartCoroutine(SwitchTargets(attacker));
-            myMovement.changeState(new MeleeEnemyAggro());
+            myMovement.changeState(new RangedEnemyAggro());
         }
-        myMovement.changeState(new MeleeEnemyInjured(), myMovement.getCurrentState());
+        myMovement.changeState(new RangedEnemyInjured(), myMovement.getCurrentState());
     }
 
     IEnumerator SwitchTargets(Transform attacker)

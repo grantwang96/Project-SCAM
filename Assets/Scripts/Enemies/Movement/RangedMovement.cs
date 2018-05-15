@@ -40,6 +40,10 @@ public class RangedMovement : Movement {
                 ReactivateNavMesh();
             }
         }
+        else
+        {
+            rbody.isKinematic = false;
+        }
         base.Update();
     }
 

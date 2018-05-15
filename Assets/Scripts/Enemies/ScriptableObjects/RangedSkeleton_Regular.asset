@@ -23,7 +23,7 @@ MonoBehaviour:
       type: 2}
     dropCountLower: 1
     dropCountUpper: 1
-    chanceDrop: 0.5
+    chanceDrop: 0.2
   firstName:
   - Todd
   - Bull

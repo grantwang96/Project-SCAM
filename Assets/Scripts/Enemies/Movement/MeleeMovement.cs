@@ -33,6 +33,9 @@ public class MeleeMovement : Movement {
                 ReactivateNavMesh();
             }
         }
+        else {
+            rbody.isKinematic = false;
+        }
 
         base.Update();
     }
