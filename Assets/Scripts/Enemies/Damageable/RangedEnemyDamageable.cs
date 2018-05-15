@@ -70,12 +70,11 @@ public class RangedEnemyDamageable : Damageable {
 
     public override void knockBack(Vector3 dir, float force)
     {
-        if(myMovement.agent.enabled && !myMovement.agent.isStopped) {
-            myMovement.agent.updatePosition = false;
-            myMovement.agent.updateRotation = false;
-            myMovement.agent.isStopped = true;
-            myMovement.agent.velocity = Vector3.zero;
-        }
+        myMovement.agent.updatePosition = false;
+        myMovement.agent.updateRotation = false;
+        if (myMovement.agent.isOnNavMesh) { myMovement.agent.isStopped = true; }
+        myMovement.agent.velocity = Vector3.zero;
+
         rbody.isKinematic = false;
         rbody.velocity = Vector3.zero;
         rbody.AddForce(dir * force, ForceMode.Impulse);

@@ -185,7 +185,6 @@ public class PlayerMovementV2 : Movement {
         string tag = coll.collider.tag;
         if (tag.Contains("Ground") || tag.Contains("Roof") || tag.Contains("Wall") || tag.Contains("Ceiling")) {
             if (((charCon.collisionFlags & CollisionFlags.CollidedAbove) != 0 || charCon.collisionFlags == CollisionFlags.CollidedAbove) && yMove > 0) { // If collided with head
-                Debug.Log("I hit my head!");
                 yMove = -yMove;
                 return;
             }
