@@ -11,7 +11,10 @@ public class MeleeEnemyIdle : NPCState
         duration = newDuration; // set the duration
         stateStartTime = Time.time;
 
-        if (myOwner.agent.enabled) { myOwner.agent.velocity = Vector3.zero; }
+        if (myOwner.agent.enabled) {
+            myOwner.agent.velocity = Vector3.zero;
+            myOwner.agent.ResetPath();
+        }
 
         anim = myOwner.anim;
         anim.SetInteger("Status", 0);

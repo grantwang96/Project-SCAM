@@ -59,20 +59,14 @@ public class MeleeEnemyDamageable : Damageable {
         targetSwitchRoutine = null;
     }
 
-    public override void knockBack(Vector3 dir, float force)
-    {
+    public override void knockBack(Vector3 dir, float force) {
         myMovement.agent.updatePosition = false;
         myMovement.agent.updateRotation = false;
         myMovement.agent.isStopped = true;
         myMovement.agent.velocity = Vector3.zero;
+        rbody.isKinematic = false;
         rbody.velocity = Vector3.zero;
         rbody.AddForce(dir * force, ForceMode.Impulse);
-
-        /*
-        if (knockBackRoutine != null) {
-            StopCoroutine(knockBackRoutine);
-        }*/
-        // knockBackRoutine = StartCoroutine(knockingBack(dir, force));
     }
 
     IEnumerator knockingBack(Vector3 dir, float force)

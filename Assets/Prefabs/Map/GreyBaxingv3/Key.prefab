@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114809461438195594}
   - component: {fileID: 114782906035912076}
   m_Layer: 0
-  m_Name: KeyProto
+  m_Name: Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   doors:
   - {fileID: 0}
   - {fileID: 0}
+  keyPickUp: {fileID: 1736552643386434, guid: c6d2b2ae37622eb4185975270be69ffc, type: 2}
 --- !u!135 &135926721870835606
 SphereCollider:
   m_ObjectHideFlags: 1

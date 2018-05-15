@@ -30,14 +30,25 @@ public class RangedMovement : Movement {
     {
         RaycastHit rayHit;
         if (hamper <= 0 && Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
-            out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
-            if (agent.nextPosition != transform.position && agent.Warp(transform.position)) {
-                agent.updatePosition = true;
-                agent.updateRotation = true;
-                agent.isStopped = false;
+            out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore))
+        {
+            NavMeshHit hit;
+            agent.nextPosition = transform.position;
+            if (agent.nextPosition != transform.position && NavMesh.SamplePosition(transform.position, out hit, agent.radius, NavMesh.AllAreas))
+            { // check if agent is synced and on/near the navmesh
+                agent.Warp(hit.position);
+                ReactivateNavMesh();
             }
         }
         base.Update();
+    }
+
+    private void ReactivateNavMesh()
+    {
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.isStopped = false;
+        rbody.isKinematic = true;
     }
 
     protected override void ToIdle() {

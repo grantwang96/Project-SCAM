@@ -76,6 +76,7 @@ public class RangedEnemyDamageable : Damageable {
             myMovement.agent.isStopped = true;
             myMovement.agent.velocity = Vector3.zero;
         }
+        rbody.isKinematic = false;
         rbody.velocity = Vector3.zero;
         rbody.AddForce(dir * force, ForceMode.Impulse);
     }

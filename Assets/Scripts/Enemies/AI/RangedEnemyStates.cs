@@ -92,12 +92,14 @@ public class RangedEnemyAggro : NPCState
         FindCover();
     }
 
-    public override void Execute()
-    {
+    public override void Execute() {
         // if you have nothing to chase, stop chasing
         if (myOwner.attackTarget == null) {
             if (previousState != null) { myOwner.changeState(previousState); }
-            else { myOwner.changeState(new RangedEnemyIdle(), Random.Range(4f, 6f)); }
+            else {
+                myOwner.changeState(new RangedEnemyIdle(), Random.Range(4f, 6f));
+                myOwner.attackTarget = myOwner.blueprint.getOriginTarget();
+            }
         }
         if (myOwner == null || myOwner.transform == null) { return; }
         if (myOwner.attackTarget == null)

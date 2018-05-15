@@ -976,7 +976,7 @@ Rigidbody:
   m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
@@ -1044,6 +1044,7 @@ MonoBehaviour:
   hurtTime: 0
   dead: 0
   damageable: 1
+  velocityDamageThreshold: 0
   myCollider: {fileID: 136490020608394900}
   myRend: {fileID: 0}
   originSpawn: {x: 0, y: 0, z: 0}
