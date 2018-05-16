@@ -100,11 +100,12 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
+		processDpad(); // for ps4 dpad
 
         if(currentInteractable == null && canFire) { reticule.sprite = reticuleNormal;  }
         else if(canFire) { reticule.sprite = reticuleInteractable; }
         
-        if (Input.GetButtonDown("Fire1")) { // make sure player hits shoot button and has something to shoot
+        if (Input.GetButtonDown("Fire1") || Input.GetAxis("ctr_Fire1") > 0.5f) { // make sure player hits shoot button and has something to shoot
             fireSpell();
         }
         if(Input.GetButtonDown("Fire2") && currentInteractable != null) {
@@ -192,20 +193,70 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             currentHeld = 0;
-            // updateCurrentHeld();
-            UpdateSpellData();
+			// updateCurrentHeld();
+			FireSwap();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && spellsInventory.Count > 1) {
             currentHeld = 1;
-            // updateCurrentHeld();
-            UpdateSpellData();
+			// updateCurrentHeld();
+			FireSwap();
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && spellsInventory.Count > 2) {
             currentHeld = 2;
-            // updateCurrentHeld();
-            UpdateSpellData();
+			// updateCurrentHeld();
+			FireSwap();
         }
     }
+
+	void processDpad() 
+	{
+		if (spellsInventory.Count < 2) return;
+
+		if (Input.GetAxis("ctr_dx") < -0.5f) {
+			DecHeldIndex();
+			FireSwap();
+		}
+		else if (Input.GetAxis("ctr_dx") > 0.5f) {
+			IncHeldIndex();
+			FireSwap();
+		}
+	}
+
+	int IncHeldIndex() 
+	{
+		if (currentHeld == spellsInventory.Count - 1) {
+			currentHeld = 0;
+		}
+		else {
+			currentHeld++;
+		}
+
+		return currentHeld;
+	}
+
+	int DecHeldIndex() 
+	{
+		if (currentHeld == 0) {
+			currentHeld = spellsInventory.Count - 1;
+		}
+		else {
+			currentHeld--;
+		}
+
+		return currentHeld;
+	}
+
+    IEnumerator StartSwapCD()
+	{
+		yield return new WaitForSeconds(sounds.)
+	}
+
+    void FireSwap()
+	{      
+        sounds.PlayClip("swap");
+        UpdateSpellData();
+		StartSwapCD();
+	}
 
     void processScrolling()
     {
@@ -214,11 +265,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         {
             if (mouse > 0) { currentHeld--; }
             else if (mouse < 0) { currentHeld++; }
-            // updateCurrentHeld();
-            UpdateSpellData();
-
-			//play audio
-			sounds.PlayClip("swap");
+			FireSwap();
         }
     }
     #endregion

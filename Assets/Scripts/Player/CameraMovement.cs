@@ -10,6 +10,7 @@ public class CameraMovement : MonoBehaviour {
     public bool cameraShaking;
 
     public float mouseSensitivity;
+	public float ctrSensitivity = 150;
     float upDownLook = 0f;
     public float shakeForce;
     public float maxShakeForce;
@@ -53,8 +54,12 @@ public class CameraMovement : MonoBehaviour {
         float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity * normalMove; // horizontal mousespeed
         float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity * normalMove; // vertical mousespeed
 
+		//alt ps4 controls
+		mouseX += Input.GetAxis("ctr_lookX") * Time.deltaTime * ctrSensitivity * normalMove;
+		mouseY += Input.GetAxis("ctr_lookY") * Time.deltaTime * ctrSensitivity * normalMove;
+
         upDownLook -= mouseY; // minus-equals un-inverts the mouse-look-y
-        upDownLook = Mathf.Clamp(upDownLook, -80f, 80f); // constrain look 80 degrees up or down
+        upDownLook = Mathf.Clamp(upDownLook, -60f, 70f); // constrain look 80 degrees up or down
 
         // Body.Rotate(0f, mouseX, 0f);
         
