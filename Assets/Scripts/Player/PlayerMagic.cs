@@ -191,6 +191,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     #region process Inputs
     void processNumKeys()
     {
+		if (!canSwap) return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             currentHeld = 0;
 			// updateCurrentHeld();
@@ -210,7 +212,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
 	void processDpad() 
 	{
-		if (spellsInventory.Count < 2) return;
+		if (!canSwap || spellsInventory.Count < 2) return;
 
 		if (Input.GetAxis("ctr_dx") < -0.5f) {
 			DecHeldIndex();
@@ -246,20 +248,26 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 		return currentHeld;
 	}
 
+	bool canSwap = true;
+
     IEnumerator StartSwapCD()
 	{
-		yield return new WaitForSeconds(sounds.)
+		canSwap = false;
+		yield return new WaitForSeconds(sounds.GetClip("swap").length * .5f);
+		canSwap = true;
 	}
 
     void FireSwap()
 	{      
         sounds.PlayClip("swap");
         UpdateSpellData();
-		StartSwapCD();
+		StartCoroutine(StartSwapCD());
 	}
 
     void processScrolling()
     {
+		if (!canSwap) return;
+
         float mouse = Input.GetAxis("Mouse ScrollWheel"); // record input from mouse scrollwheel
         if(mouse != 0)
         {
