@@ -142,23 +142,44 @@ public abstract class Damageable : MonoBehaviour
     public virtual void Seduce(float duration, GameObject target, SpellCaster owner)
     {
         Debug.Log("Seduced!");
+        
         if(myMovement.crushTarget != null && myMovement.crush != null) { // if already seduced
             myMovement.crush.removeFromSeductionList(this); // remove from the seduction list
         }
+
         if(seduction != null) { StopCoroutine(seduction); }
-        myMovement.attackTarget = null;
-        Debug.Log(owner);
-        myMovement.crushTarget = owner.returnTransform();
-        myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
+        // myMovement.attackTarget = null;
+        // Debug.Log(owner);
+        myMovement.crushTarget = owner.returnBody();
+        myMovement.crush = owner.returnTransform().GetComponent<SpellCaster>();
+
+        // FindAttackerInRadius(owner.returnBody().tag);
+        
         if(myMovement.crush != null) { myMovement.crush.addToSeductionList(this); }
         else { Debug.Log("No spellcaster component!"); }
-
+        
         seduction = StartCoroutine(processSeduction(duration, target, owner));
+    }
+
+    public virtual Transform FindAttackerInRadius(string tag) {
+        Debug.Log(tag);
+        if (tag == "Player") {
+            Debug.Log(gameObject.layer);
+            Debug.Log(myMovement.sightRange);
+            Collider[] colls = Physics.OverlapSphere(transform.position, myMovement.sightRange, ~0);
+            Debug.Log(colls.Length);
+            for (int i = 0; i < colls.Length; i++) {
+                if (colls[i].gameObject == this.gameObject) { continue; }
+                if(colls[i].gameObject.tag == "Enemy") { Debug.Log("New Target: " + colls[i].transform); return colls[i].transform; }
+                
+            }
+        }
+        return null;
     }
 
     public virtual IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
-        yield return null;
+        yield return duration;
         seduction = null;
     }
 

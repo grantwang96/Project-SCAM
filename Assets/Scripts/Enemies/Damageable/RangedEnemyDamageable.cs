@@ -191,10 +191,9 @@ public class RangedEnemyDamageable : Damageable {
     public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         myMovement.anim.Play("FrontHurt");
-        myMovement.changeState(new RangedEnemySeduced(), duration);
+        myMovement.attackTarget = FindAttackerInRadius(myMovement.crushTarget.tag);
         blush.enabled = true;
         yield return new WaitForSeconds(duration);
-        myMovement.changeState(new RangedEnemyIdle());
         myMovement.attackTarget = myMovement.blueprint.getOriginTarget();
         seduction = null;
         blush.enabled = false;

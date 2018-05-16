@@ -96,7 +96,7 @@ public class RangedEnemyAggro : NPCState
             if (previousState != null) { myOwner.changeState(previousState); }
             else {
                 myOwner.changeState(new RangedEnemyIdle(), Random.Range(4f, 6f));
-                myOwner.attackTarget = myOwner.blueprint.getOriginTarget();
+                if(myOwner.myDamageable.seduction == null) { myOwner.attackTarget = myOwner.blueprint.getOriginTarget(); }
             }
         }
         if (myOwner == null || myOwner.transform == null) { return; }
@@ -281,6 +281,8 @@ public class RangedEnemySeduced : NPCState
             */
         }
         else {
+            myOwner.myDamageable.FindAttackerInRadius(myOwner.crushTarget.tag);
+            /*
             Vector3 targetDir = myOwner.crushTarget.position - myOwner.transform.position;
             targetDir.y = 0;
             Quaternion forward = Quaternion.LookRotation(targetDir);
@@ -288,6 +290,7 @@ public class RangedEnemySeduced : NPCState
 
             myOwner.agent.stoppingDistance = 5f;
             if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.crushTarget.position); }
+            */
         }
 
         // check for obstructions

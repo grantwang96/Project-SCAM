@@ -180,10 +180,12 @@ public class MeleeEnemyDamageable : Damageable {
     public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         myMovement.anim.Play("FrontHurt");
-        myMovement.changeState(new MeleeEnemySeduced(), duration);
+        // myMovement.changeState(new MeleeEnemySeduced(), duration);
+        myMovement.attackTarget = FindAttackerInRadius(myMovement.crushTarget.tag);
         blush.enabled = true;
         yield return new WaitForSeconds(duration);
-        myMovement.changeState(new MeleeEnemyIdle());
+        // myMovement.changeState(new MeleeEnemyIdle());
+        myMovement.attackTarget = myMovement.blueprint.getOriginTarget();
         seduction = null;
         blush.enabled = false;
     }

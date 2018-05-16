@@ -18,7 +18,6 @@ public class MeleeEnemyIdle : NPCState
 
         anim = myOwner.anim;
         anim.SetInteger("Status", 0);
-        myOwner.attackTarget = myOwner.blueprint.getOriginTarget();
     }
 
     public override void Execute() {
@@ -112,7 +111,6 @@ public class MeleeEnemyInjured : NPCState
 
 public class MeleeEnemyAggro : NPCState
 {
-    Transform attackTarget;
     bool targetInView;
     float lostTargetViewTime = 0f;
 
@@ -120,7 +118,6 @@ public class MeleeEnemyAggro : NPCState
     {
         // Initialize information from movement object(owner)
         myOwner = owner;
-        attackTarget = myOwner.attackTarget;
         targetInView = false;
         myOwner.agent.speed = myOwner.maxSpeed;
 
@@ -133,13 +130,16 @@ public class MeleeEnemyAggro : NPCState
     public override void Execute()
     {
         // if you have nothing to chase, stop chasing
-        if (myOwner.attackTarget == null || attackTarget == null) { myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); return; }
-        if(myOwner == null || myOwner.transform == null || myOwner.attackTarget == null || attackTarget == null) {
+        if (myOwner.attackTarget == null) {
+            if (myOwner.myDamageable.seduction == null) { myOwner.attackTarget = myOwner.blueprint.getOriginTarget(); }
+            myOwner.changeState(new MeleeEnemyIdle(), Random.Range(4f, 6f)); return;
+        }
+        if(myOwner == null || myOwner.transform == null || myOwner.attackTarget == null) {
             // Debug.Log("Nope");
             return;
         }
 
-        float dist = Vector3.Distance(myOwner.transform.position, attackTarget.position);
+        float dist = Vector3.Distance(myOwner.transform.position, myOwner.attackTarget.position);
 
         if (myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
             myOwner.anim.GetCurrentAnimatorStateInfo(0).IsName("Notice")) {
@@ -166,8 +166,8 @@ public class MeleeEnemyAggro : NPCState
             lostTargetViewTime = 0f;
         }
 
-		if (myOwner.agent.enabled && !myOwner.agent.isStopped && attackTarget != null) { 
-			myOwner.agent.SetDestination(attackTarget.position); 
+		if (myOwner.agent.enabled && !myOwner.agent.isStopped && myOwner.attackTarget != null) { 
+			myOwner.agent.SetDestination(myOwner.attackTarget.position); 
 		}
 
         // check for obstructions
@@ -180,11 +180,11 @@ public class MeleeEnemyAggro : NPCState
 
         // Enter attack state if in range to attack
         Vector3 forward = myOwner.transform.forward;
-        Vector3 dir = attackTarget.position - myOwner.transform.position;
+        Vector3 dir = myOwner.attackTarget.position - myOwner.transform.position;
         forward.y = 0;
         dir.y = 0;
         // float ang = Vector3.Angle(myOwner.transform.forward, attackTarget.position - myOwner.transform.position);
-        float dotprod = Vector3.Dot(myOwner.transform.forward, (attackTarget.position - myOwner.transform.position).normalized);
+        float dotprod = Vector3.Dot(myOwner.transform.forward, (myOwner.attackTarget.position - myOwner.transform.position).normalized);
         
         if(dist <= myOwner.blueprint.attackRange && dotprod >= myOwner.attackDotProd) {
             myOwner.changeState(new MeleeEnemyAttack());
@@ -288,9 +288,8 @@ public class MeleeEnemySeduced : NPCState
 
         // if you don't have an attack target, go follow crush around
         if (myOwner.attackTarget == null) {
-            myOwner.agent.stoppingDistance = 5f;
-            if(myOwner.crushTarget.tag == "Player") {  }
-            else {  }
+            // myOwner.agent.stoppingDistance = 5f;
+            myOwner.myDamageable.FindAttackerInRadius(myOwner.crushTarget.tag);
             // if (myOwner.agent.enabled) { myOwner.agent.SetDestination(myOwner.crushTarget.position); }
 
             // check for obstructions
