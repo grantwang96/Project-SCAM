@@ -1117,7 +1117,7 @@ MonoBehaviour:
   hurtTime: 0
   dead: 0
   damageable: 1
-  velocityDamageThreshold: 16
+  velocityDamageThreshold: 23
   myCollider: {fileID: 136855091534851680}
   myRend: {fileID: 0}
   originSpawn: {x: 0, y: 0, z: 0}
