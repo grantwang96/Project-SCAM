@@ -131,6 +131,10 @@ public class PlayerMovementV2 : Movement {
 
         horizontal = Input.GetAxis("Horizontal"); // Get player inputs
         vertical = Input.GetAxis("Vertical"); // Get player inputs
+
+		//alt ps4 controls
+		horizontal += Input.GetAxis("ctr_Horizontal");
+		vertical += Input.GetAxis("ctr_Vertical");
         // if (hamper > 0) { return; }
 
         if (Input.GetButtonDown("Jump")) { Jump(); }
