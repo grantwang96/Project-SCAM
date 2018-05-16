@@ -3,37 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class AudioPlayer : MonoBehaviour {
+public class AudioPlayer : MonoBehaviour
+{
 
-	public string[] labels;
+    public string[] labels;
 
-	public AudioClip[] clips;
+    public AudioClip[] clips;
 
-	AudioSource source;
-	
-	public void Start() {
-		source = GetComponent<AudioSource>();
+    Dictionary<string, AudioClip> lib = new Dictionary<string, AudioClip>();
 
-		if (labels.Length != clips.Length) {
-			throw new UnityException("labels and clips lengths don't match!");
-		}
-	}
+    AudioSource source;
 
-	public void PlayClip(string label) {
-		//plays clip that shares index of label in array labels
+    public bool isPlaying
+    {
+        get
+        {
+            return source.isPlaying;
+        }
+    }
 
+    public void Start()
+    {
+        source = GetComponent<AudioSource>();
 
-		int index = -1;
-		for (int i = 0; i < labels.Length; i ++) {
-			if (labels[i] == label) {
-				index = i;
-			}
-		}
-		if (index > 0) {
-			source.PlayOneShot(clips[index]);
-		}
-		else {
-			Debug.Log(label + " not found!");
-		}
-	}
+        if (labels.Length != clips.Length)
+        {
+            throw new UnityException("labels and clips lengths don't match!");
+        }
+
+        for (int i = 0; i < labels.Length; i++)
+        {
+            lib.Add(labels[i], clips[i]);
+        }
+
+    }
+
+    public void PlayClip(string label)
+    {
+        //plays clip that shares index of label in array labels
+
+        AudioClip toPlay;
+
+        lib.TryGetValue(label, out toPlay);
+
+        if (toPlay != null)
+        {
+            source.PlayOneShot(toPlay);
+        }
+        else
+        {
+            Debug.Log(label + " clip not found!");
+        }
+
+    }
+
+    public AudioClip GetClip(string label)
+    {
+        AudioClip toRet;
+
+        lib.TryGetValue(label, out toRet);
+
+        return toRet;
+    }
+
 }
