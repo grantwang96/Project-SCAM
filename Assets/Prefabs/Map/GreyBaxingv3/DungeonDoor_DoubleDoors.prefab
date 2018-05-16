@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 65327553438126894}
   - component: {fileID: 54170608046096526}
   - component: {fileID: 114777098181214296}
+  - component: {fileID: 208805259404013290}
   m_Layer: 0
   m_Name: DungeonDoors_dLeftDoor1
   m_TagString: Wall
@@ -146,6 +147,7 @@ GameObject:
   - component: {fileID: 65685164034588980}
   - component: {fileID: 54143563114765824}
   - component: {fileID: 114792854131187010}
+  - component: {fileID: 208214994261366224}
   m_Layer: 0
   m_Name: DungeonDoors_dRightDoor1
   m_TagString: Wall
@@ -187,8 +189,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1602256120962972}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.5, y: 0, z: 20}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 2.5, y: 5, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4627254212950080}
@@ -667,12 +669,14 @@ MonoBehaviour:
   hurtTime: 0
   dead: 0
   damageable: 1
+  velocityDamageThreshold: 0
   myCollider: {fileID: 65327553438126894}
   myRend: {fileID: 23923342697438904}
   originSpawn: {x: 0, y: 0, z: 0}
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
+  blush: {fileID: 0}
   openRotation: {x: 0, y: -90, z: 0}
   closedRotation: {x: 0, y: 0, z: 0}
   myHinge: {fileID: 4873380089110608}
@@ -700,12 +704,14 @@ MonoBehaviour:
   hurtTime: 0
   dead: 0
   damageable: 1
+  velocityDamageThreshold: 0
   myCollider: {fileID: 65685164034588980}
   myRend: {fileID: 23277189437756498}
   originSpawn: {x: 0, y: 0, z: 0}
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
+  blush: {fileID: 0}
   openRotation: {x: 0, y: 90, z: 0}
   closedRotation: {x: 0, y: 0, z: 0}
   myHinge: {fileID: 4844028898900680}
@@ -715,3 +721,33 @@ MonoBehaviour:
   lock2: {fileID: 1248815910861756}
   open: 0
   rbody: {fileID: 54143563114765824}
+--- !u!208 &208214994261366224
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1720487584437574}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.25, y: 1.8750001, z: 0.23600002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!208 &208805259404013290
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1511404244004054}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.25, y: 1.8750001, z: 0.23600002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

@@ -209,4 +209,20 @@ public class RangedEnemyDamageable : Damageable {
             else { myMovement.anim.Play("LeftHurt"); } // it came from the left
         }
     }
+    
+    void OnCollisionEnter(Collision coll)
+    {
+        float magnitude = coll.relativeVelocity.magnitude;
+        if (!coll.transform.tag.Contains("Spell") && magnitude > velocityDamageThreshold) {
+            if (coll.transform.tag.Contains("Furniture")) { // if we collided with something loose
+                int damage = Mathf.RoundToInt(coll.collider.attachedRigidbody.mass);
+                TakeDamage(null, damage, Vector3.zero, 0f);
+            } else if(coll.transform.tag.Contains("Wall") ||
+                coll.transform.tag.Contains("Ground") ||
+                coll.transform.tag.Contains("Ceiling")) {
+                int damage = Mathf.RoundToInt(magnitude - velocityDamageThreshold);
+                TakeDamage(null, damage, Vector3.zero, 0f);
+            }
+        }
+    }
 }

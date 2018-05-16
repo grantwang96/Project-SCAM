@@ -16,6 +16,7 @@ public class KillAllToPass : MonoBehaviour {
         if(alldead && key != null) {
             Debug.Log("Dropping key...");
             key.SetActive(true);
+            key.GetComponent<FloatyRotaty>().SetPosition();
             Destroy(this);
         }
 	}

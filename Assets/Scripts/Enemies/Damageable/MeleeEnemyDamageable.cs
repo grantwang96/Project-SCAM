@@ -200,6 +200,9 @@ public class MeleeEnemyDamageable : Damageable {
 
     void OnCollisionEnter(Collision coll) {
         float magnitude = coll.relativeVelocity.magnitude;
-        // Debug.Log("Hit Magnitude = " + magnitude);
+        if(!coll.transform.tag.Contains("Spell") && magnitude > velocityDamageThreshold) {
+            int damage = Mathf.RoundToInt(magnitude - velocityDamageThreshold);
+            TakeDamage(null, damage, Vector3.zero, 0f);
+        }
     }
 }

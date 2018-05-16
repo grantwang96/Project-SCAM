@@ -49,14 +49,12 @@ public class RangedEnemyWander : NPCState
 
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
-        if (obstruction != null)
-        {
+        if (obstruction != null) {
             myOwner.changeState(new RangedEnemyIdle());
         }
 
         float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
-        if (distToDest < 0.2f + myOwner.agent.stoppingDistance)
-        {
+        if (distToDest < 0.2f + myOwner.agent.stoppingDistance) {
             myOwner.changeState(new RangedEnemyIdle(), Random.Range(4f, 6f));
         }
         if (myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
