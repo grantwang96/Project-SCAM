@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: c0d27c66477a0334989e4f8aad794952
-timeCreated: 1522936827
-licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -91,6 +89,7 @@ ModelImporter:
     4300026: SM_DungeonHallwayArch_BottomLeft
     7400000: Take 001
     9500000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -110,6 +109,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
