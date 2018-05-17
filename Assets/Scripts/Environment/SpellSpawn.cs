@@ -14,8 +14,7 @@ public class SpellSpawn : MonoBehaviour {
     public float checkRadius;
     public LayerMask bookLayer;
 
-    void Update()
-    {
+    void Update() {
         if(currBook == null) {
             SpawnSpell();
         }

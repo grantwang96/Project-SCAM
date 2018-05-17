@@ -15,7 +15,14 @@ public class PlayerDamageable : Damageable {
     public Transform playerCanvas;
     public Transform playerCanvasPrefab;
     public CameraMovement HeadMove;
-    public Transform mainCamerPivot;
+    public Transform Gun;
+
+    public Vector3 initialHeadPosition;
+    public Vector3 initialGunPosition;
+    public float originalRadius;
+    public float originalHeight;
+
+    public Transform mainCameraPivot;
     public GameObject DrunkHead;
 
     public Sprite transmutedIcon;
@@ -37,7 +44,10 @@ public class PlayerDamageable : Damageable {
         base.Start();
         Instance = this;
 		sounds = GetComponent<AudioPlayer>();
-
+        initialHeadPosition = HeadMove.transform.localPosition;
+        initialGunPosition = transform.Find("Gun").localPosition;
+        originalHeight = GetComponent<CharacterController>().height;
+        originalRadius = GetComponent<CharacterController>().radius;
         myMovement.hamper = 1;
         StartCoroutine(fadeInScene());
 	}
@@ -129,7 +139,7 @@ public class PlayerDamageable : Damageable {
         Debug.Log("Death animation started!");
         yield return new WaitForSeconds(clip.length);
         Debug.Log("Death animation finished!");
-
+        
         float time = 0f;
         fadeToBlackImage.color = Color.clear;
         while(time < 1f) {
@@ -249,34 +259,36 @@ public class PlayerDamageable : Damageable {
 
     public override void InitiateTransmutation(float duration, GameObject replacement)
     {
+        /*
         if (!transmutable) { return; }
         StartCoroutine(processTransmutation(duration, replacement));
+        */
+        base.InitiateTransmutation(duration, replacement);
     }
 
     public override IEnumerator processTransmutation(float duration, GameObject replacement)
     {
-        transmutable = false; // set transmutable to false
+        // transmutable = false; // set transmutable to false
         GameObject newBody = Instantiate(replacement, transform); // create new body
+        float time = 0f;
 
         // prime new body to replace player
         newBody.layer = gameObject.layer;
         newBody.transform.position = transform.position;
         newBody.transform.rotation = transform.rotation;
         Rigidbody newrbody = newBody.GetComponent<Rigidbody>();
-        Damageable newDam = newBody.GetComponent<Damageable>();
+        replacedBody = newBody.GetComponent<Damageable>();
         Collider newBodyColl = newBody.GetComponent<Collider>();
         
         //shut off unnecessary components of newbody
         newrbody.isKinematic = true;
         newrbody.useGravity = false;
-        newDam.parentHit = this;
-        newDam.transmutable = false;
+        replacedBody.parentHit = this;
+        replacedBody.transmutable = false;
 
         // shift gun(to accomodate for larger bodies)
         Vector3 localOrigin = Camera.main.transform.localPosition;
-        Transform gun = transform.Find("Gun");
-        Vector3 gunOrigin = gun.localPosition;
-        gun.localPosition += Vector3.forward * .5f;
+        Gun.localPosition += Vector3.forward * .5f;
 
         CharacterController charCon = GetComponent<CharacterController>();
 
@@ -290,17 +302,25 @@ public class PlayerDamageable : Damageable {
         charCon.radius = newRadius;
         charCon.detectCollisions = true;
 
-        myMovement.Head.position = transform.position + Vector3.up * charCon.height / 2;
+        myMovement.Head.localPosition = Vector3.up * charCon.height / 2;
         myMovement.Head.forward = transform.forward;
         // charCon.enabled = false;
-        mainCamerPivot.position -= transform.forward * 3f;
-        mainCamerPivot.transform.LookAt(myMovement.Head);
+        // mainCamerPivot.position -= transform.forward * 3f;
+        mainCameraPivot.transform.LookAt(myMovement.Head);
+        Vector3 startPos = mainCameraPivot.localPosition;
+        Vector3 endPos = Vector3.back * 3f;
+        while (time < 1f) {
+            time += Time.deltaTime;
+            mainCameraPivot.localPosition = Vector3.Lerp(startPos, endPos, time);
+            yield return new WaitForEndOfFrame();
+        }
+        time = 0f;
 
-        gun.parent = myMovement.Head;
+        // gun.parent = myMovement.Head;
         Vector3 localPos = myMovement.Head.localPosition;
         // myMovement.Head.parent = newrbody.transform;
-        myMovement.Head.position = newrbody.transform.TransformPoint(localPos);
-        myMovement.Head.forward = newrbody.transform.forward;
+        // myMovement.Head.position = newrbody.transform.TransformPoint(localPos);
+        // myMovement.Head.forward = newrbody.transform.forward;
 
         // myPlayMagic.enabled = false; // ALLOW FOR SPELL COMBAT
         // myMovement.hamper += 1;
@@ -311,7 +331,6 @@ public class PlayerDamageable : Damageable {
         newTransmuteStatus.rectTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180));
         newTransmuteStatus.name = "transmutedStatus";
 
-        float time = 0f;
         while(time < duration) {
             newTransmuteStatus.fillAmount = 1f - (time / duration);
             time += Time.deltaTime;
@@ -325,17 +344,26 @@ public class PlayerDamageable : Damageable {
  
         charCon.enabled = true;
         charCon.detectCollisions = true;
-        charCon.height = originHeight;
-        charCon.radius = originRadius;
+        charCon.height = originalHeight;
+        charCon.radius = originalRadius;
 
         // myMovement.Head.parent = transform;
         myMovement.Head.localPosition = Vector3.up * charCon.height / 2;
         myMovement.Head.forward = transform.forward;
-        gun.parent = transform;
-        gun.localPosition = gunOrigin;
-        gun.forward = transform.forward;
-        mainCamerPivot.transform.localPosition = localOrigin;
-        mainCamerPivot.transform.rotation = myMovement.Head.rotation;
+        // gun.parent = transform;
+        Gun.localPosition = initialGunPosition;
+        Gun.forward = transform.forward;
+        time = 0f;
+        startPos = mainCameraPivot.localPosition;
+        Quaternion startRot = mainCameraPivot.localRotation;
+        while(time < 1f) {
+            time += Time.deltaTime;
+            mainCameraPivot.transform.localPosition = Vector3.Lerp(startPos, Vector3.zero, time);
+            mainCameraPivot.transform.localRotation = Quaternion.Lerp(startRot, Quaternion.identity, time);
+            yield return new WaitForEndOfFrame();
+        }
+        // mainCameraPivot.transform.localPosition = localOrigin;
+        // mainCameraPivot.transform.rotation = myMovement.Head.rotation;
 
         // re-enable spell combat and transmutable
         // myMovement.hamper--;
@@ -343,6 +371,7 @@ public class PlayerDamageable : Damageable {
 
         // get rid of newbody
         Destroy(newBody);
+        transmutationProcess = null;
     }
 
 //    public override void Seduce(float duration, GameObject target, SpellCaster owner)

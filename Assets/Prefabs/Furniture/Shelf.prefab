@@ -226,13 +226,14 @@ MonoBehaviour:
   hurtTime: 0
   dead: 0
   damageable: 1
+  velocityDamageThreshold: 0
   myCollider: {fileID: 0}
   myRend: {fileID: 0}
   originSpawn: {x: 0, y: 0, z: 0}
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
-  blush: {fileID: 0}
+  blush: {fileID: 212904245764747360}
   transmuted: 0
   rbody: {fileID: 0}
 --- !u!208 &208245406398286978

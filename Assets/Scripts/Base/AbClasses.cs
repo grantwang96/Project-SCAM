@@ -19,6 +19,7 @@ public abstract class Damageable : MonoBehaviour
     public float hurtTime;
     public bool dead;
     public bool damageable = true;
+    public float velocityDamageThreshold;
 
     // rbody or character controller
     // public Rigidbody rbody;
@@ -31,6 +32,7 @@ public abstract class Damageable : MonoBehaviour
     public Damageable parentHit;
 
     public Damageable replacedBody; // for transmutations
+    public Coroutine transmutationProcess;
     
     public Coroutine seduction;
     public SpriteRenderer blush;
@@ -91,12 +93,18 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void InitiateTransmutation(float duration, GameObject replacement)
     {
-        StartCoroutine(processTransmutation(duration, replacement));
+        if(parentHit != null) { parentHit.InitiateTransmutation(duration, replacement); return; } // if you ARE the transmutation, pass it along to parent
+        if(transmutationProcess != null) { StopCoroutine(transmutationProcess); } // stop the previous transmutation process
+        if(replacedBody != null) {
+            transform.position = replacedBody.transform.position;
+            Destroy(replacedBody.gameObject);
+        } // destroy the replaced body that's already there
+        transmutationProcess = StartCoroutine(processTransmutation(duration, replacement));
     }
 
     public virtual IEnumerator processTransmutation(float duration, GameObject replacement)
     {
-        myMovement.hamper++;
+        if(myMovement != null) { myMovement.hamper++; }
         myCollider.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
         if (allRends.Length > 0) {
@@ -106,7 +114,7 @@ public abstract class Damageable : MonoBehaviour
         Rigidbody replaceRigidBody = myReplace.GetComponent<Rigidbody>();
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
-        replacedBody.setTransmutable(false);
+        replacedBody.setTransmutable(true);
 
         float time = 0f;
         while(time < duration) {
@@ -122,7 +130,8 @@ public abstract class Damageable : MonoBehaviour
             foreach (Renderer rend in allRends) { rend.enabled = true; }
         }
         replacedBody = null;
-        myMovement.hamper--;
+        if (myMovement != null) { myMovement.hamper--; }
+        transmutationProcess = null;
     }
 
     public virtual void setTransmutable(bool newBool)
@@ -133,23 +142,44 @@ public abstract class Damageable : MonoBehaviour
     public virtual void Seduce(float duration, GameObject target, SpellCaster owner)
     {
         Debug.Log("Seduced!");
+        
         if(myMovement.crushTarget != null && myMovement.crush != null) { // if already seduced
             myMovement.crush.removeFromSeductionList(this); // remove from the seduction list
         }
+
         if(seduction != null) { StopCoroutine(seduction); }
-        myMovement.attackTarget = null;
-        Debug.Log(owner);
-        myMovement.crushTarget = owner.returnTransform();
-        myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
+        // myMovement.attackTarget = null;
+        // Debug.Log(owner);
+        myMovement.crushTarget = owner.returnBody();
+        myMovement.crush = owner.returnTransform().GetComponent<SpellCaster>();
+
+        // FindAttackerInRadius(owner.returnBody().tag);
+        
         if(myMovement.crush != null) { myMovement.crush.addToSeductionList(this); }
         else { Debug.Log("No spellcaster component!"); }
-
+        
         seduction = StartCoroutine(processSeduction(duration, target, owner));
+    }
+
+    public virtual Transform FindAttackerInRadius(string tag) {
+        Debug.Log(tag);
+        if (tag == "Player") {
+            Debug.Log(gameObject.layer);
+            Debug.Log(myMovement.sightRange);
+            Collider[] colls = Physics.OverlapSphere(transform.position, myMovement.sightRange, ~0);
+            Debug.Log(colls.Length);
+            for (int i = 0; i < colls.Length; i++) {
+                if (colls[i].gameObject == this.gameObject) { continue; }
+                if(colls[i].gameObject.tag == "Enemy") { Debug.Log("New Target: " + colls[i].transform); return colls[i].transform; }
+                
+            }
+        }
+        return null;
     }
 
     public virtual IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
-        yield return null;
+        yield return duration;
         seduction = null;
     }
 
@@ -169,9 +199,10 @@ public abstract class Damageable : MonoBehaviour
     public virtual void Die()
     {
         dead = true;
-//        Destroy(gameObject);
-		//keeping disabled for checkpoint restoration
-		CheckpointManager.Instance.AddEnemyToRespawnList(this);
+        if (replacedBody != null) { Destroy(replacedBody); }
+        //        Destroy(gameObject);
+        //keeping disabled for checkpoint restoration
+        CheckpointManager.Instance.AddEnemyToRespawnList(this);
 		gameObject.SetActive(false);
     }
 }

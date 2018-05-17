@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4364553068864844}
   m_Layer: 0
   m_Name: DungeonDoor_DoorFrame
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 65685790123578610}
   m_Layer: 0
   m_Name: SM_DungeonDoor_BrickFrame
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -65,14 +65,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1119010707353948}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: -5}
+  m_LocalRotation: {x: -0.0020069098, y: -0.7138318, z: -0.0019897907, w: 0.7003116}
+  m_LocalPosition: {x: -12.36, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4176433929661316}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.324, y: -91.096, z: 0.004}
 --- !u!23 &23198608009390826
 MeshRenderer:
   m_ObjectHideFlags: 1

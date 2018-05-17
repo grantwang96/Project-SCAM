@@ -99,6 +99,7 @@ public class CheckpointManager : MonoBehaviour {
             SpellBook currBook = playerMagic.GetSpellsInventory()[i];
             currBook.primaryEffect = savedSpellInv[i].primary;
             currBook.secondaryEffect = savedSpellInv[i].secondary;
+            currBook.active = false; // all these books will be held by player
             currBook.SetupSpell();
             currBook.setAmmo(savedSpellInv[i].ammo);
         }

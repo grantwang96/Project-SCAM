@@ -5,8 +5,17 @@ using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour {
 
+    public Slider MouseSensitivity;
+    public Slider CTRSensitivity;
+    public Slider MasterVolume;
     public Dropdown ScreenResOptions;
     public Toggle fullScreen;
+
+    void OnEnable() {
+        MasterVolume.value = AudioListener.volume;
+        CTRSensitivity.value = CameraMovement.ctrSensitivity;
+        MouseSensitivity.value = CameraMovement.mouseSensitivity;
+    }
 
 	public void SetMasterVolume(float val) {
         AudioListener.volume = val;
@@ -25,5 +34,15 @@ public class OptionsMenu : MonoBehaviour {
     public void SetFullScreen(bool yes)
     {
         Screen.fullScreen = yes;
+    }
+
+    public void SetMouseSensitivity(float val)
+    {
+        CameraMovement.mouseSensitivity = val;
+    }
+
+    public void SetCTRSensitivity(float val)
+    {
+        CameraMovement.ctrSensitivity = val;
     }
 }

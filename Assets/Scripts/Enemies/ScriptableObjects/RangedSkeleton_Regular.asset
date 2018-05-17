@@ -18,7 +18,12 @@ MonoBehaviour:
   sightAngle: 90
   attackRange: 50
   attentionSpan: 15
-  possibleDrops: []
+  possibleDrops:
+  - dropPrefab: {fileID: 1882987251240948, guid: 643179f57b765bb46a01f8f95c9a92dc,
+      type: 2}
+    dropCountLower: 1
+    dropCountUpper: 1
+    chanceDrop: 0.2
   firstName:
   - Todd
   - Bull

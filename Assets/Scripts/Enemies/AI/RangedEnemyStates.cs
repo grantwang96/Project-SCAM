@@ -49,14 +49,12 @@ public class RangedEnemyWander : NPCState
 
         // check for obstructions
         Transform obstruction = myOwner.obstruction();
-        if (obstruction != null)
-        {
+        if (obstruction != null) {
             myOwner.changeState(new RangedEnemyIdle());
         }
 
         float distToDest = Vector3.Distance(myOwner.transform.position, myOwner.agent.pathEndPosition);
-        if (distToDest < 0.2f + myOwner.agent.stoppingDistance)
-        {
+        if (distToDest < 0.2f + myOwner.agent.stoppingDistance) {
             myOwner.changeState(new RangedEnemyIdle(), Random.Range(4f, 6f));
         }
         if (myOwner.friction != 1f) { myOwner.rbody.AddForce(myOwner.agent.desiredVelocity * (1f - myOwner.friction)); }
@@ -92,12 +90,14 @@ public class RangedEnemyAggro : NPCState
         FindCover();
     }
 
-    public override void Execute()
-    {
+    public override void Execute() {
         // if you have nothing to chase, stop chasing
         if (myOwner.attackTarget == null) {
             if (previousState != null) { myOwner.changeState(previousState); }
-            else { myOwner.changeState(new RangedEnemyIdle(), Random.Range(4f, 6f)); }
+            else {
+                myOwner.changeState(new RangedEnemyIdle(), Random.Range(4f, 6f));
+                if(myOwner.myDamageable.seduction == null) { myOwner.attackTarget = myOwner.blueprint.getOriginTarget(); }
+            }
         }
         if (myOwner == null || myOwner.transform == null) { return; }
         if (myOwner.attackTarget == null)
@@ -281,6 +281,8 @@ public class RangedEnemySeduced : NPCState
             */
         }
         else {
+            myOwner.myDamageable.FindAttackerInRadius(myOwner.crushTarget.tag);
+            /*
             Vector3 targetDir = myOwner.crushTarget.position - myOwner.transform.position;
             targetDir.y = 0;
             Quaternion forward = Quaternion.LookRotation(targetDir);
@@ -288,6 +290,7 @@ public class RangedEnemySeduced : NPCState
 
             myOwner.agent.stoppingDistance = 5f;
             if (myOwner.agent.enabled && !myOwner.agent.isStopped) { myOwner.agent.SetDestination(myOwner.crushTarget.position); }
+            */
         }
 
         // check for obstructions

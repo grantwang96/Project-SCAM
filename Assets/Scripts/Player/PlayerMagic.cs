@@ -62,6 +62,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     [SerializeField] Sprite reticuleRecharging;
 
     public Transform bookUI;
+    public MeshRenderer leftBook;
+    public MeshRenderer rightBook;
     public Vector3 bookNormalPosition;
     public Vector3 startSwitchPosition;
     public Vector3 bookNormalRotation;
@@ -91,12 +93,20 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 		sounds = GetComponentInParent<AudioPlayer>();
 
         // updateCurrentHeld();
+        leftBook.enabled = false;
+        rightBook.enabled = false;
         UpdateSpellData();
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (GameManager.Instance.menuMode || myDamageable.dead) { return; }
+
+        foreach(SpellBook book in spellsInventory) {
+            if(book.sparklyEffect != null && book.sparklyEffect.gameObject.activeInHierarchy) {
+                book.sparklyEffect.gameObject.SetActive(false);
+            }
+        }
 
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
@@ -157,6 +167,8 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
 
         UpdateUI();
+        UpdateBookCovers();
+
         time = 0f;
 
         while(time < 1f) {
@@ -167,6 +179,34 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
 
         bookSwapRoutine = null;
+    }
+
+    void UpdateBookCovers() {
+        if (spellsInventory.Count == maxSpells) {
+            leftBook.enabled = true;
+            rightBook.enabled = true;
+            if(currentHeld == 0) {
+                leftBook.materials[1].color = spellsInventory[2].baseColor;
+                rightBook.materials[1].color = spellsInventory[1].baseColor;
+            }
+            else if(currentHeld == 1) {
+                leftBook.materials[1].color = spellsInventory[0].baseColor;
+                rightBook.materials[1].color = spellsInventory[2].baseColor;
+            }
+            else {
+                leftBook.materials[1].color = spellsInventory[1].baseColor;
+                rightBook.materials[1].color = spellsInventory[0].baseColor;
+            }
+        }
+        else if(spellsInventory.Count == 2) {
+            leftBook.enabled = true;
+            rightBook.enabled = false;
+            if(currentHeld == 0) { leftBook.materials[1].color = spellsInventory[1].baseColor; }
+            else { leftBook.materials[1].color = spellsInventory[0].baseColor; }
+        } else {
+            leftBook.enabled = false;
+            rightBook.enabled = false;
+        }
     }
 
 	#endregion
@@ -319,6 +359,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         else { // update the ammo gauge and makesure current held is within inventory count
             if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
             else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
+
             if(bookSwapRoutine != null) { StopCoroutine(bookSwapRoutine); }
             bookSwapRoutine = StartCoroutine(switchBooks());
 			// UpdateUI();

@@ -18,6 +18,7 @@ public class SpellBook : MonoBehaviour, Interactable {
     [SerializeField] bool _dead = false;
     public bool dead { get { return _dead; } set { _dead = value; } }
     bool dying = false;
+    public bool active;
 
     public string spellTitle;
     public string spellDescription;
@@ -59,12 +60,16 @@ public class SpellBook : MonoBehaviour, Interactable {
         if (secondaryEffect) {
             ammo += secondaryEffect.ammo;
             // spellTitle = secondaryEffect.title + " " + spellTitle;
+            /*
             spellDescription += "\n-" + secondaryEffect.description;
             if (transform.Find("Sparkles")) {
                 sparklyEffect = null;
                 Destroy(transform.Find("Sparkles").gameObject);
-            }
+            }*/
+
+            if(sparklyEffect != null) { Destroy(sparklyEffect.gameObject); }
             sparklyEffect = Instantiate(secondaryEffect.decoration, transform);
+            sparklyEffect.gameObject.SetActive(active);
             sparklyEffect.name = "Sparkles";
             sparklyEffect.localPosition = Vector3.zero;
             sparklyEffect.localRotation = transform.rotation;
@@ -118,6 +123,7 @@ public class SpellBook : MonoBehaviour, Interactable {
         GetComponent<SphereCollider>().enabled = false;
         FloatyRotaty fr = GetComponent<FloatyRotaty>();
         fr.active = false;
+        active = false;
     }
 
     public void Activate()
@@ -127,6 +133,7 @@ public class SpellBook : MonoBehaviour, Interactable {
         }
         sparklyEffect.gameObject.SetActive(true);
         GetComponent<SphereCollider>().enabled = true;
+        active = true;
     }
 
     public void Die()

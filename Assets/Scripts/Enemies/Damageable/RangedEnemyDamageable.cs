@@ -45,14 +45,12 @@ public class RangedEnemyDamageable : Damageable {
 
         PlayHurtAnimation(dirDotProd, dir);
 
-        if (attacker != null && attacker != myMovement.attackTarget &&
-           myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced))
-        {
+        if (attacker != null && myMovement.getCurrentState().GetType() != typeof(RangedEnemySeduced)) {
             if (targetSwitchRoutine != null) { StopCoroutine(targetSwitchRoutine); }
             targetSwitchRoutine = StartCoroutine(SwitchTargets(attacker));
-            myMovement.changeState(new MeleeEnemyAggro());
+            myMovement.changeState(new RangedEnemyAggro());
         }
-        myMovement.changeState(new MeleeEnemyInjured(), myMovement.getCurrentState());
+        myMovement.changeState(new RangedEnemyInjured(), myMovement.getCurrentState());
     }
 
     IEnumerator SwitchTargets(Transform attacker)
@@ -72,8 +70,10 @@ public class RangedEnemyDamageable : Damageable {
     {
         myMovement.agent.updatePosition = false;
         myMovement.agent.updateRotation = false;
-        myMovement.agent.isStopped = true;
+        if (myMovement.agent.isOnNavMesh) { myMovement.agent.isStopped = true; }
         myMovement.agent.velocity = Vector3.zero;
+
+        rbody.isKinematic = false;
         rbody.velocity = Vector3.zero;
         rbody.AddForce(dir * force, ForceMode.Impulse);
     }
@@ -122,6 +122,7 @@ public class RangedEnemyDamageable : Damageable {
 
     public override void InitiateTransmutation(float duration, GameObject replacement)
     {
+        if(transmutationProcess != null) { myMovement.hamper--; }
         base.InitiateTransmutation(duration, replacement);
     }
 
@@ -147,7 +148,7 @@ public class RangedEnemyDamageable : Damageable {
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
         replacedBody.parentHit = this;
-        replacedBody.setTransmutable(false);
+        // replacedBody.setTransmutable(false);
 
         // wait for the spell duration
         float time = 0f;
@@ -190,10 +191,9 @@ public class RangedEnemyDamageable : Damageable {
     public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         myMovement.anim.Play("FrontHurt");
-        myMovement.changeState(new RangedEnemySeduced(), duration);
+        myMovement.attackTarget = FindAttackerInRadius(myMovement.crushTarget.tag);
         blush.enabled = true;
         yield return new WaitForSeconds(duration);
-        myMovement.changeState(new RangedEnemyIdle());
         myMovement.attackTarget = myMovement.blueprint.getOriginTarget();
         seduction = null;
         blush.enabled = false;
@@ -206,6 +206,22 @@ public class RangedEnemyDamageable : Damageable {
         else {
             if (-dir.x > 0) { myMovement.anim.Play("RightHurt"); } // it came from the right
             else { myMovement.anim.Play("LeftHurt"); } // it came from the left
+        }
+    }
+    
+    void OnCollisionEnter(Collision coll)
+    {
+        float magnitude = coll.relativeVelocity.magnitude;
+        if (!coll.transform.tag.Contains("Spell") && magnitude > velocityDamageThreshold) {
+            if (coll.transform.tag.Contains("Furniture")) { // if we collided with something loose
+                int damage = Mathf.RoundToInt(coll.collider.attachedRigidbody.mass);
+                TakeDamage(null, damage, Vector3.zero, 0f);
+            } else if(coll.transform.tag.Contains("Wall") ||
+                coll.transform.tag.Contains("Ground") ||
+                coll.transform.tag.Contains("Ceiling")) {
+                int damage = Mathf.RoundToInt(magnitude - velocityDamageThreshold);
+                TakeDamage(null, damage, Vector3.zero, 0f);
+            }
         }
     }
 }

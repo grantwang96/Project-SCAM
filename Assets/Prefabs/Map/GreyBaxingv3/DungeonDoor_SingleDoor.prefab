@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 114464496459722192}
   - component: {fileID: 54775813404972376}
   - component: {fileID: 65936212084398424}
+  - component: {fileID: 208634620331524108}
   m_Layer: 0
   m_Name: Dungeon_Single_Door
   m_TagString: Wall
@@ -97,7 +98,7 @@ GameObject:
   - component: {fileID: 65788691412573584}
   m_Layer: 0
   m_Name: SM_DungeonDoor_BrickFrame
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -136,8 +137,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666554925897750}
-  m_LocalRotation: {x: -0, y: 0.9997416, z: -0.022732204, w: 0}
-  m_LocalPosition: {x: 2.5, y: 0, z: 5.07}
+  m_LocalRotation: {x: 0.0074813305, y: 0.010432004, z: -0.00007804622, w: 0.9999176}
+  m_LocalPosition: {x: 0, y: -0, z: 7.433}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4363851055025772}
@@ -487,12 +488,14 @@ MonoBehaviour:
   hurtTime: 0
   dead: 0
   damageable: 1
+  velocityDamageThreshold: 0
   myCollider: {fileID: 0}
   myRend: {fileID: 23791033747061750}
   originSpawn: {x: 0, y: 0, z: 0}
   myMovement: {fileID: 0}
   parentHit: {fileID: 0}
   replacedBody: {fileID: 0}
+  blush: {fileID: 0}
   openRotation: {x: 0, y: -90, z: 0}
   closedRotation: {x: 0, y: 0, z: 0}
   myHinge: {fileID: 4376225374826900}
@@ -502,3 +505,18 @@ MonoBehaviour:
   lock2: {fileID: 1611471958511096}
   open: 0
   rbody: {fileID: 54775813404972376}
+--- !u!208 &208634620331524108
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1825421824415884}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.559, y: 4.3900003, z: 0.22600001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.142, z: 0}
+  m_TimeToStationary: 0.5

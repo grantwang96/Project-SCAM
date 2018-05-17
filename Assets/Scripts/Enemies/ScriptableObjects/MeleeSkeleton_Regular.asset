@@ -19,11 +19,11 @@ MonoBehaviour:
   attackRange: 3
   attentionSpan: 10
   possibleDrops:
-  - dropPrefab: {fileID: 1503298962346312, guid: b926fd780feaf28409f6b6b4b4b6f126,
+  - dropPrefab: {fileID: 1882987251240948, guid: 643179f57b765bb46a01f8f95c9a92dc,
       type: 2}
-    dropCountLower: 2
-    dropCountUpper: 5
-    chanceDrop: 1
+    dropCountLower: 1
+    dropCountUpper: 1
+    chanceDrop: 0.1
   firstName:
   - Bob
   - Krong

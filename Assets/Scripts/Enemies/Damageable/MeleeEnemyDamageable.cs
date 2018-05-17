@@ -15,7 +15,6 @@ public class MeleeEnemyDamageable : Damageable {
         base.Die();
         // play some death animations
         // play some death sfxs
-
         myMovement.blueprint.DropLoot(transform.position + Vector3.up);
         // activate special drop if you have one
         if(specialDrop != null) {
@@ -40,8 +39,7 @@ public class MeleeEnemyDamageable : Damageable {
 
         PlayHurtAnimation(dirDotProd, dir);
 
-        if(attacker != null && attacker != myMovement.attackTarget &&
-           myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced)) {
+        if(attacker != null && myMovement.getCurrentState().GetType() != typeof(MeleeEnemySeduced)) {
             if(targetSwitchRoutine != null) { StopCoroutine(targetSwitchRoutine); }
             targetSwitchRoutine = StartCoroutine(SwitchTargets(attacker));
             myMovement.changeState(new MeleeEnemyAggro());
@@ -60,20 +58,14 @@ public class MeleeEnemyDamageable : Damageable {
         targetSwitchRoutine = null;
     }
 
-    public override void knockBack(Vector3 dir, float force)
-    {
+    public override void knockBack(Vector3 dir, float force) {
         myMovement.agent.updatePosition = false;
         myMovement.agent.updateRotation = false;
-        myMovement.agent.isStopped = true;
+        if(myMovement.agent.isOnNavMesh) { myMovement.agent.isStopped = true; }
         myMovement.agent.velocity = Vector3.zero;
+        rbody.isKinematic = false;
         rbody.velocity = Vector3.zero;
         rbody.AddForce(dir * force, ForceMode.Impulse);
-
-        /*
-        if (knockBackRoutine != null) {
-            StopCoroutine(knockBackRoutine);
-        }*/
-        // knockBackRoutine = StartCoroutine(knockingBack(dir, force));
     }
 
     IEnumerator knockingBack(Vector3 dir, float force)
@@ -119,19 +111,19 @@ public class MeleeEnemyDamageable : Damageable {
 
     public override void InitiateTransmutation(float duration, GameObject replacement)
     {
+        if(transmutationProcess != null) { myMovement.hamper--; }
         base.InitiateTransmutation(duration, replacement);
     }
 
     public override IEnumerator processTransmutation(float duration, GameObject replacement)
     {
-        myMovement.hamper++;
+        if(myMovement != null) { myMovement.hamper++; }
 
         // shut off the renderers
         Collider myColl = GetComponent<Collider>();
         myColl.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
-        if (allRends.Length > 0)
-        {
+        if (allRends.Length > 0) {
             foreach (Renderer rend in allRends)
             { if (rend != blush) { rend.enabled = false; } }
         }
@@ -147,7 +139,7 @@ public class MeleeEnemyDamageable : Damageable {
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
         replacedBody.parentHit = this;
-        replacedBody.setTransmutable(false);
+        // replacedBody.setTransmutable(false);
 
         // wait for the spell duration
         float time = 0f;
@@ -175,7 +167,7 @@ public class MeleeEnemyDamageable : Damageable {
                 if (rend != null && rend != blush) { rend.enabled = true; }
         }
         replacedBody = null;
-        myMovement.hamper--;
+        if (myMovement != null) { myMovement.hamper--; }
     }
 
     public override void Seduce(float duration, GameObject target, SpellCaster owner)
@@ -188,10 +180,12 @@ public class MeleeEnemyDamageable : Damageable {
     public override IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
         myMovement.anim.Play("FrontHurt");
-        myMovement.changeState(new MeleeEnemySeduced(), duration);
+        // myMovement.changeState(new MeleeEnemySeduced(), duration);
+        myMovement.attackTarget = FindAttackerInRadius(myMovement.crushTarget.tag);
         blush.enabled = true;
         yield return new WaitForSeconds(duration);
-        myMovement.changeState(new MeleeEnemyIdle());
+        // myMovement.changeState(new MeleeEnemyIdle());
+        myMovement.attackTarget = myMovement.blueprint.getOriginTarget();
         seduction = null;
         blush.enabled = false;
     }
@@ -203,6 +197,14 @@ public class MeleeEnemyDamageable : Damageable {
         else {
             if (-dir.x > 0) { myMovement.anim.Play("RightHurt"); } // it came from the right
             else { myMovement.anim.Play("LeftHurt"); } // it came from the left
+        }
+    }
+
+    void OnCollisionEnter(Collision coll) {
+        float magnitude = coll.relativeVelocity.magnitude;
+        if(!coll.transform.tag.Contains("Spell") && magnitude > velocityDamageThreshold) {
+            int damage = Mathf.RoundToInt(magnitude - velocityDamageThreshold);
+            TakeDamage(null, damage, Vector3.zero, 0f);
         }
     }
 }

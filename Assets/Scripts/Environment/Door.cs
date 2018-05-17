@@ -59,6 +59,15 @@ public class Door : Damageable, Interactable {
         locked = false;
     }
 
+    public void Lock()
+    {
+        if(open) {
+            if(movement != null) { StopCoroutine(movement); }
+            movement = StartCoroutine(doorRotation());
+        }
+        locked = true;
+    }
+
     IEnumerator doorRotation()
     {
         float prog = 0f;
@@ -77,8 +86,6 @@ public class Door : Damageable, Interactable {
         if(open) { myHinge.localRotation = Quaternion.Euler(openRotation); }
         else { myHinge.localRotation = Quaternion.Euler(closedRotation); }
         
-        
-
         movement = null;
     }
 
@@ -127,7 +134,7 @@ public class Door : Damageable, Interactable {
 
     public override void knockBack(Vector3 dir, float force)
     {
-        if(!rbody.isKinematic) { rbody.AddForce(dir * force, ForceMode.Impulse); }
+        if(rbody && !rbody.isKinematic) { rbody.AddForce(dir * force, ForceMode.Impulse); }
     }
 
     public override void Seduce(float duration, GameObject target, SpellCaster owner)

@@ -16,7 +16,7 @@ public class Drownable : MonoBehaviour {
 			throw new UnityException("no damageable attached!");
 		}
 		else {
-			Debug.Log("we have a damageable");
+			// Debug.Log("we have a damageable");
 		}
 	}
 	

@@ -16,7 +16,17 @@ public class KillAllToPass : MonoBehaviour {
         if(alldead && key != null) {
             Debug.Log("Dropping key...");
             key.SetActive(true);
+            key.GetComponent<FloatyRotaty>().SetPosition();
             Destroy(this);
         }
 	}
+
+    void OnTriggerExit(Collider coll) {
+        if(coll.tag == "Enemy") {
+            Damageable dam = coll.GetComponent<Damageable>();
+            if(dam && enemiesToKill.Contains(dam)) {
+                dam.TakeDamage(null, 999, Vector3.zero, 0f);
+            }
+        }
+    }
 }

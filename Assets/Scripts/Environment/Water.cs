@@ -70,13 +70,13 @@ public class Water : MonoBehaviour {
 		if (pmov != null) {
 			pmov.slownessSeverity = waterSlowScalar;
 		}
-		Debug.Log("In Water: " + other.name);
+		// Debug.Log("In Water: " + other.name);
 	}
 
 	void Update() {
 //		foreach (inWaterType obj in inWater) {
 		for (int i = 0; i < inWater.Count; i ++) {
-			Debug.Log("Checking: " + inWater[i].obj.name);
+			// Debug.Log("Checking: " + inWater[i].obj.name);
 			inWaterType obj = inWater[i];
 			if (obj.obj == null) {
 				inWater.Remove(obj);
@@ -103,7 +103,7 @@ public class Water : MonoBehaviour {
 		if (pmov != null) {
 			pmov.slownessSeverity = 1f;
 		}
-		Debug.Log("Leaving Water: " + other.name);
+		// Debug.Log("Leaving Water: " + other.name);
 		inWater.Remove(FindStruct(other.gameObject));
 	}
 

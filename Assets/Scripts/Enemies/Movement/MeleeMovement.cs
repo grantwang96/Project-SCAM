@@ -26,14 +26,26 @@ public class MeleeMovement : Movement {
         RaycastHit rayHit;
         if (hamper <= 0 && Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
             out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
-            if (agent.nextPosition != transform.position && agent.Warp(transform.position)) {
-                agent.updatePosition = true;
-                agent.updateRotation = true;
-                agent.isStopped = false;
+            NavMeshHit hit;
+            agent.nextPosition = transform.position;
+            if(agent.nextPosition != transform.position && NavMesh.SamplePosition(transform.position, out hit, agent.radius, NavMesh.AllAreas)) { // check if agent is synced and on/near the navmesh
+                agent.Warp(hit.position);
+                ReactivateNavMesh();
             }
+        }
+        else {
+            rbody.isKinematic = false;
         }
 
         base.Update();
+    }
+
+    private void ReactivateNavMesh()
+    {
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.isStopped = false;
+        rbody.isKinematic = true;
     }
 
     public override IEnumerator attack(Vector3 target)
@@ -46,47 +58,14 @@ public class MeleeMovement : Movement {
     {
         base.knockBack(dir, force);
     }
-    /*
+
+    public override void Teleport(Vector3 newLocation, Vector3 offset)
+    {
+        
+    }
+
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.transform.tag == "Ground" && hamper <= 0)
-        {
-            // Debug.Log("Hi Ground");
-            /*
-            if (agent.Warp(transform.position)
-                && !agent.isStopped)
-            {
-                agent.updatePosition = true;
-                agent.updateRotation = true;
-                agent.isStopped = false;
-            }
-
-            NavMeshHit hit;
-            if(NavMesh.SamplePosition(transform.position, out hit, agent.radius * 2, NavMesh.AllAreas)) {
-                transform.position = hit.position;
-                agent.nextPosition = transform.position;
-                agent.updatePosition = true;
-                agent.updateRotation = true;
-                agent.isStopped = false;
-            }
-        }
+        if(coll.transform == attackTarget) { changeState(new MeleeEnemyAggro()); }
     }
-    /*
-    void OnCollisionStay(Collision coll)
-    {
-        if (coll.collider.tag == "Ground" || coll.collider.tag == "Wall" || coll.collider.tag == "Roof")
-        {
-            for (int i = 0; i < coll.contacts.Length; i++) {
-                Vector3 point = coll.contacts[i].point;
-                if (Vector3.Distance(point, transform.position) < 0.2f) {
-                    isGrounded = true;
-                }
-            }
-        }
-    }
-
-    void OnCollisionExit(Collision coll)
-    {
-        if (coll.collider.tag == "Ground") { isGrounded = false; }
-    }*/
 }
