@@ -13,11 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   baseSpeed: 3
-  maxSpeed: 8
+  maxSpeed: 10
   sightRange: 30
   sightAngle: 80
   attackRange: 3
   attentionSpan: 10
+  possibleDrops:
+  - dropPrefab: {fileID: 1882987251240948, guid: 643179f57b765bb46a01f8f95c9a92dc,
+      type: 2}
+    dropCountLower: 1
+    dropCountUpper: 1
+    chanceDrop: 0.1
   firstName:
   - Bob
   - Krong

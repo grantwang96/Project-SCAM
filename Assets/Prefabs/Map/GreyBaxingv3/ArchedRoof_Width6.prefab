@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 65671796736342656}
   m_Layer: 18
   m_Name: BrickRoof (7)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 118
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 65679451862223858}
   m_Layer: 18
   m_Name: BrickRoof (2)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 118
@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 65433170103002258}
   m_Layer: 18
   m_Name: BrickRoof (6)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 118
@@ -82,10 +82,10 @@ GameObject:
   - component: {fileID: 65676696956087304}
   m_Layer: 18
   m_Name: WallPillarCapstone
-  m_TagString: Wall
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967294
+  m_StaticEditorFlags: 86
   m_IsActive: 1
 --- !u!1 &1714061421855606
 GameObject:
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 65518380257184492}
   m_Layer: 18
   m_Name: BrickRoof (8)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 118
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 4168724608899998}
   m_Layer: 18
   m_Name: ArchedRoof_Width6
-  m_TagString: Untagged
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 65436624352480292}
   m_Layer: 18
   m_Name: BrickRoof (5)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 118
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 65232468924807322}
   m_Layer: 18
   m_Name: BrickRoof (4)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 118
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 65045250728103278}
   m_Layer: 18
   m_Name: BrickRoof (1)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 118
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 65374028376244390}
   m_Layer: 18
   m_Name: BrickRoof (3)
-  m_TagString: Ground
+  m_TagString: Ceiling
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 118
@@ -350,7 +350,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 71f297b3efc1f604cbd0d1a0ad596d03, type: 2}
+  - {fileID: 2100000, guid: 183234abef998974086ec80bf16147d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -384,7 +384,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 71f297b3efc1f604cbd0d1a0ad596d03, type: 2}
+  - {fileID: 2100000, guid: 183234abef998974086ec80bf16147d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -418,7 +418,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3bb86dc607e03b74c8b7d9b5865dc486, type: 2}
+  - {fileID: 2100000, guid: 1923e439eaa433a4cab6c1883d2d5182, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -452,7 +452,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 71f297b3efc1f604cbd0d1a0ad596d03, type: 2}
+  - {fileID: 2100000, guid: 183234abef998974086ec80bf16147d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -486,7 +486,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 71f297b3efc1f604cbd0d1a0ad596d03, type: 2}
+  - {fileID: 2100000, guid: 183234abef998974086ec80bf16147d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -520,7 +520,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 71f297b3efc1f604cbd0d1a0ad596d03, type: 2}
+  - {fileID: 2100000, guid: 183234abef998974086ec80bf16147d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -554,7 +554,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 71f297b3efc1f604cbd0d1a0ad596d03, type: 2}
+  - {fileID: 2100000, guid: 183234abef998974086ec80bf16147d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -588,7 +588,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 71f297b3efc1f604cbd0d1a0ad596d03, type: 2}
+  - {fileID: 2100000, guid: 183234abef998974086ec80bf16147d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -622,7 +622,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 71f297b3efc1f604cbd0d1a0ad596d03, type: 2}
+  - {fileID: 2100000, guid: 183234abef998974086ec80bf16147d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -12,6 +12,7 @@ public class MeleeMovement : Movement {
     public override void setup() {
         agent = GetComponent<NavMeshAgent>(); // set the agent
         base.setup();
+        changeState(new MeleeEnemyIdle());
     }
 
 	protected override void ToIdle() {
@@ -21,15 +22,30 @@ public class MeleeMovement : Movement {
     public override void Update()
     {
         destination = agent.destination;
-        if(isGrounded) {
-            agent.updatePosition = true;
-            agent.updateRotation = true;
-            if(agent.nextPosition != transform.position) {
-                agent.Warp(transform.position);
+
+        RaycastHit rayHit;
+        if (hamper <= 0 && Physics.Raycast(new Ray(transform.position + Vector3.up * 0.1f, Vector3.down),
+            out rayHit, 0.2f, groundLayers, QueryTriggerInteraction.Ignore)) {
+            NavMeshHit hit;
+            agent.nextPosition = transform.position;
+            if(agent.nextPosition != transform.position && NavMesh.SamplePosition(transform.position, out hit, agent.radius, NavMesh.AllAreas)) { // check if agent is synced and on/near the navmesh
+                agent.Warp(hit.position);
+                ReactivateNavMesh();
             }
-            agent.isStopped = false;
         }
+        else {
+            rbody.isKinematic = false;
+        }
+
         base.Update();
+    }
+
+    private void ReactivateNavMesh()
+    {
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.isStopped = false;
+        rbody.isKinematic = true;
     }
 
     public override IEnumerator attack(Vector3 target)
@@ -42,22 +58,14 @@ public class MeleeMovement : Movement {
     {
         base.knockBack(dir, force);
     }
-    
-    void OnCollisionStay(Collision coll)
+
+    public override void Teleport(Vector3 newLocation, Vector3 offset)
     {
-        if (coll.collider.tag == "Ground" || coll.collider.tag == "Wall" || coll.collider.tag == "Roof")
-        {
-            for (int i = 0; i < coll.contacts.Length; i++) {
-                Vector3 point = coll.contacts[i].point;
-                if (Vector3.Distance(point, transform.position) < 0.2f) {
-                    isGrounded = true;
-                }
-            }
-        }
+        
     }
 
-    void OnCollisionExit(Collision coll)
+    void OnCollisionEnter(Collision coll)
     {
-        if (coll.collider.tag == "Ground") { isGrounded = false; }
+        if(coll.transform == attackTarget) { changeState(new MeleeEnemyAggro()); }
     }
 }

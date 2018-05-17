@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public static PlayerMagic instance;
+    public Damageable myDamageable;
     [SerializeField] List<SpellBook> spellsInventory = new List<SpellBook>();
     public int maxSpells;
     int currentHeld;
@@ -35,6 +36,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 
     public TextMesh currentSpellTitle;
     public TextMesh currentSpellDescription;
+    public SpriteRenderer currentSpellSideEffectImage;
     public TextMesh ammoCount;
     public MeshRenderer currentSpellCover;
 
@@ -56,11 +58,19 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     [SerializeField] Image enemyHealthGaugeBackground;
     [SerializeField] Text enemyName;
 
-    [SerializeField] Color reticuleNormal;
-    [SerializeField] Color reticuleInteractable;
+    [SerializeField] Sprite reticuleNormal;
+    [SerializeField] Sprite reticuleInteractable;
+    [SerializeField] Sprite reticuleRecharging;
 
-    public Sprite shootReticuleSprite;
-    public Sprite interactReticuleSprite;
+    public Transform bookUI;
+    public MeshRenderer leftBook;
+    public MeshRenderer rightBook;
+    public Vector3 bookNormalPosition;
+    public Vector3 startSwitchPosition;
+    public Vector3 bookNormalRotation;
+    public Vector3 startSwitchRotation;
+    Coroutine bookSwapRoutine;
+    public float swapSpeed;
     #endregion
 
 	#region Audio
@@ -84,23 +94,30 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 		sounds = GetComponentInParent<AudioPlayer>();
 
         // updateCurrentHeld();
+        leftBook.enabled = false;
+        rightBook.enabled = false;
         UpdateSpellData();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameManager.Instance.menuMode) { return; }
+        if (GameManager.Instance.menuMode || myDamageable.dead) { return; }
+
+        foreach(SpellBook book in spellsInventory) {
+            if(book.sparklyEffect != null && book.sparklyEffect.gameObject.activeInHierarchy) {
+                book.sparklyEffect.gameObject.SetActive(false);
+            }
+        }
 
         processScrolling(); // if the player scrolls
         processNumKeys(); // if the player hits the keys
+		processDpad(); // for ps4 dpad
 
-        if(currentInteractable == null) { reticule.color = reticuleNormal;  }
-        else { reticule.color = reticuleInteractable; }
+        if(currentInteractable == null && canFire) { reticule.sprite = reticuleNormal;  }
+        else if(canFire) { reticule.sprite = reticuleInteractable; }
         
-        if (Input.GetButtonDown("Fire1")) { // make sure player hits shoot button and has something to shoot
+        if (Input.GetButtonDown("Fire1") || Input.GetAxis("ctr_Fire1") > 0.5f) { // make sure player hits shoot button and has something to shoot
             fireSpell();
-            // if(interactable != null) { interactable.Interact(this); }
-            // else if (spellsInventory.Count != 0) { fireSpell(); }
         }
         if(Input.GetButtonDown("Fire2") && currentInteractable != null) {
             currentInteractable.Interact(this); currentInteractable = null;
@@ -127,11 +144,71 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
 		if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
 		else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
+		if (spellsInventory.Count == 0) {
+			return;
+		}
+
 		currentSpellTitle.text = spellsInventory[currentHeld].primaryEffect.title;
-		currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
+        // currentSpellDescription.text = spellsInventory[currentHeld].secondaryEffect.title;
+        currentSpellSideEffectImage.sprite = spellsInventory[currentHeld].secondaryEffect.descriptiveImage;
 		ammoCount.text = "Charges: " + spellsInventory[currentHeld].getAmmo();
 		currentSpellCover.material.color = spellsInventory[currentHeld].baseColor;
 	}
+
+    IEnumerator switchBooks() {
+        Vector3 startPos = bookUI.localPosition;
+        Vector3 startRot = bookUI.localRotation.eulerAngles;
+        float time = 0f;
+
+        while(time < 1f) {
+            time += Time.deltaTime * swapSpeed;
+            bookUI.localPosition = Vector3.Lerp(startPos, startSwitchPosition, time);
+            bookUI.localRotation = Quaternion.Lerp(Quaternion.Euler(startRot), Quaternion.Euler(startSwitchRotation), time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        UpdateUI();
+        UpdateBookCovers();
+
+        time = 0f;
+
+        while(time < 1f) {
+            time += Time.deltaTime * swapSpeed;
+            bookUI.localPosition = Vector3.Lerp(startPos, bookNormalPosition, time);
+            bookUI.localRotation = Quaternion.Lerp(Quaternion.Euler(startSwitchRotation), Quaternion.Euler(bookNormalRotation), time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        bookSwapRoutine = null;
+    }
+
+    void UpdateBookCovers() {
+        if (spellsInventory.Count == maxSpells) {
+            leftBook.enabled = true;
+            rightBook.enabled = true;
+            if(currentHeld == 0) {
+                leftBook.materials[1].color = spellsInventory[2].baseColor;
+                rightBook.materials[1].color = spellsInventory[1].baseColor;
+            }
+            else if(currentHeld == 1) {
+                leftBook.materials[1].color = spellsInventory[0].baseColor;
+                rightBook.materials[1].color = spellsInventory[2].baseColor;
+            }
+            else {
+                leftBook.materials[1].color = spellsInventory[1].baseColor;
+                rightBook.materials[1].color = spellsInventory[0].baseColor;
+            }
+        }
+        else if(spellsInventory.Count == 2) {
+            leftBook.enabled = true;
+            rightBook.enabled = false;
+            if(currentHeld == 0) { leftBook.materials[1].color = spellsInventory[1].baseColor; }
+            else { leftBook.materials[1].color = spellsInventory[0].baseColor; }
+        } else {
+            leftBook.enabled = false;
+            rightBook.enabled = false;
+        }
+    }
 
 	#endregion
 
@@ -155,38 +232,89 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     #region process Inputs
     void processNumKeys()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && currentHeld != 0) {
+		if (!canSwap) return;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
             currentHeld = 0;
-            // updateCurrentHeld();
-            UpdateSpellData();
-			PlaySwapSound();
+			// updateCurrentHeld();
+			FireSwap();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && spellsInventory.Count > 1 && currentHeld != 1) {
             currentHeld = 1;
-            // updateCurrentHeld();
-            UpdateSpellData();
-			PlaySwapSound();
+			// updateCurrentHeld();
+			FireSwap();
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && spellsInventory.Count > 2 && currentHeld != 2) {
             currentHeld = 2;
-            // updateCurrentHeld();
-            UpdateSpellData();
-			PlaySwapSound();
+			// updateCurrentHeld();
+			FireSwap();
         }
     }
 
+	void processDpad() 
+	{
+		if (!canSwap || spellsInventory.Count < 2) return;
+
+		if (Input.GetAxis("ctr_dx") < -0.5f) {
+			DecHeldIndex();
+			FireSwap();
+		}
+		else if (Input.GetAxis("ctr_dx") > 0.5f) {
+			IncHeldIndex();
+			FireSwap();
+		}
+	}
+
+	int IncHeldIndex() 
+	{
+		if (currentHeld == spellsInventory.Count - 1) {
+			currentHeld = 0;
+		}
+		else {
+			currentHeld++;
+		}
+
+		return currentHeld;
+	}
+
+	int DecHeldIndex() 
+	{
+		if (currentHeld == 0) {
+			currentHeld = spellsInventory.Count - 1;
+		}
+		else {
+			currentHeld--;
+		}
+
+		return currentHeld;
+	}
+
+	bool canSwap = true;
+
+    IEnumerator StartSwapCD()
+	{
+		canSwap = false;
+		yield return new WaitForSeconds(sounds.GetClip("swap").length * .5f);
+		canSwap = true;
+	}
+
+    void FireSwap()
+	{      
+        sounds.PlayClip("swap");
+        UpdateSpellData();
+		StartCoroutine(StartSwapCD());
+	}
+
     void processScrolling()
     {
+		if (!canSwap) return;
+
         float mouse = Input.GetAxis("Mouse ScrollWheel"); // record input from mouse scrollwheel
         if(mouse != 0)
         {
             if (mouse > 0) { currentHeld--; }
             else if (mouse < 0) { currentHeld++; }
-            // updateCurrentHeld();
-            UpdateSpellData();
-			if (spellsInventory.Count > 1) {
-				PlaySwapSound();
-			}
+			FireSwap();
         }
     }
 
@@ -238,19 +366,23 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         }
     }
 
-    void UpdateSpellData()
-    {
+    void UpdateSpellData() {
         if (spellsInventory.Count == 0) { // shut everything off
             currentHeld = 0;
             currentSpellTitle.text = "";
-            currentSpellDescription.text = "";
+            // currentSpellDescription.text = "";
+            currentSpellSideEffectImage.sprite = null;
             ammoCount.text = "";
             currentSpellCover.material.color = new Color(.3f, .3f, .3f);
 
         }
         else { // update the ammo gauge and makesure current held is within inventory count
+            if (currentHeld >= spellsInventory.Count) { currentHeld = 0; }
+            else if (currentHeld < 0) { currentHeld = spellsInventory.Count - 1; }
 
-			UpdateUI();
+            if(bookSwapRoutine != null) { StopCoroutine(bookSwapRoutine); }
+            bookSwapRoutine = StartCoroutine(switchBooks());
+			// UpdateUI();
         }
     }
 
@@ -378,10 +510,11 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         else { // otherwise just add the spell
             spellsInventory.Add(newSpell);
             currentHeld = spellsInventory.Count - 1;
+            UpdateSpellData();
         }
         // updateCurrentHeld();
-        UpdateSpellData();
         newSpell.Deactivate();
+        newSpell.transform.parent = transform.parent;
         newSpell.transform.localPosition = Vector3.zero;
         newSpell.transform.localRotation = Quaternion.identity;
 
@@ -431,16 +564,24 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     IEnumerator dropSpellProcess(SpellBook dropSpell, Vector3 originPos) // visualize dropping the book
     {
         // dropSpell.dead = true;
+        FloatyRotaty fr = dropSpell.GetComponent<FloatyRotaty>();
+        fr.active = false;
+        UpdateSpellData();
         dropSpell.Activate(); // turn on the book
         dropSpell.transform.parent = null;
+
+        float time = 0f;
+
         Vector3 startPos = dropSpell.transform.position;
-        while (!dropSpell.dead && Vector3.Distance(dropSpell.transform.position, originPos) > 0.2f)
-        {
-            dropSpell.transform.position = Vector3.Lerp(dropSpell.transform.position, originPos, Time.deltaTime / spellPickUpSpeed); // shift book to position
+        while (!dropSpell.dead && Vector3.Distance(dropSpell.transform.position, originPos) > 0.2f) {
+            time += Time.deltaTime;
+            dropSpell.transform.position = Vector3.Lerp(startPos, originPos, time / spellPickUpSpeed); // shift book to position
             yield return new WaitForEndOfFrame();
         }
+        if (fr != null) { fr.enabled = true; }
+        fr.SetPosition();
+        fr.active = true;
         // updateCurrentHeld();
-        UpdateSpellData();
     }
 
     public SpellBook returnSpell()
@@ -452,6 +593,7 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
     public IEnumerator fireCoolDown(float duration) // process cool down
     {
         canFire = false;
+        reticule.sprite = reticuleRecharging;
         float recovery = 0f;
         while(recovery < duration) {
             reticule.fillAmount = recovery / duration; // update reticule to show progress

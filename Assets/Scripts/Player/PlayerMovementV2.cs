@@ -27,6 +27,7 @@ public class PlayerMovementV2 : Movement {
         charCon.detectCollisions = true;
         yMove = -3f;
         falling = true;
+        
 	}
 
     // Update is called once per frame
@@ -54,9 +55,14 @@ public class PlayerMovementV2 : Movement {
         */
 
         // if(hamper <= 0) { Move(move * Time.deltaTime); }
+
+        Move((move + Vector3.up * yMove) * Time.deltaTime);
+
+        /*
         Move(move * Time.deltaTime);
         if(!charCon.enabled) { return; }
         charCon.Move(Vector3.up * yMove * Time.deltaTime);
+        */
     }
 
     void calculateMove()
@@ -120,12 +126,16 @@ public class PlayerMovementV2 : Movement {
 
     public override void processMovement()
     {
-        if(GameManager.Instance.menuMode) { return; }
-
         float horizontal = 0f;
         float vertical = 0f;
+        if (GameManager.Instance.menuMode || myDamageable.dead) { return; }
+
         horizontal = Input.GetAxis("Horizontal"); // Get player inputs
         vertical = Input.GetAxis("Vertical"); // Get player inputs
+
+		//alt ps4 controls
+		horizontal += Input.GetAxis("ctr_Horizontal");
+		vertical += Input.GetAxis("ctr_Vertical");
         // if (hamper > 0) { return; }
 
         if (Input.GetButtonDown("Jump")) { Jump(); }
@@ -173,31 +183,14 @@ public class PlayerMovementV2 : Movement {
     {
         if (!charCon.isGrounded) { return; }
         yMove = jumpForce;
-        falling = true;
+        // falling = true;
     }
 
-    void OnControllerColliderHit(ControllerColliderHit coll)
-    {
+    void OnControllerColliderHit(ControllerColliderHit coll) {
         string tag = coll.collider.tag;
-        if (tag.Contains("Book")) {
-            SpellBook touchedBook = coll.collider.GetComponent<SpellBook>();
-            if (touchedBook) {
-                // Debug.Log("I touched book!");
-            }
-        }
-        if (tag.Contains("Ground") || tag.Contains("Roof") || tag.Contains("Wall")) {
-            
-            if ((charCon.collisionFlags & CollisionFlags.CollidedAbove) != 0 && yMove > 0) // If collided with head
-            {
-                // Debug.Log("I hit my head!");
-                yMove = 0f;
-                return;
-            }
-            Vector3 feet = transform.position + Vector3.down * charCon.bounds.extents.y;
-            if (Vector3.Distance(coll.point, feet) < 0.2f && !charCon.isGrounded) // If collided with feet
-            {
-                falling = false;
-                yMove = Physics.gravity.y;
+        if (tag.Contains("Ground") || tag.Contains("Roof") || tag.Contains("Wall") || tag.Contains("Ceiling")) {
+            if (((charCon.collisionFlags & CollisionFlags.CollidedAbove) != 0 || charCon.collisionFlags == CollisionFlags.CollidedAbove) && yMove > 0) { // If collided with head
+                yMove = -yMove;
                 return;
             }
         }

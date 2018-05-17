@@ -15,6 +15,8 @@ public class EnemyData : ScriptableObject {
     [Range(0, 90)] public float attackRange;
     [Range(1, 30)] public float attentionSpan;
 
+    public List<EnemyDrop> possibleDrops = new List<EnemyDrop>();
+
     public string[] firstName;
     public string[] lastNameP1;
     public string[] lastNameP2;
@@ -95,4 +97,29 @@ public class EnemyData : ScriptableObject {
         newPlace += " " + nouns[Random.Range(0, nouns.Length)];
         return newPlace;
     }
+
+    public void DropLoot(Vector3 deathLocation) {
+        float chance = Random.value;
+        foreach(EnemyDrop drop in possibleDrops) {
+            if(chance < drop.chanceDrop) {
+                int count = Random.Range(drop.dropCountLower, drop.dropCountUpper);
+                for(int i = 0; i < count; i++) {
+                    GameObject newDrop = Instantiate(drop.dropPrefab, deathLocation, Quaternion.Euler(Vector3.up * Random.Range(0, 360f)));
+                    Rigidbody dropRbody = newDrop.GetComponent<Rigidbody>();
+                    if(dropRbody) {
+                        dropRbody.AddExplosionForce(3f, deathLocation, 2f);
+                    }
+                }
+            }
+        }
+    }
+}
+
+[System.Serializable]
+public class EnemyDrop
+{
+    public GameObject dropPrefab;
+    public int dropCountLower;
+    public int dropCountUpper;
+    [Range(0, 1)] public float chanceDrop;
 }

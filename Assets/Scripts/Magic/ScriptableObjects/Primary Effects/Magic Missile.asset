@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d865f22706ee2142b99990066aebcb9, type: 3}
   m_Name: Magic Missile
   m_EditorClassIdentifier: 
-  force: 100
+  force: 12
   power: 10
   duration: 0
   powerLevelModifier: 1
   powerLevel: 1
   baseColor: {r: 0.86206913, g: 0, b: 1, a: 0.7058824}
+  coreColor: {r: 0.9034486, g: 0, b: 1, a: 1}
   ammo: 6
   coolDown: 0.1
   title: Magic Missile

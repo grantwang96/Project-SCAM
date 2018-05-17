@@ -9,14 +9,20 @@ public class PlayerDamageable : Damageable {
 
     public static PlayerDamageable Instance;
 
-    Coroutine flight;
-    Coroutine drunkness;
-    Coroutine slowness;
     Coroutine seduced;
+    Coroutine hurtVisuals;
 
     public Transform playerCanvas;
     public Transform playerCanvasPrefab;
     public CameraMovement HeadMove;
+    public Transform Gun;
+
+    public Vector3 initialHeadPosition;
+    public Vector3 initialGunPosition;
+    public float originalRadius;
+    public float originalHeight;
+
+    public Transform mainCameraPivot;
     public GameObject DrunkHead;
 
     public Sprite transmutedIcon;
@@ -27,6 +33,9 @@ public class PlayerDamageable : Damageable {
     // public Image healthBar;
     public MeshRenderer healthBar;
 	public MeshRenderer encasing;
+    public Image fadeToBlackImage;
+    public Image ouchImage;
+    Coroutine deathSequence;
 
 //	AudioPlayer sounds;
 
@@ -34,32 +43,30 @@ public class PlayerDamageable : Damageable {
 	public override void Start () {
         base.Start();
         Instance = this;
-		if (sounds==null)
-			sounds = GetComponent<AudioPlayer>();
-        // playerCanvas = Instantiate(playerCanvasPrefab);
-        // healthBar = playerCanvas.Find("HealthBar").GetComponent<Image>();
+		sounds = GetComponent<AudioPlayer>();
+        initialHeadPosition = HeadMove.transform.localPosition;
+        initialGunPosition = transform.Find("Gun").localPosition;
+        originalHeight = GetComponent<CharacterController>().height;
+        originalRadius = GetComponent<CharacterController>().radius;
+        myMovement.hamper = 1;
+        StartCoroutine(fadeInScene());
 	}
 	
 	// Update is called once per frame
 	public override void Update () {
-        // update healthbar
-        // healthBar.fillAmount = (float)health / max_health;
-
         float fillAmount = (float)health / max_health;
         if(fillAmount > 1f) { fillAmount = 1f; }
         else if(fillAmount < 0) { fillAmount = 0f; }
 
         healthBar.transform.localScale = new Vector3(.7f, fillAmount, .7f);
-		Color c = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
-		healthBar.material.color = c;
-		encasing.material.SetColor("_RimColor", c);
+		// Color c = Color.Lerp(Color.green, Color.red, 1f - (float)health / max_health);
+		// healthBar.material.color = c;
+		// encasing.material.SetColor("_RimColor", c);
     }
 
     public override void TakeDamage(Transform attacker, int hpLost, Vector3 dir, float force)
     {
-        if (hurt) { return; }
-        
-        // Visual hurt effects
+        if (hurt || dead) { Debug.Log("Omae wa mo...shindeiru!"); return; }
         
         base.TakeDamage(attacker, hpLost, dir, force);
         if(health <= 0) { Die(); return; }
@@ -67,11 +74,12 @@ public class PlayerDamageable : Damageable {
         PlayerMagic.instance.invokeChangeFollowers(attacker.GetComponent<Damageable>());
 
 		sounds.PlayClip("hurt");
+        if(hurtVisuals != null) { StopCoroutine(hurtVisuals); }
+        hurtVisuals = StartCoroutine(visualizeHurt(hpLost));
         StartCoroutine(hurtFrames(hpLost));
     }
 
-    IEnumerator hurtFrames(int hpLost)
-    {
+    IEnumerator hurtFrames(int hpLost) {
         hurt = true;
         float time = 0f;
 
@@ -82,6 +90,7 @@ public class PlayerDamageable : Damageable {
         Vector3 startRot = new Vector3(xRot, yRot, zRot);
         Camera.main.transform.localEulerAngles = startRot;
 
+
         while(time < hurtTime) {
             Camera.main.transform.localEulerAngles = Vector3.Lerp(startRot, Vector3.zero, time / hurtTime);
             yield return new WaitForEndOfFrame();
@@ -91,11 +100,61 @@ public class PlayerDamageable : Damageable {
         hurt = false;
     }
 
+    IEnumerator visualizeHurt(int hpLost)
+    {
+        // add opacity to hurt image
+        float hurtVal = ouchImage.color.a + (float)hpLost / max_health;
+        Color hurtColor = new Color(ouchImage.color.r, ouchImage.color.g, ouchImage.color.b, hurtVal);
+        ouchImage.color = hurtColor;
+
+        if(ouchImage.color.a > 0.8f) { ouchImage.color = new Color(ouchImage.color.r, ouchImage.color.g, ouchImage.color.b, 0.8f); }
+
+        while(ouchImage.color.a > 0f) {
+            ouchImage.color =
+                new Color(ouchImage.color.r, ouchImage.color.g, ouchImage.color.b, ouchImage.color.a - (Time.deltaTime * .25f));
+            yield return new WaitForEndOfFrame();
+        }
+        hurtVisuals = null;
+    }
+
     public override void Die()
     {
-//       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-		CheckpointManager.Instance.ResetToLastCheckpoint();
-//		yield return new WaitForEndOfFrame();
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // CheckpointManager.Instance.ResetToLastCheckpoint();
+
+        // Play some death sfx
+        if(deathSequence == null) { deathSequence = StartCoroutine(DeathSequence()); }
+    }
+
+    IEnumerator DeathSequence() {
+        dead = true;
+        CharacterController charCon = GetComponent<CharacterController>();
+        while(!charCon.isGrounded) { yield return new WaitForFixedUpdate(); }
+
+        Animator anim = Camera.main.GetComponent<Animator>();
+        anim.Play("Death");
+        Debug.Log("Waiting for death animation change over...");
+        while(!anim.GetCurrentAnimatorStateInfo(0).IsName("Death")) { yield return new WaitForFixedUpdate(); }
+        AnimationClip clip = anim.GetCurrentAnimatorClipInfo(0)[0].clip;
+        Debug.Log("Death animation started!");
+        yield return new WaitForSeconds(clip.length);
+        Debug.Log("Death animation finished!");
+        
+        float time = 0f;
+        fadeToBlackImage.color = Color.clear;
+        while(time < 1f) {
+            time += Time.deltaTime * .33f;
+            fadeToBlackImage.color = Color.Lerp(Color.clear, Color.black, time);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Camera.main.transform.localPosition = Vector3.zero;
+        Camera.main.transform.localRotation = Quaternion.identity;
+        anim.Play("Default");
+        CheckpointManager.Instance.ResetToLastCheckpoint();
+        fadeToBlackImage.color = Color.clear;
+        dead = false;
+        deathSequence = null;
     }
 
     /*
@@ -200,34 +259,36 @@ public class PlayerDamageable : Damageable {
 
     public override void InitiateTransmutation(float duration, GameObject replacement)
     {
+        /*
         if (!transmutable) { return; }
         StartCoroutine(processTransmutation(duration, replacement));
+        */
+        base.InitiateTransmutation(duration, replacement);
     }
 
     public override IEnumerator processTransmutation(float duration, GameObject replacement)
     {
-        transmutable = false; // set transmutable to false
+        // transmutable = false; // set transmutable to false
         GameObject newBody = Instantiate(replacement, transform); // create new body
+        float time = 0f;
 
         // prime new body to replace player
         newBody.layer = gameObject.layer;
         newBody.transform.position = transform.position;
         newBody.transform.rotation = transform.rotation;
         Rigidbody newrbody = newBody.GetComponent<Rigidbody>();
-        Damageable newDam = newBody.GetComponent<Damageable>();
+        replacedBody = newBody.GetComponent<Damageable>();
         Collider newBodyColl = newBody.GetComponent<Collider>();
         
         //shut off unnecessary components of newbody
         newrbody.isKinematic = true;
         newrbody.useGravity = false;
-        newDam.parentHit = this;
-        newDam.transmutable = false;
+        replacedBody.parentHit = this;
+        replacedBody.transmutable = false;
 
         // shift gun(to accomodate for larger bodies)
         Vector3 localOrigin = Camera.main.transform.localPosition;
-        Transform gun = transform.Find("Gun");
-        Vector3 gunOrigin = gun.localPosition;
-        gun.localPosition += Vector3.forward * .5f;
+        Gun.localPosition += Vector3.forward * .5f;
 
         CharacterController charCon = GetComponent<CharacterController>();
 
@@ -241,17 +302,25 @@ public class PlayerDamageable : Damageable {
         charCon.radius = newRadius;
         charCon.detectCollisions = true;
 
-        myMovement.Head.position = transform.position + Vector3.up * charCon.height / 2;
+        myMovement.Head.localPosition = Vector3.up * charCon.height / 2;
         myMovement.Head.forward = transform.forward;
         // charCon.enabled = false;
-        Camera.main.transform.position -= transform.forward * 3f;
-        Camera.main.transform.LookAt(myMovement.Head);
+        // mainCamerPivot.position -= transform.forward * 3f;
+        mainCameraPivot.transform.LookAt(myMovement.Head);
+        Vector3 startPos = mainCameraPivot.localPosition;
+        Vector3 endPos = Vector3.back * 3f;
+        while (time < 1f) {
+            time += Time.deltaTime;
+            mainCameraPivot.localPosition = Vector3.Lerp(startPos, endPos, time);
+            yield return new WaitForEndOfFrame();
+        }
+        time = 0f;
 
-        gun.parent = myMovement.Head;
+        // gun.parent = myMovement.Head;
         Vector3 localPos = myMovement.Head.localPosition;
-        myMovement.Head.parent = newrbody.transform;
-        myMovement.Head.position = newrbody.transform.TransformPoint(localPos);
-        myMovement.Head.forward = newrbody.transform.forward;
+        // myMovement.Head.parent = newrbody.transform;
+        // myMovement.Head.position = newrbody.transform.TransformPoint(localPos);
+        // myMovement.Head.forward = newrbody.transform.forward;
 
         // myPlayMagic.enabled = false; // ALLOW FOR SPELL COMBAT
         // myMovement.hamper += 1;
@@ -261,7 +330,7 @@ public class PlayerDamageable : Damageable {
         Image newTransmuteStatus = Instantiate(statusEffectPrefab, statusEffectBar);
         newTransmuteStatus.rectTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180));
         newTransmuteStatus.name = "transmutedStatus";
-        float time = 0f;
+
         while(time < duration) {
             newTransmuteStatus.fillAmount = 1f - (time / duration);
             time += Time.deltaTime;
@@ -275,16 +344,26 @@ public class PlayerDamageable : Damageable {
  
         charCon.enabled = true;
         charCon.detectCollisions = true;
-        charCon.height = originHeight;
-        charCon.radius = originRadius;
-        myMovement.Head.position = transform.position + Vector3.up * charCon.height / 2;
-        myMovement.Head.parent = transform;
+        charCon.height = originalHeight;
+        charCon.radius = originalRadius;
+
+        // myMovement.Head.parent = transform;
+        myMovement.Head.localPosition = Vector3.up * charCon.height / 2;
         myMovement.Head.forward = transform.forward;
-        gun.parent = transform;
-        gun.localPosition = gunOrigin;
-        gun.forward = transform.forward;
-        Camera.main.transform.localPosition = localOrigin;
-        Camera.main.transform.rotation = myMovement.Head.rotation;
+        // gun.parent = transform;
+        Gun.localPosition = initialGunPosition;
+        Gun.forward = transform.forward;
+        time = 0f;
+        startPos = mainCameraPivot.localPosition;
+        Quaternion startRot = mainCameraPivot.localRotation;
+        while(time < 1f) {
+            time += Time.deltaTime;
+            mainCameraPivot.transform.localPosition = Vector3.Lerp(startPos, Vector3.zero, time);
+            mainCameraPivot.transform.localRotation = Quaternion.Lerp(startRot, Quaternion.identity, time);
+            yield return new WaitForEndOfFrame();
+        }
+        // mainCameraPivot.transform.localPosition = localOrigin;
+        // mainCameraPivot.transform.rotation = myMovement.Head.rotation;
 
         // re-enable spell combat and transmutable
         // myMovement.hamper--;
@@ -292,6 +371,7 @@ public class PlayerDamageable : Damageable {
 
         // get rid of newbody
         Destroy(newBody);
+        transmutationProcess = null;
     }
 
 //    public override void Seduce(float duration, GameObject target, SpellCaster owner)
@@ -310,5 +390,16 @@ public class PlayerDamageable : Damageable {
         float dist = Vector3.Distance(center.position, transform.position);
         Vector3 dir = (center.position - transform.position).normalized;
         myMovement.knockBack(dir, force);
+    }
+
+    IEnumerator fadeInScene()
+    {
+        float time = 0f;
+        while(time < 1f) {
+            time += Time.deltaTime / 3f;
+            fadeToBlackImage.color = Color.Lerp(Color.black, Color.clear, time);
+            yield return new WaitForEndOfFrame();
+        }
+        myMovement.hamper = 0;
     }
 }

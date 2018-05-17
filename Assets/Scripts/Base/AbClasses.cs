@@ -19,6 +19,7 @@ public abstract class Damageable : MonoBehaviour
     public float hurtTime;
     public bool dead;
     public bool damageable = true;
+    public float velocityDamageThreshold;
 
     // rbody or character controller
     // public Rigidbody rbody;
@@ -26,12 +27,16 @@ public abstract class Damageable : MonoBehaviour
     public Collider myCollider;
 	public SkinnedMeshRenderer myRend;
 
+    public Vector3 originSpawn;
     public Movement myMovement;
     public Damageable parentHit;
 
     public Damageable replacedBody; // for transmutations
+    public Coroutine transmutationProcess;
     
     public Coroutine seduction;
+    public SpriteRenderer blush;
+    // public Vector3 blushScale;
 
 	public AudioPlayer sounds;
 
@@ -42,6 +47,7 @@ public abstract class Damageable : MonoBehaviour
 //        myRend = GetComponent<MeshRenderer>();
         myMovement = GetComponent<Movement>();
         health = max_health;
+        originSpawn = transform.position;
 
 		if (sounds == null) {
 			sounds = GetComponent<AudioPlayer>();
@@ -99,14 +105,19 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void InitiateTransmutation(float duration, GameObject replacement)
     {
-        StartCoroutine(processTransmutation(duration, replacement));
+        if(parentHit != null) { parentHit.InitiateTransmutation(duration, replacement); return; } // if you ARE the transmutation, pass it along to parent
+        if(transmutationProcess != null) { StopCoroutine(transmutationProcess); } // stop the previous transmutation process
+        if(replacedBody != null) {
+            transform.position = replacedBody.transform.position;
+            Destroy(replacedBody.gameObject);
+        } // destroy the replaced body that's already there
+        transmutationProcess = StartCoroutine(processTransmutation(duration, replacement));
     }
 
     public virtual IEnumerator processTransmutation(float duration, GameObject replacement)
     {
-        myMovement.hamper++;
-        Collider myColl = GetComponent<Collider>();
-        myColl.enabled = false;
+        if(myMovement != null) { myMovement.hamper++; }
+        myCollider.enabled = false;
         Renderer[] allRends = GetComponentsInChildren<Renderer>();
         if (allRends.Length > 0) {
             foreach(Renderer rend in allRends) { rend.enabled = false; }
@@ -115,16 +126,24 @@ public abstract class Damageable : MonoBehaviour
         Rigidbody replaceRigidBody = myReplace.GetComponent<Rigidbody>();
         replaceRigidBody.AddExplosionForce(3f, transform.position, 1f);
         replacedBody = myReplace.GetComponent<Damageable>();
-        replacedBody.setTransmutable(false);
-        yield return new WaitForSeconds(duration);
+        replacedBody.setTransmutable(true);
+
+        float time = 0f;
+        while(time < duration) {
+            yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
+            transform.position = replacedBody.transform.position;
+        }
+
         transform.position = myReplace.transform.position;
         Destroy(myReplace); // Destroy my replacement
-        myColl.enabled = true;
+        myCollider.enabled = true;
         if (allRends.Length > 0) {
             foreach (Renderer rend in allRends) { rend.enabled = true; }
         }
         replacedBody = null;
-        myMovement.hamper--;
+        if (myMovement != null) { myMovement.hamper--; }
+        transmutationProcess = null;
     }
 
     public virtual void setTransmutable(bool newBool)
@@ -134,22 +153,45 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void Seduce(float duration, GameObject target, SpellCaster owner)
     {
-        if(myMovement.crushTarget != null) { // if already seduced
+        Debug.Log("Seduced!");
+        
+        if(myMovement.crushTarget != null && myMovement.crush != null) { // if already seduced
             myMovement.crush.removeFromSeductionList(this); // remove from the seduction list
         }
+
         if(seduction != null) { StopCoroutine(seduction); }
-        myMovement.attackTarget = null;
-        myMovement.crushTarget = owner.returnTransform();
-        myMovement.crush = myMovement.crushTarget.GetComponent<SpellCaster>();
-        // Debug.Log("Owner is: " + myMovement.crushTarget);
-        // Debug.Log("Owner SpellCaster is: " + myMovement.crush);
-        myMovement.crush.addToSeductionList(this);
+        // myMovement.attackTarget = null;
+        // Debug.Log(owner);
+        myMovement.crushTarget = owner.returnBody();
+        myMovement.crush = owner.returnTransform().GetComponent<SpellCaster>();
+
+        // FindAttackerInRadius(owner.returnBody().tag);
+        
+        if(myMovement.crush != null) { myMovement.crush.addToSeductionList(this); }
+        else { Debug.Log("No spellcaster component!"); }
+        
         seduction = StartCoroutine(processSeduction(duration, target, owner));
+    }
+
+    public virtual Transform FindAttackerInRadius(string tag) {
+        Debug.Log(tag);
+        if (tag == "Player") {
+            Debug.Log(gameObject.layer);
+            Debug.Log(myMovement.sightRange);
+            Collider[] colls = Physics.OverlapSphere(transform.position, myMovement.sightRange, ~0);
+            Debug.Log(colls.Length);
+            for (int i = 0; i < colls.Length; i++) {
+                if (colls[i].gameObject == this.gameObject) { continue; }
+                if(colls[i].gameObject.tag == "Enemy") { Debug.Log("New Target: " + colls[i].transform); return colls[i].transform; }
+                
+            }
+        }
+        return null;
     }
 
     public virtual IEnumerator processSeduction(float duration, GameObject target, SpellCaster owner)
     {
-        yield return null;
+        yield return duration;
         seduction = null;
     }
 
@@ -168,6 +210,11 @@ public abstract class Damageable : MonoBehaviour
 
 	public virtual void Die()
     {
+        dead = true;
+        if (replacedBody != null) { Destroy(replacedBody); }
+        //        Destroy(gameObject);
+        //keeping disabled for checkpoint restoration
+        CheckpointManager.Instance.AddEnemyToRespawnList(this);
 //        Destroy(gameObject);
 		//keeping disabled for checkpoint restoration
 		Debug.Log(gameObject.name + " is dying");
@@ -237,6 +284,7 @@ public abstract class Movement : MonoBehaviour
     [SerializeField] int numRaycasts;
     [SerializeField] float raySpread;
     [SerializeField] float obstacleCheckRange;
+    public LayerMask groundLayers;
     public LayerMask scanLayer;
     public LayerMask obstacleLayer;
     public LayerMask pathFindingLayers;
@@ -315,10 +363,11 @@ public abstract class Movement : MonoBehaviour
 
     public Transform obstruction() {
         RaycastHit[] rayHits = Physics.RaycastAll(
-            Head.position, agent.desiredVelocity, obstacleCheckRange, obstacleLayer, QueryTriggerInteraction.Ignore);
+            Head.position, agent.desiredVelocity, agent.radius, obstacleLayer, QueryTriggerInteraction.Ignore);
         Debug.DrawRay(Head.position, agent.desiredVelocity, Color.green);
         foreach (RaycastHit rayhit in rayHits) {
             if(rayhit.collider.tag == "Wall" || rayhit.collider.tag == "Ground") {
+                // Debug.Log("Obstruction: " + rayhit.transform);
                 return rayhit.transform;
             }
         }
@@ -339,13 +388,16 @@ public abstract class Movement : MonoBehaviour
 
     public Vector3 getRandomLocation(Vector3 origin, float range)
     {
+
         Vector3 randPos = Random.insideUnitSphere * range;
         randPos += origin;
 
         NavMeshHit navHit;
-        NavMesh.SamplePosition(randPos, out navHit, range, pathFindingLayers);
+        if(NavMesh.SamplePosition(randPos, out navHit, range, NavMesh.AllAreas)) {
+            return navHit.position;
+        }
 
-        return navHit.position;
+        return transform.position;
     }
 
     public virtual void Move(Vector3 movement)

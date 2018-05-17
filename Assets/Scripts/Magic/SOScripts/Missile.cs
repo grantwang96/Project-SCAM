@@ -73,13 +73,12 @@ public class Missile : MonoBehaviour {
         transform.parent = null;
         if(messUpEffect != null) { StopCoroutine(messUpEffect); }
         ParticleSystem newDeath = Instantiate(deathEffect, transform.position, Quaternion.identity);
-        ParticleSystem.MainModule main = newDeath.main;
+        var main = newDeath.main;
         main.startColor = primaryEffect.baseColor;
         Destroy(newDeath.gameObject, 1f);
 
         if(toBeDeleted.Count != 0) {
-            while(toBeDeleted.Count != 0)
-            {
+            while(toBeDeleted.Count != 0) {
                 GameObject wrecked = toBeDeleted[0];
                 toBeDeleted.RemoveAt(0);
                 Destroy(wrecked.gameObject);

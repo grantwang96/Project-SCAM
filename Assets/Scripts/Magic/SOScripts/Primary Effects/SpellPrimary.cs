@@ -12,6 +12,7 @@ public class SpellPrimary : ScriptableObject {
     [Range(1, 10)] public int powerLevel;
 
     public Color baseColor;
+    public Color coreColor;
     public int ammo;
     public float coolDown;
 
@@ -53,6 +54,9 @@ public class SpellPrimary : ScriptableObject {
             projRbody.AddForce(newProjectile.transform.forward * force, ForceMode.Impulse);
 
             // Apply visual effects
+            MeshRenderer mrend = newProjectile.GetComponent<MeshRenderer>();
+            mrend.material.EnableKeyword("_EMISSION");
+            mrend.material.SetColor("_EmissionColor", coreColor);
             ParticleSystem.MainModule main = newProjectile.sparkles.main;
             main.startColor = baseColor;
             TrailRenderer trail = newProjectile.trail;

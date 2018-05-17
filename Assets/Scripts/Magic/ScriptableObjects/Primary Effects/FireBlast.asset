@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ecfa24c2a4fc046be44c891d98df20, type: 3}
   m_Name: FireBlast
   m_EditorClassIdentifier: 
-  force: 60
+  force: 12
   power: 10
   duration: 0
   powerLevelModifier: 1
   powerLevel: 1
   baseColor: {r: 1, g: 1, b: 0, a: 0.7058824}
+  coreColor: {r: 0.9862069, g: 1, b: 0, a: 1}
   ammo: 2
   coolDown: 1
   title: Flame Pillar

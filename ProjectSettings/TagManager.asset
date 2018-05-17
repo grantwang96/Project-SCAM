@@ -10,6 +10,11 @@ TagManager:
   - Ground
   - Wall
   - Icy
+  - Ceiling
+  - Water
+  - Magic
+  - WaterInteracting
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -29,6 +34,8 @@ TagManager:
   - Trigger
   - Doom
   - NobodyCares
+  - Interact
+  - MagicEnvironment
   - Map
   - 
   - 

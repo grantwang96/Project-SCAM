@@ -12,14 +12,17 @@ public class SpellBook : MonoBehaviour, Interactable {
     public int getMaxAmmo() { return maxAmmo; }
     [SerializeField] int ammo;
     public int getAmmo() { return ammo; }
+    public void setAmmo(int newAmmo) { ammo = newAmmo; }
     public void useAmmo() { ammo--; }
     public SpellCaster owner;
     [SerializeField] bool _dead = false;
     public bool dead { get { return _dead; } set { _dead = value; } }
     bool dying = false;
+    public bool active;
 
     public string spellTitle;
     public string spellDescription;
+    public Sprite instructionImage;
     public Color baseColor;
 
     MeshRenderer[] allMeshes;
@@ -46,8 +49,7 @@ public class SpellBook : MonoBehaviour, Interactable {
     {
         // offChance = Random.Range(0.5f, .9f);
         offChance = 1f;
-        if (primaryEffect)
-        {
+        if (primaryEffect) {
             ammo += primaryEffect.ammo;
             baseColor = primaryEffect.baseColor;
             baseColor.a = 1f;
@@ -55,22 +57,24 @@ public class SpellBook : MonoBehaviour, Interactable {
             spellTitle = primaryEffect.title;
             spellDescription = "-" + primaryEffect.description;
         }
-        if (secondaryEffect)
-        {
+        if (secondaryEffect) {
             ammo += secondaryEffect.ammo;
             // spellTitle = secondaryEffect.title + " " + spellTitle;
+            /*
             spellDescription += "\n-" + secondaryEffect.description;
             if (transform.Find("Sparkles")) {
                 sparklyEffect = null;
                 Destroy(transform.Find("Sparkles").gameObject);
-            }
+            }*/
+
+            if(sparklyEffect != null) { Destroy(sparklyEffect.gameObject); }
             sparklyEffect = Instantiate(secondaryEffect.decoration, transform);
+            sparklyEffect.gameObject.SetActive(active);
             sparklyEffect.name = "Sparkles";
             sparklyEffect.localPosition = Vector3.zero;
             sparklyEffect.localRotation = transform.rotation;
             ParticleSystem sparklyParticles = sparklyEffect.GetComponent<ParticleSystem>();
-            if (sparklyParticles)
-            {
+            if (sparklyParticles) {
                 ParticleSystem.MainModule main = sparklyParticles.main;
                 main.startColor = baseColor;
             }
@@ -80,11 +84,7 @@ public class SpellBook : MonoBehaviour, Interactable {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!_dead && owner == null) // If not dead
-        {
-            // fun rotations and floats!
-        }
-        if (ammo <= 0 && !_dead) {
+        if (ammo <= 0) {
             Die();
         }
     }
@@ -121,6 +121,9 @@ public class SpellBook : MonoBehaviour, Interactable {
         }
         sparklyEffect.gameObject.SetActive(false);
         GetComponent<SphereCollider>().enabled = false;
+        FloatyRotaty fr = GetComponent<FloatyRotaty>();
+        fr.active = false;
+        active = false;
     }
 
     public void Activate()
@@ -130,6 +133,7 @@ public class SpellBook : MonoBehaviour, Interactable {
         }
         sparklyEffect.gameObject.SetActive(true);
         GetComponent<SphereCollider>().enabled = true;
+        active = true;
     }
 
     public void Die()

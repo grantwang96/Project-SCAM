@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
     [SerializeField] GameObject PausePanel;
     public GameObject currentMenuPanel;
 
+    public GameObject blushPrefab;
+    public GameObject heartPS;
+
     #region Prefabs N Stuff
     public GameHint messagePrefab;
     #endregion
@@ -30,7 +33,7 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetButtonDown("Cancel") && !menuMode) {
+        if((Input.GetButtonDown("Cancel")) && !menuMode) {
             TogglePauseMenu();
         }
 	}
@@ -100,8 +103,23 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
         door.locked = true;
     }
 
-    public void QuitGame()
+    public void QuitGame() {
+        StartCoroutine(BackToMainMenu());
+    }
+
+    IEnumerator BackToMainMenu()
     {
-        Application.Quit();
+        Debug.Log("Returning to main menu...");
+        float time = 0f;
+        /*
+        PlayerDamageable.Instance.fadeToBlackImage.enabled = true;
+        while (time < 1f) {
+            time += Time.unscaledDeltaTime;
+            PlayerDamageable.Instance.fadeToBlackImage.color = Color.Lerp(Color.clear, Color.black, time);
+            yield return new WaitForEndOfFrame();
+        }*/
+        Time.timeScale = 1f;
+        AsyncOperation op = SceneManager.LoadSceneAsync(0);
+        while(!op.isDone) { yield return new WaitForEndOfFrame(); }
     }
 }

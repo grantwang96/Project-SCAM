@@ -9,7 +9,8 @@ public class CameraMovement : MonoBehaviour {
     public bool drunk;
     public bool cameraShaking;
 
-    public float mouseSensitivity;
+    public static float mouseSensitivity = 150;
+	public static float ctrSensitivity = 150;
     float upDownLook = 0f;
     public float shakeForce;
     public float maxShakeForce;
@@ -19,6 +20,7 @@ public class CameraMovement : MonoBehaviour {
     public Transform affectedYTurn;
     public int normalMove = 1;
     public static CameraMovement Instance;
+    public PlayerDamageable playerDamageable;
 
     public bool separateControl
     {
@@ -46,12 +48,18 @@ public class CameraMovement : MonoBehaviour {
     {
         // if (Input.GetKeyDown(KeyCode.U)) { StartCoroutine(shakeCamera(0.3f)); }
 
+        if(playerDamageable.dead) { return; }
+
         // 1. get mouse input data
         float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity * normalMove; // horizontal mousespeed
         float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity * normalMove; // vertical mousespeed
 
+		//alt ps4 controls
+		mouseX += Input.GetAxis("ctr_lookX") * Time.deltaTime * ctrSensitivity * normalMove;
+		mouseY += Input.GetAxis("ctr_lookY") * Time.deltaTime * ctrSensitivity * normalMove;
+
         upDownLook -= mouseY; // minus-equals un-inverts the mouse-look-y
-        upDownLook = Mathf.Clamp(upDownLook, -80f, 80f); // constrain look 80 degrees up or down
+        upDownLook = Mathf.Clamp(upDownLook, -60f, 70f); // constrain look 80 degrees up or down
 
         // Body.Rotate(0f, mouseX, 0f);
         
