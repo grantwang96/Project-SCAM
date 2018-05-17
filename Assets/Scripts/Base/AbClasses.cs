@@ -218,7 +218,7 @@ public abstract class Damageable : MonoBehaviour
 //        Destroy(gameObject);
 		//keeping disabled for checkpoint restoration
 		Debug.Log(gameObject.name + " is dying");
-		CheckpointManager.Instance.AddEnemyToRespawnList(gameObject);
+		//CheckpointManager.Instance.AddEnemyToRespawnList(gameObject); //why was this done twice?
 //		Renderer rend = GetComponentInChildren<Renderer>();
 		myRend.enabled = false;
 		if (sounds == null) {

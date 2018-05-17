@@ -172,7 +172,11 @@ public class Movable : Damageable
         attackTarget = target;
     }
 
-	public override void Die() {
-		//do nothing wtf walls don't die
-	}
+	//public override void Die() {
+	//	//do nothing wtf walls don't die
+        //grant you're so insistent of this that you overwrote this twice
+        //i should delete all this but it's 2AM before student showcase and i just wanna have some fun
+        //--marcus
+        //this block comment is my legacy
+	//}
 }

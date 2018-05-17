@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -113,6 +113,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 5320f6537da273e439fe5e00bf3e887a, type: 2}
+--- !u!114 &12198682 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114346499034393202, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+    type: 2}
+  m_PrefabInternal: {fileID: 548343518}
+  m_Script: {fileID: 11500000, guid: 81aba603d2d514db9bd75ea12fc702bf, type: 3}
 --- !u!1001 &15708087
 Prefab:
   m_ObjectHideFlags: 0
@@ -3355,30 +3361,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbdb614b5ff7134bbc5af055d9ea883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rect: {fileID: 429443681}
-  startPosition: {x: -1291, y: -798, z: 0}
-  startRotation: -120
-  targetPosition: {x: -350, y: 10, z: 0}
-  targetRotation: 5
-  speed: 15
-  menuButtons:
-  - {fileID: 1940623149}
-  - {fileID: 438426214}
-  - {fileID: 758159872}
+  rect: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
+  startRotation: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+  targetRotation: 0
+  speed: 0
+  menuButtons: []
   OnExitMenu:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1168026776}
-        m_MethodName: TogglePauseMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &429443679
@@ -4702,7 +4694,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4100886270380074, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 2.51
       objectReference: {fileID: 0}
     - target: {fileID: 4100886270380074, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4738,6 +4730,96 @@ Prefab:
       propertyPath: ctrSensitivity
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 144192797757918194, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.0020000138
+      objectReference: {fileID: 0}
+    - target: {fileID: 144192797757918194, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.0030000303
+      objectReference: {fileID: 0}
+    - target: {fileID: 144192797757918194, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.023000183
+      objectReference: {fileID: 0}
+    - target: {fileID: 144806343579914890, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.0020000376
+      objectReference: {fileID: 0}
+    - target: {fileID: 144806343579914890, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.0010000207
+      objectReference: {fileID: 0}
+    - target: {fileID: 144806343579914890, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.0200001
+      objectReference: {fileID: 0}
+    - target: {fileID: 144272377439823338, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.0020000106
+      objectReference: {fileID: 0}
+    - target: {fileID: 144272377439823338, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.0039999634
+      objectReference: {fileID: 0}
+    - target: {fileID: 144102035582257714, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.0050000213
+      objectReference: {fileID: 0}
+    - target: {fileID: 144102035582257714, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.0019999817
+      objectReference: {fileID: 0}
+    - target: {fileID: 144102035582257714, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.027999759
+      objectReference: {fileID: 0}
+    - target: {fileID: 144536024646802434, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.0030000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 144536024646802434, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.0009999871
+      objectReference: {fileID: 0}
+    - target: {fileID: 144536024646802434, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.02000016
+      objectReference: {fileID: 0}
+    - target: {fileID: 144629417092723802, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.0080000395
+      objectReference: {fileID: 0}
+    - target: {fileID: 144629417092723802, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.13499984
+      objectReference: {fileID: 0}
+    - target: {fileID: 144629417092723802, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.018999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 114931254559795686, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf,
+        type: 2}
+      propertyPath: sounds
+      value: 
+      objectReference: {fileID: 12198682}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3fbcf3c12f6e82f4ca1f33227a8721bf, type: 2}
   m_IsPrefabParent: 0
@@ -9262,61 +9344,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbdb614b5ff7134bbc5af055d9ea883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rect: {fileID: 1002192214}
-  startPosition: {x: -1333, y: -702, z: 0}
-  startRotation: 50
-  targetPosition: {x: 2, y: 3, z: 0}
-  targetRotation: -7
-  speed: 15
-  menuButtons:
-  - {fileID: 1174094678}
+  rect: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
+  startRotation: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+  targetRotation: 0
+  speed: 0
+  menuButtons: []
   OnExitMenu:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 429443678}
-        m_MethodName: SetButtonsInteractable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1168026776}
-        m_MethodName: SetCurrentMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 429443677}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1002192213}
-        m_MethodName: SetButtonsInteractable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1002192212}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!224 &1002192214
@@ -9352,8 +9389,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1082e93292f17414e96d49ae72641d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScreenResOptions: {fileID: 623898663}
-  fullScreen: {fileID: 337101832}
+  MouseSensitivity: {fileID: 0}
+  CTRSensitivity: {fileID: 0}
+  MasterVolume: {fileID: 0}
+  ScreenResOptions: {fileID: 0}
+  fullScreen: {fileID: 0}
 --- !u!114 &1002192216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10753,8 +10793,7 @@ MonoBehaviour:
   playerHealth: 0
   playerDmg: {fileID: 548343520}
   playerMagic: {fileID: 548343519}
-  spellBookPrefab: {fileID: 114233178495423298, guid: 41e5e204f56f3fe489ea699084c0291d,
-    type: 2}
+  spellBookPrefab: {fileID: 1449366440}
 --- !u!114 &1168026776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10771,13 +10810,12 @@ MonoBehaviour:
   spellBooksLayer:
     serializedVersion: 2
     m_Bits: 0
-  gameIsRunning: 1
+  gameIsRunning: 0
   menuMode: 0
-  PauseCanvas: {fileID: 517883839}
-  PausePanel: {fileID: 429443677}
+  PauseCanvas: {fileID: 0}
+  PausePanel: {fileID: 0}
   currentMenuPanel: {fileID: 0}
-  blushPrefab: {fileID: 1464923783658704, guid: 42affadb8bdf1134a8793c1aab91ea3a,
-    type: 2}
+  blushPrefab: {fileID: 0}
   heartPS: {fileID: 0}
   messagePrefab: {fileID: 0}
 --- !u!4 &1168026777
@@ -13278,6 +13316,12 @@ Transform:
   m_PrefabParentObject: {fileID: 4485431142630650, guid: 413d98c019f871642a5628d59b75e1e1,
     type: 2}
   m_PrefabInternal: {fileID: 1448565703}
+--- !u!114 &1449366440 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114233178495423298, guid: 41e5e204f56f3fe489ea699084c0291d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1493904340}
+  m_Script: {fileID: 11500000, guid: 85b739a862485784b84d2d9c5aecc2cd, type: 3}
 --- !u!1001 &1451844409
 Prefab:
   m_ObjectHideFlags: 0

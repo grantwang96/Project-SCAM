@@ -19,12 +19,13 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4510346450271588}
+  - component: {fileID: 65954781670309270}
   m_Layer: 18
   m_Name: Floor
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1415201948398716
 GameObject:
@@ -115,6 +116,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -148,6 +150,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 0982212b02c8b9148b8b97fd220774a8, type: 2}
   - {fileID: 2100000, guid: b9fa982f2a81d7846b6f3c3a16144053, type: 2}
@@ -195,4 +198,16 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 5.000001, y: 0.6, z: 5.000001}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65954781670309270
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1269501378394832}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
