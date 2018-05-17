@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: e2a47e29aaab206488058fd1aa6ecd74
-timeCreated: 1518387733
-licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -14,6 +12,7 @@ ModelImporter:
     3300000: polySurface49
     4300000: polySurface49
     9500000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -33,6 +32,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
