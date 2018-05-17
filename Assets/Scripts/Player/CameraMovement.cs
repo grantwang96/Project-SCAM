@@ -9,8 +9,8 @@ public class CameraMovement : MonoBehaviour {
     public bool drunk;
     public bool cameraShaking;
 
-    public float mouseSensitivity;
-	public float ctrSensitivity = 150;
+    public static float mouseSensitivity = 150;
+	public static float ctrSensitivity = 150;
     float upDownLook = 0f;
     public float shakeForce;
     public float maxShakeForce;

@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour { // will handle game events such as it
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetButtonDown("Cancel") && !menuMode) {
+        if((Input.GetButtonDown("Cancel")) && !menuMode) {
             TogglePauseMenu();
         }
 	}

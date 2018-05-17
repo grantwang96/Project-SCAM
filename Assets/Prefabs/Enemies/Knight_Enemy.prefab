@@ -1245,7 +1245,7 @@ MonoBehaviour:
   replacedBody: {fileID: 0}
   blush: {fileID: 212537880185659510}
   rbody: {fileID: 54566267605765546}
-  deathFX: {fileID: 0}
+  deathFX: {fileID: 1781021062355326, guid: 5c60ceb1b59db0245921c011fb0553fd, type: 2}
   specialDrop: {fileID: 0}
 --- !u!114 &114359958199326236
 MonoBehaviour:

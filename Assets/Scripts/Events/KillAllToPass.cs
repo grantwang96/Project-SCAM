@@ -20,4 +20,13 @@ public class KillAllToPass : MonoBehaviour {
             Destroy(this);
         }
 	}
+
+    void OnTriggerExit(Collider coll) {
+        if(coll.tag == "Enemy") {
+            Damageable dam = coll.GetComponent<Damageable>();
+            if(dam && enemiesToKill.Contains(dam)) {
+                dam.TakeDamage(null, 999, Vector3.zero, 0f);
+            }
+        }
+    }
 }

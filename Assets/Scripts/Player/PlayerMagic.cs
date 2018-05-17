@@ -96,7 +96,6 @@ public class PlayerMagic : MonoBehaviour, SpellCaster {
         leftBook.enabled = false;
         rightBook.enabled = false;
         UpdateSpellData();
-        Debug.Log("Setup complete!");
     }
 	
 	// Update is called once per frame

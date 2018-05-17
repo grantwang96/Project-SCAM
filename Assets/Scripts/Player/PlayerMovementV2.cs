@@ -27,6 +27,7 @@ public class PlayerMovementV2 : Movement {
         charCon.detectCollisions = true;
         yMove = -3f;
         falling = true;
+        
 	}
 
     // Update is called once per frame
